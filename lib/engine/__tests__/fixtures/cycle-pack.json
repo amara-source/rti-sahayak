@@ -1,0 +1,10 @@
+{
+  "eventId": "__cycle_fixture__",
+  "tier": 1,
+  "label": "Deliberately malformed cycle fixture",
+  "intake": [],
+  "nodes": [
+    { "id": "cycle_a", "dependsOn": ["cycle_b"] },
+    { "id": "cycle_b", "dependsOn": ["cycle_a"] }
+  ]
+}
