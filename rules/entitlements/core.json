@@ -1,0 +1,51 @@
+[
+  {
+    "id":"legal_aid","job":"CLAIM","section":"available",
+    "title":"Free legal aid is your right, not a favour",
+    "whyYouMayQualify":"Under Section 12 of the Legal Services Authorities Act 1987, women are entitled irrespective of income or financial status.",
+    "whatItGives":"A lawyer at no cost, court fees covered, for any kind of case where there is a genuine case to prosecute or defend.",
+    "howToGet":[
+      "Go to the District Legal Services Authority at your local court complex",
+      "Fill a simple NALSA form, or write the request on plain paper",
+      "An affidavit as to your income is generally sufficient — no income proof needed (Section 13(2))",
+      "Or call the national helpline 15100"
+    ],
+    "appliesIf":[{"field":"gender","op":"eq","value":"F"}],
+    "authority":"NALSA / District Legal Services Authority",
+    "confidence":"verified","sourceLabel":"NALSA FAQ; Legal Services Authorities Act 1987",
+    "sourceUrl":"https://nalsa.gov.in/faqs/","verifiedOn":"2026-08-22"
+  },
+  {
+    "id":"legal_aid_categories","job":"CLAIM","section":"available",
+    "title":"Free legal aid is your right, not a favour",
+    "whyYouMayQualify":"Section 12 lists categories entitled as of right, including members of Scheduled Castes and Scheduled Tribes, persons with disabilities, industrial workmen, persons in custody, and victims of trafficking, mass disaster, ethnic violence, caste atrocity or natural disaster.",
+    "whatItGives":"A lawyer at no cost, court fees covered.",
+    "howToGet":["District Legal Services Authority at your local court complex","NALSA form or plain-paper request","National helpline 15100"],
+    "appliesIf":[{"field":"category","op":"in","value":["sc","st"]}],
+    "authority":"NALSA / District Legal Services Authority",
+    "confidence":"verified","sourceLabel":"NALSA FAQ; Section 12, Legal Services Authorities Act 1987",
+    "sourceUrl":"https://nalsa.gov.in/faqs/","verifiedOn":"2026-08-22"
+  },
+  {
+    "id":"immunisation","job":"DO","section":"overdue",
+    "title":"Free childhood vaccinations at a government facility",
+    "whyYouMayQualify":"You told us there is a child in the household.",
+    "whatItGives":"Every vaccine in the Universal Immunization Programme is free at government facilities.",
+    "howToGet":[
+      "Birth — BCG, OPV-0, Hepatitis B birth dose",
+      "6 weeks — OPV-1, Pentavalent-1, Rotavirus-1, fIPV-1, PCV-1 in selected states",
+      "10 weeks — OPV-2, Pentavalent-2, Rotavirus-2",
+      "14 weeks — OPV-3, Pentavalent-3, fIPV-2, Rotavirus-3, PCV-2 in selected states",
+      "9 to 12 months — Measles-Rubella-1, JE-1 in endemic districts, PCV booster",
+      "16 to 24 months — MR-2, JE-2, DPT booster-1, OPV booster",
+      "5 to 6 years — DPT booster-2",
+      "10 years and 16 years — Td",
+      "Track it on U-WIN"
+    ],
+    "appliesIf":[{"field":"childrenAges","op":"exists","value":""}],
+    "authority":"Ministry of Health and Family Welfare — Universal Immunization Programme",
+    "warnings":[{"severity":"info","text":"This is the public schedule and these are free at a government facility. The Indian Academy of Pediatrics recommends additional vaccines that are not part of the government programme. Talk to a doctor about your child."}],
+    "confidence":"verified","sourceLabel":"National Health Mission — National Immunization Schedule",
+    "sourceUrl":"https://nhm.gov.in/New_Updates_2018/NHM_Components/Immunization/report/National_%20Immunization_Schedule.pdf","verifiedOn":"2026-08-22"
+  }
+]
