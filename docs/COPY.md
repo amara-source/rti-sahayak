@@ -301,3 +301,83 @@ Scholarships, accredited institutions and employment services.
 ## Haq API errors
 
 - Invalid request: The request is not valid.
+
+## Model-assisted entry points
+
+- Section label: Use your own words
+- Description: The model can read or translate what you write. It never decides what you qualify for.
+- Extract title: Describe your situation
+- Extract line: Write one paragraph. You will review every detail before it is used.
+- Extract action: Describe in your own words
+- Translate title: Hindi to Kannada form
+- Translate line: Type details in Hindi and see the same form fill in Kannada.
+- Translate action: See the translation demo
+
+## Hindi to Kannada demonstration
+
+- Eyebrow: Language demonstration
+- Heading: Hindi in. Kannada form out.
+- Description: Write synthetic details in Hindi. The model translates the words only. It does not select services or decide eligibility.
+- Synthetic note: Use synthetic details only. Do not enter Aadhaar, PAN, OTP, password or payment information.
+- Hindi panel: Hindi input
+- Kannada panel: Kannada form output
+- Current place label: वर्तमान राज्य और जिला
+- New place label: नया राज्य और जिला
+- Situation label: अपनी स्थिति बताइए
+- Kannada current place label: ಪ್ರಸ್ತುತ ರಾಜ್ಯ ಮತ್ತು ಜಿಲ್ಲೆ
+- Kannada new place label: ಹೊಸ ರಾಜ್ಯ ಮತ್ತು ಜಿಲ್ಲೆ
+- Kannada situation label: ನಿಮ್ಮ ಪರಿಸ್ಥಿತಿ
+- Translate action: Fill the Kannada form
+- Translating: Translating the words
+- Empty output: The Kannada translation will appear here.
+- Failure: Translation is unavailable right now. Your Hindi text is still here, and the rest of the prototype continues to work.
+- Back: Back to Haq
+
+## Free-text profile extraction
+
+- Eyebrow: Model-assisted profile
+- Heading: Describe your situation in your own words
+- Description: The model reads your words and proposes profile fields. It does not check eligibility or recommend a service.
+- Synthetic note: Use synthetic details only. Do not enter Aadhaar, PAN, OTP, password or payment information.
+- Input label: What would you like UMANG to understand?
+- Placeholder: Example: My date of birth is 2002-06-15, I am a woman, and I have two children aged 4 and 7.
+- Read action: Show me what you read
+- Reading: Reading your words
+- Review eyebrow: Confirm before anything is used
+- Review heading: Is this what you said?
+- Review description: Correct or remove any detail. The rule engine is not called until you confirm.
+- No fields: We could not find a profile detail to confirm. Revise the description or answer the form instead.
+- Remove: Remove this detail
+- Confirm: Yes, use these details
+- Confirming: Using the confirmed details
+- Revise: Revise the description
+- Answer form: Answer the form instead
+- Unavailable: Model-assisted reading is unavailable right now. You can still answer the form and use every deterministic feature.
+- Restricted: Remove government identifiers before continuing. Do not enter Aadhaar or PAN data.
+- Save failure: We could not use the confirmed details. Answer the form instead.
+
+### Extracted profile labels
+
+- Name: Name
+- Date of birth: Date of birth
+- Gender: Gender
+- Current state: Current state
+- Current district: Current district
+- Home state: Home state
+- Home district: Home district
+- Household income band: Household income band
+- Employment: Employment type
+- Marital status: Marital status
+- Single parent: Single parent
+- Children’s ages: Children’s ages
+- Parents’ ages: Parents’ ages
+- Category: Category
+- Disability: Disability
+- Housing: Housing type
+
+## Model API errors
+
+- Invalid request: The request is not valid.
+- Unavailable: Model-assisted features are unavailable right now.
+- Restricted identifiers: Remove government identifiers before continuing.
+- Unsupported language path: Only Hindi to Kannada is available in this prototype.

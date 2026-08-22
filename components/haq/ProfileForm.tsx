@@ -6,6 +6,7 @@ import { haqCopy } from "@/content/haq-copy";
 import type { EntitlementProfileField } from "@/lib/engine/profile-fields";
 import type { Profile } from "@/lib/engine/types";
 import { AgeListField } from "./AgeListField";
+import { HaqModelActions } from "./HaqModelActions";
 import { SensitiveField } from "./SensitiveField";
 
 interface ProfileFormProps {
@@ -192,6 +193,7 @@ export function ProfileForm({ fields, initialProfile }: ProfileFormProps) {
           <span>{haqCopy.profile.description}</span>
           <small>{haqCopy.profile.browserNote}</small>
         </header>
+        <HaqModelActions />
         <article className="haq-question-card" id={`field-${field}`}>
           <div className="intake-progress">
             <p>{haqCopy.profile.progress(index + 1, fields.length)}</p>

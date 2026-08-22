@@ -46,9 +46,9 @@ describe("extractProfileText", () => {
 
     await extractProfileText("I am moving next month.", gateway);
 
-    const request = generateStructured.mock.calls[0]?.[0] as
-      | StructuredModelRequest
-      | undefined;
+    const request = (
+      generateStructured.mock.calls as unknown as [[StructuredModelRequest]]
+    )[0]?.[0];
     expect(request?.instructions).toContain("only facts explicitly stated");
     expect(request?.instructions).toContain("Never infer sensitive attributes");
     expect(request?.instructions).toContain("Never decide eligibility");

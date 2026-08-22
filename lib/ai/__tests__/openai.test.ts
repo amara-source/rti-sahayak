@@ -35,7 +35,9 @@ describe("OpenAI model gateway", () => {
       }),
     ).resolves.toBe("ಕನ್ನಡ ಪಠ್ಯ");
 
-    const [, init] = fetchMock.mock.calls[0] ?? [];
+    const [, init] = (
+      fetchMock.mock.calls as unknown as [[string, RequestInit]]
+    )[0];
     const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
     expect(init?.headers).toMatchObject({
       Authorization: "Bearer server-secret",

@@ -23,9 +23,9 @@ describe("translateText", () => {
       translateText("अगले महीने", "hi", "kn", gateway),
     ).resolves.toBe("ಮುಂದಿನ ತಿಂಗಳು");
 
-    const request = generateText.mock.calls[0]?.[0] as
-      | TextModelRequest
-      | undefined;
+    const request = (
+      generateText.mock.calls as unknown as [[TextModelRequest]]
+    )[0]?.[0];
     expect(request?.instructions).toContain("Translate from Hindi to Kannada");
     expect(request?.instructions).toContain("Do not decide eligibility");
     expect(request?.instructions).toContain("Preserve ASCII field markers");
