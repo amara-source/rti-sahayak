@@ -217,3 +217,87 @@ Scholarships, accredited institutions and employment services.
 - Plan not found: This plan was not found in this browser.
 - Task not found: This task is not part of the plan.
 - Synthetic reference: Reference numbers must begin with SYNTHETIC-.
+
+## Haq profile
+
+- Eyebrow: Haq
+- Heading: Tell us about your household
+- Description: Only questions used by the entitlement rules appear here. Every answer is self-declared.
+- Browser note: This prototype stores your answers in this browser only.
+- Progress: Question {current} of {total}
+- Skip: Skip this question
+- Continue: Continue
+- Finish: See what may apply
+- Error: We could not save these answers. Try again.
+- Prefer not to say: Prefer not to say
+
+### Profile questions
+
+- Name: What name should we use for this synthetic profile?
+- Synthetic Aadhaar: What are the last four digits of the synthetic Aadhaar number?
+- Date of birth: What is your date of birth?
+- Gender: How do you describe your gender?
+- Current state: Which state or union territory do you live in now?
+- Current district: Which district do you live in now?
+- Home state: Which state or union territory is your home state?
+- Home district: Which district is your home district?
+- Household income band: Which household income band do you declare?
+- Employment: What is your employment type?
+- Marital status: What is your marital status?
+- Single parent: Are you a single parent?
+- Children’s ages: How old are the children in your household?
+- Parents’ ages: How old are your parents?
+- Category: Which category do you declare?
+- Disability: Do you declare a disability?
+- Housing: What type of housing do you live in?
+
+### Profile controls
+
+- Add child: Add another child
+- Add parent: Add another parent
+- Remove: Remove
+- No children: No children in the household
+- No parents: No parents to add
+- Age label: Age
+
+### Sensitive options
+
+- Gender: Woman | Prefer not to say | Man | Another gender
+- Category: General | Other Backward Class | Prefer not to say | Scheduled Caste | Scheduled Tribe | Economically Weaker Section
+- Income: Below 1 lakh | 1 to 3 lakh | Prefer not to say | 3 to 5 lakh | 5 to 8 lakh | Above 8 lakh
+- Disability: Yes | Prefer not to say | No
+
+## Haq results
+
+- Eyebrow: Haq results
+- Heading: What may apply to you
+- Description: These are possible matches from the facts you chose to share. The rules decide what appears; this prototype does not decide whether you qualify.
+- Overdue section: This should already have happened
+- Available section: You may be entitled to this
+- Upcoming section: Coming up for you
+- Empty section: No items in this section from the answers you shared.
+- Card framing: You may be entitled to this
+- Why this appears: Why this appears
+- What the rule says: What the rule says
+- What it gives: What it gives
+- How to get it: How to get it
+- Authority: Authority
+- Hidden count: {count} more may apply. Answer {fields} more question(s) to see them.
+- Edit answers: Edit your answers
+
+### Direct profile facts
+
+- Woman: You told us you are a woman.
+- Man: You told us you are a man.
+- Another gender: You told us you use another description for your gender.
+- General: You told us you selected General.
+- Other Backward Class: You told us you selected Other Backward Class.
+- Scheduled Caste: You told us you selected Scheduled Caste.
+- Scheduled Tribe: You told us you selected Scheduled Tribe.
+- Economically Weaker Section: You told us you selected Economically Weaker Section.
+- One child: You told us there is a child aged {age} in your household.
+- More than one child: You told us there are children aged {ages} in your household.
+
+## Haq API errors
+
+- Invalid request: The request is not valid.

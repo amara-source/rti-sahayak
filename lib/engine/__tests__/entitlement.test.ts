@@ -120,4 +120,32 @@ describe("computeEntitlements", () => {
     expect(upcoming.entitlements[0]?.section).toBe("upcoming");
     expect(overdue.entitlements[0]?.section).toBe("overdue");
   });
+
+  it("orders sections consistently and places CLAIM first within a section", () => {
+    const rules: Entitlement[] = [
+      { ...fixtureEntitlement, id: "available-do", job: "DO" },
+      { ...fixtureEntitlement, id: "available-claim", job: "CLAIM" },
+      {
+        ...fixtureEntitlement,
+        id: "overdue-do",
+        job: "DO",
+        section: "overdue",
+      },
+      {
+        ...fixtureEntitlement,
+        id: "upcoming-claim",
+        job: "CLAIM",
+        section: "upcoming",
+      },
+    ];
+
+    const result = computeEntitlementsFromRules(rules, {});
+
+    expect(result.entitlements.map((item) => item.id)).toEqual([
+      "overdue-do",
+      "available-claim",
+      "available-do",
+      "upcoming-claim",
+    ]);
+  });
 });

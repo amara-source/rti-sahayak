@@ -982,6 +982,366 @@ main {
   font-weight: 700;
 }
 
+.haq-profile-page,
+.haq-results-page {
+  min-height: 64vh;
+  padding-block: 72px;
+  background: var(--wash);
+}
+
+.haq-profile-page__inner {
+  max-width: 900px;
+}
+
+.haq-profile-intro > p,
+.haq-results-header > p {
+  margin: 0;
+  color: var(--blue-dk);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.haq-profile-intro h1,
+.haq-results-header h1 {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: clamp(2.15rem, 5vw, 3.75rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.haq-profile-intro > span,
+.haq-results-header > span {
+  display: block;
+  max-width: 760px;
+  margin-top: 14px;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.haq-profile-intro > small {
+  display: block;
+  margin-top: 12px;
+  color: var(--grey);
+  font-size: 0.875rem;
+}
+
+.haq-question-card {
+  margin-top: 36px;
+  padding: clamp(28px, 6vw, 56px);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background: white;
+}
+
+.haq-question-card .intake-progress {
+  margin-top: 0;
+}
+
+.haq-question-card h2 {
+  margin: 36px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.sensitive-field {
+  min-width: 0;
+  margin: 30px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.sensitive-options,
+.profile-option-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sensitive-option,
+.profile-option {
+  min-height: 56px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: white;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sensitive-option:hover,
+.sensitive-option:focus-visible,
+.profile-option:hover,
+.profile-option:focus-visible,
+.sensitive-option[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: var(--icon-bg);
+}
+
+.sensitive-option:focus-visible,
+.profile-option:focus-visible,
+.age-input-row input:focus-visible,
+.profile-text-field input:focus-visible,
+.secondary-action:focus-visible,
+.age-remove:focus-visible,
+.primary-action:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.profile-option-list,
+.profile-text-field,
+.age-list-field {
+  margin-top: 30px;
+}
+
+.profile-text-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.profile-text-field input,
+.age-input-row input {
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: var(--card-border);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: white;
+  font: inherit;
+}
+
+.age-input-list {
+  display: grid;
+  gap: 12px;
+}
+
+.age-input-row {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(100px, 180px) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.age-input-row label {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.age-remove,
+.secondary-action {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--blue);
+  border-radius: var(--radius-sm);
+  color: var(--blue-dk);
+  background: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.age-field-actions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  gap: 10px;
+}
+
+.haq-results-page__inner {
+  max-width: 980px;
+}
+
+.haq-results-header {
+  position: relative;
+  padding-right: 180px;
+}
+
+.haq-edit-link {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-bottom: 2px solid var(--orange);
+  color: var(--blue-dk);
+  font-weight: 800;
+}
+
+.haq-hidden-count {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  margin-top: 32px;
+  padding: 16px 20px;
+  border: 2px solid var(--blue);
+  border-radius: var(--radius-md);
+  color: var(--blue-dk);
+  background: white;
+  font-size: 1.0625rem;
+  font-weight: 800;
+}
+
+.haq-hidden-count:hover {
+  background: var(--icon-bg);
+}
+
+.entitlement-sections {
+  display: grid;
+  margin-top: 52px;
+  gap: 64px;
+}
+
+.entitlement-section__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.entitlement-section__header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.entitlement-section__header span {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--blue-dk);
+  background: var(--icon-bg);
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.entitlement-list {
+  display: grid;
+  margin-top: 22px;
+  gap: 20px;
+}
+
+.entitlement-empty {
+  margin: 18px 0 0;
+  padding: 18px 20px;
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background: white;
+}
+
+.entitlement-card {
+  padding: clamp(24px, 5vw, 42px);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background: white;
+  break-inside: avoid;
+}
+
+.entitlement-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.entitlement-card__header p {
+  margin: 0;
+  color: var(--blue-dk);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.entitlement-card__header h3 {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.entitlement-card__badges {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.entitlement-fact {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border-left: 4px solid var(--green);
+  color: var(--ink);
+  background: #eef8f2;
+}
+
+.entitlement-card h4,
+.entitlement-authority dt {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.entitlement-fact p,
+.entitlement-card__section p {
+  margin: 6px 0 0;
+}
+
+.entitlement-card__section {
+  margin-top: 24px;
+}
+
+.entitlement-card__section ol {
+  display: grid;
+  margin: 10px 0 0;
+  padding-left: 24px;
+  gap: 8px;
+}
+
+.entitlement-card > .warning-box {
+  margin-top: 24px;
+}
+
+.entitlement-authority {
+  display: grid;
+  grid-template-columns: minmax(110px, auto) 1fr;
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: var(--card-border);
+  gap: 18px;
+}
+
+.entitlement-authority dd {
+  margin: 0;
+}
+
+.entitlement-card .source-line {
+  margin-top: 24px;
+}
+
+.primary-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .intake-error {
   width: min(820px, calc(100% - 32px));
   margin: -48px auto 48px;
@@ -1746,6 +2106,43 @@ a.task-row:hover {
     grid-template-columns: 1fr;
   }
 
+  .haq-profile-page,
+  .haq-results-page {
+    padding-block: 40px;
+  }
+
+  .sensitive-options,
+  .profile-option-list,
+  .profile-text-field {
+    grid-template-columns: 1fr;
+  }
+
+  .age-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .haq-results-header {
+    padding-right: 0;
+  }
+
+  .haq-edit-link {
+    position: static;
+    margin-top: 18px;
+  }
+
+  .entitlement-card__header {
+    flex-direction: column;
+  }
+
+  .entitlement-card__badges {
+    justify-content: flex-start;
+  }
+
+  .entitlement-authority {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
   .provisional-row {
     align-items: flex-start;
     flex-direction: column;
@@ -1894,6 +2291,20 @@ a.task-row:hover {
   }
 
   .intake-card {
+    border-color: var(--grey);
+  }
+
+  .haq-profile-page,
+  .haq-results-page {
+    padding-block: 24px;
+    background: white;
+  }
+
+  .haq-question-card,
+  .sensitive-option,
+  .profile-option,
+  .entitlement-card,
+  .entitlement-empty {
     border-color: var(--grey);
   }
 
