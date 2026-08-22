@@ -133,3 +133,87 @@ Scholarships, accredited institutions and employment services.
 - Heading: Haq — what you are entitled to
 - Line: Nobody ever sat you down and told you what you can claim. Answer a few questions and find out.
 - Button: Start
+
+## Journey intake
+
+- Eyebrow: Life event
+- Progress: Question {current} of {total}
+- Skip: Skip this question
+- Provisional label: Provisional
+- Provisional heading: Your plan so far
+- Provisional description: This is based on what you have told us so far.
+- Sharpen singular: Answer one more to sharpen this.
+- Sharpen plural: Answer {count} more to sharpen this.
+- Final action: View your ordered plan
+- No change: Nothing changed — this answer doesn't affect what you need to do.
+- Change summary: Join the non-zero changes: {added} row/rows added, {removed} no longer applies, {warnings} warning/warnings added.
+- Update error: We could not update the plan. Try again.
+
+### Intake option labels
+
+- Relationship: Parent | Spouse | Sibling | Child | Someone else
+- States: Karnataka | Bihar | Uttar Pradesh | Maharashtra | West Bengal | Odisha | Delhi | Tamil Nadu | Another state
+- Yes or no: Yes | No | Not sure
+- Registration: Registered | Application submitted | Not registered | Not sure
+- Employment after death: Private-sector employee | Central government employee | State government employee | Unorganised worker | Retired | None of these
+- Job ending: Laid off | Resigned | Contract ended | Employer closed
+- Tenure: Under one year | One to two years | Two to five years | More than five years
+- Job ending date: This month | One to three months ago | More than three months ago
+- Move date: Later | Soon | Already moved
+- Housing: Own home | Stamp-paper agreement | Registered agreement | Staying with a relative | Employer housing | Not sure
+- Work: Salaried work | Daily-wage work | Self-employed | Student
+- Languages: English | हिंदी | ಕನ್ನಡ
+
+## Journey list
+
+- Eyebrow: Your plan
+- Plan code: Plan code
+- Browser note: This code identifies the plan stored in this browser.
+- Intro: Tasks are ordered by dependency and urgency.
+- Ordered view: Ordered plan
+- Category view: UMANG categories
+- Ordered description: Ordered around what you need to do first.
+- Category description: The same services across categories, without dependency order.
+- Locked reason: Waiting for {tasks}.
+- Warning count singular: 1 warning
+- Warning count plural: {count} warnings
+- Clock: {label}: {days} days from {start}
+- Clock starts: the event | this plan was created
+- Statuses: Not started | Applied | Stuck | Complete
+- Buckets: Urgent | Before you begin | In the first week | Within a month | Later
+- Job tags: DO | CLAIM | CLOSE | PROTECT | BELONG
+
+## Node detail
+
+- Authority: Authority
+- Typical time: Typical time
+- Body heading: What to know
+- Warnings: Warnings
+- Documents: Documents to prepare
+- No documents: No documents are listed for this task.
+- Status: Your status
+- Reference: Reference number
+- Reference help: Use a synthetic reference number only.
+- Reference placeholder: Example: SYNTHETIC-REF-1
+- Reference action: Save reference and mark complete
+- Saved: Reference saved. This task is complete.
+- Unlocked heading: This completion unlocked
+- Status error: We could not save the status. Try again.
+- Complete first: Complete first
+- Unlocks next: This unlocks next
+- Sources: Source
+- Verified: Verified on {date}
+- Open source: Open source
+- Confidence badge: Sources conflict
+- Confidence note: Sources disagree, so no disputed number is shown.
+- Severity labels: Information | Caution | Critical
+- Belong heading: A place to ask for help
+- Back: Back to plan
+
+## Plan API errors
+
+- Invalid request: The request is not valid.
+- Guided journey unavailable: This event is not available as a guided journey.
+- Plan not found: This plan was not found in this browser.
+- Task not found: This task is not part of the plan.
+- Synthetic reference: Reference numbers must begin with SYNTHETIC-.

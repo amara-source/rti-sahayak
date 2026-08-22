@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JourneyIntake } from "@/components/intake/JourneyIntake";
 import { landingCopy } from "@/content/landing-copy";
 import { allLandingEvents } from "@/content/landing-events";
+import { drivenIntakeQuestions } from "@/lib/engine/intake";
+import { loadEventRulePack } from "@/lib/engine/journey";
 
 interface EventPageProps {
   params: Promise<{ eventId: string }>;
@@ -32,6 +35,22 @@ export default async function EventPage({ params }: EventPageProps) {
     notFound();
   }
 
+  if (event.tier === 1) {
+    const pack = loadEventRulePack(event.eventId);
+    const questions = drivenIntakeQuestions(pack);
+    if (questions.length === 0) {
+      notFound();
+    }
+
+    return (
+      <JourneyIntake
+        eventId={event.eventId}
+        eventLabel={event.label}
+        questions={questions}
+      />
+    );
+  }
+
   return (
     <section className="event-detail-page">
       <div className="site-shell event-detail-page__inner">
@@ -39,11 +58,9 @@ export default async function EventPage({ params }: EventPageProps) {
           <p className="event-detail-card__cluster">{event.cluster}</p>
           <h1>{event.label}</h1>
           {event.description ? <p>{event.description}</p> : null}
-          {event.tier === 2 ? (
-            <p className="mapped-marker">
-              {landingCopy.lifeEvents.mappedMarker}
-            </p>
-          ) : null}
+          <p className="mapped-marker">
+            {landingCopy.lifeEvents.mappedMarker}
+          </p>
         </article>
       </div>
     </section>

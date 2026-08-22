@@ -38,4 +38,20 @@ describe("plan lifecycle", () => {
     expect(result.plan.statuses.abvky).toBe("stuck");
     expect(result.unlocked).toEqual([]);
   });
+
+  it("does not allow a locked task to be updated through the plan API layer", () => {
+    const plan = createPlan("death", {
+      employment: "none",
+      nominee: "yes",
+      vehicle: "no",
+      insurance: "no",
+    });
+
+    expect(() =>
+      patchPlan(plan, {
+        nodeId: "certificate_copies",
+        status: "applied",
+      }),
+    ).toThrow(/locked/i);
+  });
 });
