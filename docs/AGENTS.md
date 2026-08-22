@@ -32,5 +32,6 @@
 - Every screen must be legible printed on A4.
 
 ## Performance
-Under 200KB JS first load. Server-render the critical path.
-Must work on throttled 3G on a low-end Android.
+Server-render the critical path. Must remain usable on a low-end Android
+over a slow connection. No fixed bundle budget — measure and report, don't
+optimise prematurely.
