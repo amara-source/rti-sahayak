@@ -6,15 +6,19 @@ Concept prototype for a hackathon. Not an official Government of India product. 
 
 ## Utility strip
 
-- Left: Skip to main content
-- Right: A- A A+ | language select
+- Accessibility: Accessibility tools
+- Skip: Skip to main content
+- Text size: A- | A | A+
+- Theme: Use dark theme | Use light theme
+- ISL: Not available in this prototype
+- Language: English | हिंदी | ಕನ್ನಡ
 
 ## Header
 
 - Wordmark: UMANG
 - Tagline: One App, Many Government Services
-- Navigation: Home | Life Events | Categories | All Services | About
-- Account: Try a demo profile
+- Navigation: Home | Services | Schemes | DigiLocker | Dashboard | Jobs
+- Account: Login/Register
 
 ## Language
 
@@ -22,37 +26,42 @@ English | हिंदी | ಕನ್ನಡ
 
 ## Footer
 
-- UMANG: About, Services, Categories, Life Events
-- Support: Help and FAQ, Contact, Feedback
-- Policies: Terms, Privacy, Accessibility, Disclaimer
-- Also on: Android, iOS, KaiOS
+- Get to know: Privacy policy | FAQ | Terms of service | UMANG case study
+- Grievance: CPGRAMS | National Consumer Helpline
+- Quick links: About us | Dashboard | Schemes | Contact us | Accessibility | Jobs
+- Useful links: Digital India | MyGov | India.gov.in
+- Counter: Visitors | Prototype counter
 
-Concept prototype built for a public-service redesign hackathon. Not affiliated with, endorsed by, or representing the Government of India, MeitY, NeGD or UMANG. No government emblem or logo is reproduced. All data shown is synthetic.
+Concept prototype for a public-service redesign hackathon. Not affiliated with or endorsed by the Government of India, MeitY, NeGD or UMANG.
+
+Last updated: 23 August 2026 | prototype v0.9
 
 ## Hero
 
-- Headline: One App, Many Government Services
-- Description: UMANG brings services from central and state government bodies into one place. Tell us what has happened, or who you are, and we will show you which of them apply to you.
+- Slide 1: Start with what happened, not a department name
+- Slide 2: Eligibility is not an answer
+- Slide 3: Find the service without knowing who owns it
 
 ## Search
 
 - Placeholder: Search for a service, department or scheme
 - Button: Search
-- Unavailable: Search is not part of this prototype. Use Life Events or Categories below.
+- No result: No matching event, category or service was found.
+- Empty: Enter a service, category or life event to search.
 
 ## Stats
 
-- 2,575: Services on UMANG
-- 880: From central government
-- 1,695: From state governments
-- All: States and union territories
+- Departments/Entities: Central 80 | State 162
+- Services: Central 880 | State 1,705
+- Registrations: Total 12.15 Crores
+- Transactions: Total 803.79 Crores
 
-As reported to the Rajya Sabha on 7 August 2026.
+As shown on web.umang.gov.in, August 2026.
 
 ## Life Events
 
 - Heading: Life Events
-- Description: Some things in life need many services at once, from many government bodies, in a particular order. Tell us what has happened and UMANG will bring the right services together for you.
+- Description: Tell us what happened. We bring the relevant services together in dependency order and keep every existing category available below.
 - Explore link: Explore more life events
 - Mapped marker: Mapped from public sources, not individually verified.
 
@@ -101,38 +110,16 @@ Place | Family | Work | Money and crisis | Education | Health and ageing | Ident
 ## Categories
 
 - Heading: Categories
-- Description: UMANG has innumerable services offered by many government bodies and organisations. To ease the job of finding services relevant for you, we have categorised these state and central government bodies into different groups such as Students, Health and others.
+- Description: Browse the same service catalogue by category. Life Events adds another door and removes nothing.
 - Explore link: Explore 9 more categories
 
-### Travel
-
-Railways, metro services, highways and other travel-related services.
-
-### Health and Wellness
-
-Government health schemes, vaccination and other health services.
-
-### Police and Legal
-
-Reporting cases with the police, and services relating to the courts.
-
-### Mera Ration
-
-Ration card details and services relating to your ration card.
-
-### Transport
-
-Vehicle, licence and other transport services.
-
-### Education, Skills and Employment
-
-Scholarships, accredited institutions and employment services.
+Farmers | Social Security & Pensioners | Education, Skills & Employment | Women, Child & Senior Citizens | Youth, Skills and Employment | BFSI | e-District Services | Health & Wellness | Mera Ration | Police and Legal | Public Grievance | Transport | Travel | Utility & Bill Payments | General
 
 ## Haq promo
 
-- Heading: Haq: what you are entitled to
-- Line: Nobody ever sat you down and told you what you can claim. Answer a few questions and find out.
-- Button: Start
+- Heading: A match is only the beginning
+- Line: See which verified items matter now, what should already have happened and what is coming up.
+- Button: Build your list
 
 ## Journey intake
 
@@ -167,7 +154,7 @@ Scholarships, accredited institutions and employment services.
 ## Journey list
 
 - Eyebrow: Your plan
-- Plan code: Plan code
+- Plan code: Saved plan
 - Browser note: This code identifies the plan stored in this browser.
 - Intro: Tasks are ordered by dependency and urgency.
 - Ordered view: Ordered plan
@@ -193,7 +180,7 @@ Scholarships, accredited institutions and employment services.
 - No documents: No documents are listed for this task.
 - Status: Your status
 - Reference: Reference number
-- Reference help: Use a synthetic reference number only.
+- Reference help: Optional. If you add one, use a synthetic reference number only.
 - Reference placeholder: Example: SYNTHETIC-REF-1
 - Reference action: Save reference and mark complete
 - Saved: Reference saved. This task is complete.
@@ -437,6 +424,14 @@ entitlement-specific sentence is written in code.
 - Government handoff: Government links open the real source in a separate tab.
 - Identifier protection: Model requests reject Aadhaar and PAN shaped input before any API call.
 - Translation limitation: Live Hindi to Kannada quality validation is pending API credits.
+- Limitations heading: What is not connected
+- Haq content: Only three verified entitlement rules are loaded, so Haq currently has a maximum of three results.
+- Tier 2: Tier 2 Life Events are mapped from public sources and are not individually verified.
+- Integrations: ISL, app-store downloads, social links, QR installation and outbound WhatsApp are not connected.
+- Login: Demo login uses synthetic personas. It does not accept or authenticate a mobile number or MPIN.
+- Persistence: Plans cannot resume on another device because storage is limited to this browser.
+- Preview data: Air quality, the financial calculator and the visitor count are labelled interface previews, not live services.
+- Device validation: A physical low-end Android and throttled 3G validation run is still pending.
 
 ## Interface languages
 
@@ -483,3 +478,89 @@ The working interface dictionaries for English, Hindi and Kannada live in `conte
 - Invalid request: The request is not valid.
 - Plan not found: This plan was not found in this browser.
 - No tasks: There are no more unlocked tasks available for this simulation.
+
+## Logged-out landing sections
+
+### What's New
+
+- Heading: What's New
+- Line: Citizens may explore recently added service areas.
+- Promo: Weather alerts | See the shape of an alert service without contacting a live system. | View prototype note
+
+### Popular Services
+
+- Line: Common starting points across the public-service catalogue.
+- Cards: EPFO services | Aadhaar services | DigiLocker | Rail journey services
+
+### Trending
+
+- Line: Services people are exploring in this prototype.
+- Cards: Income certificate | Pension services | Scholarship services | Ration card details | Vehicle services | Public grievance
+
+### Services by States
+
+- Heading: Services by States
+- Line: Browse service areas connected to state and union territory administrations.
+- Action: Explore 30+ States
+
+### Life Events band
+
+- Line: Tell us what happened. We bring the relevant services together in dependency order and keep every existing category available below.
+- Label: Guided plan
+
+### Help
+
+- Heading: Need help with a service?
+- Line: We are available all days of the week from 10 am to 6 pm.
+- Number: 10505
+
+### Access
+
+- Heading: Multiple Ways to Access
+- QR: Scan QR Code to Download the App
+- Options: Play Store | App Store | Gov.in AppStore | WhatsApp +91 95828 10505
+- Note: This prototype is web-only. Store and WhatsApp buttons show the intended access points without opening an integration.
+
+## Demo login
+
+- Heading: Login
+- Welcome: Welcome back to UMANG
+- Notice: This prototype does not use real accounts. Choose a demo profile.
+- Fields: Mobile number | Enter MPIN
+- Field placeholders: Real mobile numbers are not accepted | Real MPINs are not accepted
+- Actions: Forgot MPIN? | Login | Login with OTP | Register | National single sign-on
+- Chooser: Choose a demo profile | Each profile is synthetic and opens the logged-in application.
+
+## Logged-in shell
+
+- Search: Search services
+- Rotating examples: EPFO | Aadhaar services | eKYC | Pension passbook
+- Navigation: Home | Services | DigiLocker | {User's state} | Schemes | Jobs | Dashboard
+- ISL note: ISL is not available in this prototype.
+- Notification state: No new notifications in this prototype.
+- Profile action: Change demo profile
+
+## Logged-in Home
+
+- Highlight: A clearer route through government services, built around your situation.
+- Sections: Quick Services | Recently Used Services | My Documents | Essential Helpline Numbers | Complete Profile | Air Quality Index | Financial Calculator
+- Quick Services: Health | Emergency | Travel | Utility
+- Documents action: View All ({count}) | Show fewer
+- Helpline note: These links dial official helplines. Emergency calls should be made only when help is genuinely needed.
+- Haq attachment: Your profile is {score} out of 10. Completing it would show you four more things you can claim.
+- AQI disclosure: Synthetic sample, moderate | No live air-quality service is connected.
+- Calculator disclosure: This prototype does not calculate eligibility, benefits, fees or financial advice.
+
+## Logged-in Services
+
+- Heading: View All Services
+- Filter: Search certificates, pensions and student services
+- Promo: One life event can involve many services | Use an ordered journey when a department-by-department list is not enough. | Explore Life Events
+- Groups: Certificates | Pension | Student
+- Explore tabs: Popular | Trending | What's New
+- Category result: Services in this category | Static catalogue listing
+
+## Theme
+
+- Controls: Use dark theme | Use light theme
+- Behaviour: Respect the system colour preference until a manual choice is made. Persist the manual choice across pages.

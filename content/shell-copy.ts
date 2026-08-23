@@ -34,7 +34,7 @@ export const shellCopy = {
       { label: "DigiLocker", href: "/honesty#storage" },
       { label: "Schemes", href: "/haq" },
       { label: "Jobs", href: "/app/services#jobs" },
-      { label: "Dashboard", href: "/dashboard" },
+      { label: "Dashboard", href: "/dashboard#overview" },
     ],
   },
   personas: [
@@ -46,17 +46,36 @@ export const shellCopy = {
     columns: [
       {
         title: "Get to know",
-        links: ["Privacy policy", "FAQ", "Terms of service", "UMANG case study"],
+        links: [
+          { label: "Privacy policy", href: "/honesty" },
+          { label: "FAQ", href: "/honesty" },
+          { label: "Terms of service", href: "/honesty" },
+          { label: "UMANG case study", href: "/honesty" },
+        ],
         subheading: "Grievance",
-        secondary: ["CPGRAMS", "National Consumer Helpline"],
+        secondary: [
+          { label: "CPGRAMS", href: "https://pgportal.gov.in/" },
+          { label: "National Consumer Helpline", href: "https://consumerhelpline.gov.in/" },
+        ],
       },
       {
         title: "Quick links",
-        links: ["About us", "Dashboard", "Schemes", "Contact us", "Accessibility", "Jobs"],
+        links: [
+          { label: "About us", href: "/honesty" },
+          { label: "Dashboard", href: "/login" },
+          { label: "Schemes", href: "/haq" },
+          { label: "Contact us", href: "/honesty" },
+          { label: "Accessibility", href: "/honesty" },
+          { label: "Jobs", href: "/services?category=youth-skills-employment" },
+        ],
       },
       {
         title: "Useful links",
-        links: ["Digital India", "MyGov", "India.gov.in"],
+        links: [
+          { label: "Digital India", href: "https://www.digitalindia.gov.in/" },
+          { label: "MyGov", href: "https://www.mygov.in/" },
+          { label: "India.gov.in", href: "https://www.india.gov.in/" },
+        ],
       },
     ],
     visitors: "Visitors",

@@ -10,13 +10,28 @@ export const metadata: Metadata = {
   description: layoutCopy.disclaimer,
 };
 
+const themeBootstrap = `
+  try {
+    const saved = localStorage.getItem("umang-theme");
+    const theme = saved === "light" || saved === "dark"
+      ? saved
+      : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = "light";
+  }
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
       <body>
         <InterfaceTranslator />
         <DisclaimerStrip />

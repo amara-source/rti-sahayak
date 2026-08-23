@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AbstractIcon } from "@/components/home/AbstractIcon";
+import { SearchBar } from "@/components/home/SearchBar";
 import { landingCopy } from "@/content/landing-copy";
 import { lifeEventClusters } from "@/content/landing-events";
 import { marketingCopy } from "@/content/marketing-copy";
@@ -31,6 +32,10 @@ export function LandingPage() {
   return (
     <div className="marketing-landing">
       <HeroCarousel />
+
+      <section className="marketing-search-band">
+        <div className="site-shell"><SearchBar /></div>
+      </section>
 
       <section className="marketing-stats">
         <div className="site-shell marketing-stats__grid">

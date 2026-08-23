@@ -37,7 +37,7 @@ export function DashboardHome() {
     : dashboardCopy.documents.items.slice(0, 2);
 
   return (
-    <div className="dashboard-home">
+    <div className="dashboard-home" id="overview">
       <section className={`dashboard-hero dashboard-hero--${activeSlide.tone}`}>
         <button aria-label={dashboardCopy.hero.previous} onClick={() => setSlide((slide - 1 + dashboardCopy.hero.slides.length) % dashboardCopy.hero.slides.length)} type="button">‹</button>
         <div>

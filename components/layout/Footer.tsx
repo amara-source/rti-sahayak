@@ -12,7 +12,7 @@ export function Footer() {
               <h2>{column.title}</h2>
               <ul>
                 {column.links.map((link) => (
-                  <li key={link}><Link href="/honesty">{link}</Link></li>
+                  <li key={link.label}><Link href={link.href}>{link.label}</Link></li>
                 ))}
               </ul>
               {"subheading" in column ? (
@@ -20,7 +20,7 @@ export function Footer() {
                   <h3>{column.subheading}</h3>
                   <ul>
                     {column.secondary.map((link) => (
-                      <li key={link}><Link href="/honesty">{link}</Link></li>
+                      <li key={link.label}><Link href={link.href}>{link.label}</Link></li>
                     ))}
                   </ul>
                 </>
