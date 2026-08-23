@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { SyncEvent } from "../../engine/types";
 import { createPlan } from "../plan";
-import { applySyncEvent, simulateSync } from "../sync";
+import {
+  applySyncEvent,
+  approveFiledTask,
+  simulateSync,
+} from "../sync";
 
 const deathAnswers = {
   employment: "none",
@@ -105,5 +109,36 @@ describe("simulated department sync", () => {
     expect(firstMessage).toMatch(/received/i);
     expect(firstMessage).toContain("Reply 1");
     expect(firstMessage).not.toMatch(/welcome/i);
+  });
+
+  it("approves the exact task a citizen says they filed", () => {
+    const plan = createPlan("death", deathAnswers);
+    const applied = applySyncEvent(plan, event("received"));
+    const result = approveFiledTask(
+      applied.plan,
+      "register_death",
+      new Date("2026-08-23T10:00:02.000Z"),
+    );
+
+    expect(result.events).toHaveLength(1);
+    expect(result.events[0]).toMatchObject({
+      nodeId: "register_death",
+      status: "approved",
+      simulated: true,
+    });
+    expect(result.plan.statuses.register_death).toBe("done");
+    expect(result.unlocked).toContain("certificate_copies");
+    expect(result.events[0]?.message).toContain("Reply 1");
+  });
+
+  it("will not approve a different or locked task through the return flow", () => {
+    const plan = createPlan("death", deathAnswers);
+
+    expect(() =>
+      approveFiledTask(plan, "certificate_copies"),
+    ).toThrow(/locked/i);
+    expect(() => approveFiledTask(plan, "not-in-this-plan")).toThrow(
+      /not part of this plan/i,
+    );
   });
 });
