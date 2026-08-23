@@ -1,5 +1,6 @@
 import { journeyCopy } from "@/content/journey-copy";
 import { ConfidenceBadge } from "@/components/shared/ConfidenceBadge";
+import { MockBadge } from "@/components/shared/MockBadge";
 import type { RenderedNode, Status } from "@/lib/engine/types";
 import { citizenSafeRuleText } from "@/lib/presentation/rule-text";
 import { ClockBanner } from "./ClockBanner";
@@ -7,12 +8,14 @@ import { JobTag } from "./JobTag";
 
 interface LockedRowProps {
   node: RenderedNode;
+  simulated: boolean;
   dependencyTitles: string[];
   status: Status;
 }
 
 export function LockedRow({
   node,
+  simulated,
   dependencyTitles,
   status,
 }: LockedRowProps) {
@@ -26,6 +29,7 @@ export function LockedRow({
         <span className="task-row__badges">
           <JobTag job={node.job} />
           {node.confidence === "conflicted" ? <ConfidenceBadge /> : null}
+          {simulated ? <MockBadge /> : null}
         </span>
         <span className={`task-status task-status--${status}`}>
           {journeyCopy.list.status[status]}

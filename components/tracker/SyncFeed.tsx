@@ -1,0 +1,42 @@
+import { MockBadge } from "@/components/shared/MockBadge";
+import { trackerCopy } from "@/content/tracker-copy";
+import type { SyncEvent } from "@/lib/engine/types";
+
+interface SyncFeedProps {
+  events: SyncEvent[];
+}
+
+function eventTime(at: string): string {
+  return new Intl.DateTimeFormat("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(at));
+}
+
+export function SyncFeed({ events }: SyncFeedProps) {
+  return (
+    <section className="sync-feed" aria-live="polite">
+      <header>
+        <h3>{trackerCopy.feed.heading}</h3>
+        <MockBadge />
+      </header>
+
+      {events.length === 0 ? (
+        <p className="sync-feed__empty">{trackerCopy.feed.empty}</p>
+      ) : (
+        <ol>
+          {events.map((event, index) => (
+            <li key={`${event.nodeId}-${event.at}-${index}`}>
+              <span className="sync-feed__status">
+                {trackerCopy.status[event.status]}
+              </span>
+              <strong>{event.from}</strong>
+              <time dateTime={event.at}>{eventTime(event.at)}</time>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
+  );
+}

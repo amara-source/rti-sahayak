@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { CompareToggle } from "@/components/list/CompareToggle";
 import { PlanHeader } from "@/components/list/PlanHeader";
+import { PlanWorkspace } from "@/components/list/PlanWorkspace";
 import { computeJourney, loadEventRulePack } from "@/lib/engine/journey";
 import { cookiePlanStorage } from "@/lib/plans/storage";
 
@@ -43,10 +43,10 @@ export default async function JourneyListPage({
     <section className="plan-page">
       <div className="site-shell plan-page__inner">
         <PlanHeader code={plan.code} eventLabel={pack.label} />
-        <CompareToggle
+        <PlanWorkspace
           code={plan.code}
-          nodes={nodes}
-          statuses={plan.statuses}
+          initialNodes={nodes}
+          initialPlan={plan}
         />
       </div>
     </section>

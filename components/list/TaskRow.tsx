@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MockBadge } from "@/components/shared/MockBadge";
 import { journeyCopy } from "@/content/journey-copy";
 import { ConfidenceBadge } from "@/components/shared/ConfidenceBadge";
 import type { RenderedNode, Status } from "@/lib/engine/types";
@@ -10,14 +11,18 @@ import { LockedRow } from "./LockedRow";
 interface TaskRowProps {
   code: string;
   dependencyTitles: string[];
+  highlighted: boolean;
   node: RenderedNode;
+  simulated: boolean;
   status: Status;
 }
 
 export function TaskRow({
   code,
   dependencyTitles,
+  highlighted,
   node,
+  simulated,
   status,
 }: TaskRowProps) {
   if (node.locked) {
@@ -25,17 +30,22 @@ export function TaskRow({
       <LockedRow
         dependencyTitles={dependencyTitles}
         node={node}
+        simulated={simulated}
         status={status}
       />
     );
   }
 
   return (
-    <Link className="task-row" href={`/node/${node.id}?code=${code}`}>
+    <Link
+      className={`task-row${highlighted ? " task-row--highlighted" : ""}`}
+      href={`/node/${node.id}?code=${code}`}
+    >
       <span className="task-row__topline">
         <span className="task-row__badges">
           <JobTag job={node.job} />
           {node.confidence === "conflicted" ? <ConfidenceBadge /> : null}
+          {simulated ? <MockBadge /> : null}
         </span>
         <span className={`task-status task-status--${status}`}>
           {journeyCopy.list.status[status]}

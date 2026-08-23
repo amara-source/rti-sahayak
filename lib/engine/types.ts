@@ -15,7 +15,7 @@ export interface Condition {
     | "lte"
     | "exists"
     | "notExists";
-  value: string | number | string[];
+  value: string | number | boolean | string[];
 }
 
 export interface Warning {

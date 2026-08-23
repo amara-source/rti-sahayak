@@ -4,7 +4,7 @@ import { JobTag } from "@/components/list/JobTag";
 import { ConfidenceBadge } from "@/components/shared/ConfidenceBadge";
 import { haqCopy } from "@/content/haq-copy";
 import type { Entitlement, Profile } from "@/lib/engine/types";
-import { profileFactForEntitlement } from "@/lib/haq/profile-facts";
+import { renderWhyYouMayQualify } from "@/lib/haq/profile-facts";
 
 interface EntitlementCardProps {
   entitlement: Entitlement;
@@ -15,7 +15,7 @@ export function EntitlementCard({
   entitlement,
   profile,
 }: EntitlementCardProps) {
-  const profileFact = profileFactForEntitlement(entitlement, profile);
+  const whyYouMayQualify = renderWhyYouMayQualify(entitlement, profile);
 
   return (
     <article className="entitlement-card">
@@ -32,16 +32,9 @@ export function EntitlementCard({
         </div>
       </header>
 
-      {profileFact ? (
-        <section className="entitlement-fact">
-          <h4>{haqCopy.results.why}</h4>
-          <p>{profileFact}</p>
-        </section>
-      ) : null}
-
-      <section className="entitlement-card__section">
-        <h4>{haqCopy.results.rule}</h4>
-        <p>{entitlement.whyYouMayQualify}</p>
+      <section className="entitlement-fact">
+        <h4>{haqCopy.results.why}</h4>
+        <p>{whyYouMayQualify}</p>
       </section>
 
       <section className="entitlement-card__section">

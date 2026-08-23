@@ -9,13 +9,21 @@ import { TaskRow } from "./TaskRow";
 
 interface CompareToggleProps {
   code: string;
+  highlightedNodeIds: string[];
   nodes: RenderedNode[];
+  simulatedNodeIds: string[];
   statuses: Record<string, Status>;
 }
 
 const bucketOrder: Bucket[] = ["urgent", "before", "week1", "month", "later"];
 
-export function CompareToggle({ code, nodes, statuses }: CompareToggleProps) {
+export function CompareToggle({
+  code,
+  highlightedNodeIds,
+  nodes,
+  simulatedNodeIds,
+  statuses,
+}: CompareToggleProps) {
   const [view, setView] = useState<"ordered" | "categories">("ordered");
 
   return (
@@ -45,7 +53,13 @@ export function CompareToggle({ code, nodes, statuses }: CompareToggleProps) {
       </div>
 
       {view === "categories" ? (
-        <CategoryScatterView code={code} nodes={nodes} statuses={statuses} />
+        <CategoryScatterView
+          code={code}
+          highlightedNodeIds={highlightedNodeIds}
+          nodes={nodes}
+          simulatedNodeIds={simulatedNodeIds}
+          statuses={statuses}
+        />
       ) : (
         <div className="ordered-view">
           {bucketOrder.map((bucket) => {
@@ -66,6 +80,8 @@ export function CompareToggle({ code, nodes, statuses }: CompareToggleProps) {
                       )}
                       key={node.id}
                       node={node}
+                      highlighted={highlightedNodeIds.includes(node.id)}
+                      simulated={simulatedNodeIds.includes(node.id)}
                       status={statuses[node.id] ?? "none"}
                     />
                   ))}

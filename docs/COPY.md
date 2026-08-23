@@ -278,25 +278,19 @@ Scholarships, accredited institutions and employment services.
 - Empty section: No items in this section from the answers you shared.
 - Card framing: You may be entitled to this
 - Why this appears: Why this appears
-- What the rule says: What the rule says
 - What it gives: What it gives
 - How to get it: How to get it
 - Authority: Authority
 - Hidden count: {count} more may apply. Answer {fields} more question(s) to see them.
 - Edit answers: Edit your answers
 
-### Direct profile facts
+### Entitlement profile placeholders
 
-- Woman: You told us you are a woman.
-- Man: You told us you are a man.
-- Another gender: You told us you use another description for your gender.
-- General: You told us you selected General.
-- Other Backward Class: You told us you selected Other Backward Class.
-- Scheduled Caste: You told us you selected Scheduled Caste.
-- Scheduled Tribe: You told us you selected Scheduled Tribe.
-- Economically Weaker Section: You told us you selected Economically Weaker Section.
-- One child: You told us there is a child aged {age} in your household.
-- More than one child: You told us there are children aged {ages} in your household.
+`whyYouMayQualify` is rendered as authored in the entitlement JSON. A profile
+field may be inserted with `{{profileField}}`, for example
+`You told us you selected {{gender}}.` Existing strings without a placeholder
+render unchanged. Labels and values come from the profile controls; no
+entitlement-specific sentence is written in code.
 
 ## Haq API errors
 
@@ -381,3 +375,43 @@ Scholarships, accredited institutions and employment services.
 - Unavailable: Model-assisted features are unavailable right now.
 - Restricted identifiers: Remove government identifiers before continuing.
 - Unsupported language path: Only Hindi to Kannada is available in this prototype.
+
+## Tracker and notifications
+
+- Eyebrow: Simulated tracker
+- Heading: See a department update arrive
+- Description: Run a labelled simulation against this browser-only plan. It changes task status and unlocks dependent work using the same deterministic plan logic as a saved reference number.
+- Trigger: Simulate a status update
+- Pending: Simulating an update
+- Trigger note: Explicit demo control. No department is contacted.
+- Update summary singular: {count} simulated update added.
+- Update summary plural: {count} simulated updates added.
+- Unlock summary singular: {title} is now unlocked.
+- Unlock summary plural: {count} tasks are now unlocked: {titles}.
+- No remaining tasks: There are no more unlocked tasks available for this simulation.
+- Failure: The simulated update could not be added. Try again.
+- Sync feed heading: Simulated event feed
+- Empty feed: No department event has been simulated yet.
+- Mock badge: Mock — simulated
+- Status labels: Received | In progress | Approved | Rejected
+
+### WhatsApp panel
+
+- Eyebrow: WhatsApp-style preview
+- Heading: The message finds you
+- Rendered-only label: Rendered preview only. Nothing is sent.
+- Description: Each message below comes directly from a simulated status event stored with this plan.
+- Empty state: No status message yet. Use the simulation control to create the first useful update.
+- Platform constraint: Proactive status updates use approved template messages. Free-form replies are available only inside the 24-hour window opened by the user’s reply.
+- Grounding: MyGov already runs a WhatsApp helpdesk that authenticates DigiLocker and delivers documents at national scale. This adds status to an existing channel; it does not create a new one.
+- Received message: {authority} received “{task}”. Reply 1 and we’ll send the document checklist.
+- In-progress message: “{task}” is being reviewed by {authority}. Reply 1 and we’ll send the documents that may be needed.
+- Approved with unlocks: “{task}” was approved. {count} opened up because of it — {titles}. Reply 1 and we’ll send the filled form(s).
+- Approved without unlocks: “{task}” was approved. Reply 1 and we’ll send the confirmation and next steps.
+- Rejected message: {authority} marked “{task}” as rejected in this simulation. Reply 1 and we’ll send the source and document checklist.
+
+## Simulated sync API errors
+
+- Invalid request: The request is not valid.
+- Plan not found: This plan was not found in this browser.
+- No tasks: There are no more unlocked tasks available for this simulation.
