@@ -389,6 +389,35 @@ entitlement-specific sentence is written in code.
 - Updated-plan action: View updated plan and message
 - Reference help: Optional. If you add one, use a synthetic reference number only.
 
+## Working utility controls
+
+- Text size label: Text size
+- Search no-results state: No matching event, category or service was found.
+- Empty search state: Enter a service, category or life event to search.
+- Search result types: Life event | Category | Service
+- Service catalogue eyebrow: Service catalogue
+- All-services heading: All services
+- Service catalogue description: Static catalogue entries and guided services available in this prototype.
+- Category back link: View all categories
+- Guided-service link: Open guided journey
+- Static service label: Catalogue listing
+
+## Honesty page
+
+- Eyebrow: About this prototype
+- Heading: What is real, and what is simulated
+- Rule-engine note: Rule packs deterministically decide eligibility, ordering, clocks and consequences. The language model only reads, writes and translates.
+- Plan storage: Plan and profile data is stored in this browser only.
+- Simulation: Department status events and WhatsApp messages are simulated.
+- No outbound contact: No message is sent and no government system is contacted.
+- Government handoff: Government links open the real source in a separate tab.
+- Identifier protection: Model requests reject Aadhaar and PAN shaped input before any API call.
+- Translation limitation: Live Hindi to Kannada quality validation is pending API credits.
+
+## Interface languages
+
+The working interface dictionaries for English, Hindi and Kannada live in `content/interface-translations.ts`. Rule-pack content remains authored and is never model-translated into a legal interpretation.
+
 ## Tracker and notifications
 
 - Eyebrow: Simulated tracker

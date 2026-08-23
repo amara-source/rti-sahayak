@@ -3,6 +3,7 @@ import { DisclaimerStrip } from "@/components/layout/DisclaimerStrip";
 import { Footer } from "@/components/layout/Footer";
 import { GovStrip } from "@/components/layout/GovStrip";
 import { Header } from "@/components/layout/Header";
+import { InterfaceTranslator } from "@/components/layout/InterfaceTranslator";
 import { layoutCopy } from "@/content/layout-copy";
 import "./globals.css";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <InterfaceTranslator />
         <DisclaimerStrip />
         <GovStrip />
         <Header />

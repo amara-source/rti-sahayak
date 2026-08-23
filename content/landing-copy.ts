@@ -7,8 +7,8 @@ export const landingCopy = {
   search: {
     placeholder: "Search for a service, department or scheme",
     button: "Search",
-    unavailable:
-      "Search is not part of this prototype. Use Life Events or Categories below.",
+    noResults: "No matching event, category or service was found.",
+    enterSearch: "Enter a service, category or life event to search.",
   },
   stats: {
     items: [

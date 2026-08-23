@@ -1,5 +1,6 @@
 import { layoutCopy } from "@/content/layout-copy";
 import { LangSwitch } from "@/components/layout/LangSwitch";
+import { FontSizeControls } from "@/components/layout/FontSizeControls";
 
 export function GovStrip() {
   return (
@@ -9,11 +10,7 @@ export function GovStrip() {
           {layoutCopy.skipToMain}
         </a>
         <div className="utility-strip__tools">
-          <div className="text-size-options">
-            {layoutCopy.textSizes.map((size) => (
-              <span key={size}>{size}</span>
-            ))}
-          </div>
+          <FontSizeControls />
           <span className="utility-strip__divider" aria-hidden="true" />
           <LangSwitch />
         </div>
