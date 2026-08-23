@@ -1910,34 +1910,24 @@ main {
 }
 
 .plan-code {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
+  display: flex;
   align-items: center;
-  width: fit-content;
-  margin-top: 24px;
-  padding: 12px 14px;
-  border: var(--card-border);
-  border-radius: var(--radius-sm);
-  gap: 10px;
-  background: white;
+  margin: 18px 0 0;
+  gap: 8px;
+  color: var(--grey);
+  font-size: 0.8125rem;
 }
 
-.plan-code strong {
-  color: var(--body);
-  font-size: 0.8125rem;
+.plan-code span::after {
+  content: ":";
 }
 
 .plan-code code {
   color: var(--blue-dk);
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
+  font-size: 0.875rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-}
-
-.plan-code small {
-  color: var(--grey);
-  font-size: 0.75rem;
 }
 
 .plan-workspace {

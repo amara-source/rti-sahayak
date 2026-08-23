@@ -15,13 +15,13 @@
       "id":"aadhaar_address","job":"DO","bucket":"week1",
       "title":"Update your Aadhaar address",
       "summary":"Almost everything else waits on this.",
-      "body":"Your bank, gas connection, passport and your children's school admission all check your Aadhaar address. UIDAI accepts a rent, lease or leave-and-licence agreement only when it is registered with the Sub-Registrar — the usual 11-month agreement on stamp paper is not on the accepted list, and this is the single most common reason these requests are rejected. Two routes work without a registered agreement. The Head of Family route uses a relative's Aadhaar plus a proof of relationship, approved by OTP on their Aadhaar-linked mobile, with a self-declaration in a prescribed format where no relationship proof exists. The Address Validation Letter route has a verifier consent to your using their address, after which a secret code is posted to them. The free document-update window runs to 14 June 2027.",
+      "body":"Your bank, gas connection, passport and your children's school admission all check your Aadhaar address. UIDAI accepts a rent, lease or leave-and-licence agreement only when it is registered with the Sub-Registrar, the usual 11-month agreement on stamp paper is not on the accepted list, and this is the single most common reason these requests are rejected. Two routes work without a registered agreement. The Head of Family route uses a relative's Aadhaar plus a proof of relationship, approved by OTP on their Aadhaar-linked mobile, with a self-declaration in a prescribed format where no relationship proof exists. The Address Validation Letter route has a verifier consent to your using their address, after which a secret code is posted to them. The free document-update window runs to 14 June 2027.",
       "appliesIf":[],"dependsOn":[],
       "authority":"UIDAI","typicalDays":"a few days to about a month",
       "documents":["Your Aadhaar number","An accepted proof of address, or a Head of Family willing to consent","Proof of relationship, or the self-declaration form"],
       "warnings":[
         {"severity":"critical","text":"Your agreement is on stamp paper, not registered at the Sub-Registrar. UIDAI will reject it. Use one of the other two routes.","showIf":[{"field":"housing","op":"eq","value":"stamp"}]},
-        {"severity":"caution","text":"The Head of Family approves by OTP on the mobile linked to their Aadhaar — very often an old SIM. Check it before you start.","showIf":[{"field":"housing","op":"in","value":["stamp","relative","employer"]}]}
+        {"severity":"caution","text":"The Head of Family approves by OTP on the mobile linked to their Aadhaar, very often an old SIM. Check it before you start.","showIf":[{"field":"housing","op":"in","value":["stamp","relative","employer"]}]}
       ],
       "belongResources":[{"label":"District Legal Services Authority","note":"Free legal help, listed by NALSA for every district","sourceUrl":"https://nalsa.gov.in"}],
       "confidence":"verified","sourceLabel":"UIDAI supported-document list",
@@ -31,7 +31,7 @@
       "id":"onorc","job":"CLAIM","bucket":"month",
       "title":"Your ration card already works here",
       "summary":"You do not need a new one.",
-      "body":"Under One Nation One Ration Card your existing card works at any fair price shop in India on Aadhaar biometric authentication. Most people who move go without for months while trying to get a new card in the new state. Note that portability covers PDS food grains only — it does not extend to health, housing or other state welfare.",
+      "body":"Under One Nation One Ration Card your existing card works at any fair price shop in India on Aadhaar biometric authentication. Most people who move go without for months while trying to get a new card in the new state. Note that portability covers PDS food grains only, it does not extend to health, housing or other state welfare.",
       "appliesIf":[{"field":"work","op":"in","value":["daily","self"]}],
       "dependsOn":[],
       "authority":"Department of Food & Public Distribution","typicalDays":"works immediately",

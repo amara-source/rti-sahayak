@@ -46,7 +46,7 @@ describe("computeJourney", () => {
           appliesIf: [],
           dependsOn: [],
           authority: "Test authority",
-          typicalDays: "—",
+          typicalDays: ",",
           documents: [],
           warnings: [],
           confidence: "verified",

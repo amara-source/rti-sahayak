@@ -22,10 +22,10 @@ English | हिंदी | ಕನ್ನಡ
 
 ## Footer
 
-- UMANG — About, Services, Categories, Life Events
-- Support — Help and FAQ, Contact, Feedback
-- Policies — Terms, Privacy, Accessibility, Disclaimer
-- Also on — Android, iOS, KaiOS
+- UMANG: About, Services, Categories, Life Events
+- Support: Help and FAQ, Contact, Feedback
+- Policies: Terms, Privacy, Accessibility, Disclaimer
+- Also on: Android, iOS, KaiOS
 
 Concept prototype built for a public-service redesign hackathon. Not affiliated with, endorsed by, or representing the Government of India, MeitY, NeGD or UMANG. No government emblem or logo is reproduced. All data shown is synthetic.
 
@@ -42,10 +42,10 @@ Concept prototype built for a public-service redesign hackathon. Not affiliated 
 
 ## Stats
 
-- 2,575 — Services on UMANG
-- 880 — From central government
-- 1,695 — From state governments
-- All — States and union territories
+- 2,575: Services on UMANG
+- 880: From central government
+- 1,695: From state governments
+- All: States and union territories
 
 As reported to the Rajya Sabha on 7 August 2026.
 
@@ -62,41 +62,41 @@ Place | Family | Work | Money and crisis | Education | Health and ageing | Ident
 
 ### Tier 2 event metadata
 
-- Moving within a state — Services that may matter when you move within the same state.
-- Moving abroad or returning — Services that may matter when you move abroad or return to India.
-- Buying or renting a home — Services that may matter when you buy or rent a home.
-- Losing a home to disaster — Services that may matter after a disaster leaves you without a home.
-- Marriage — Services that may matter when you get married.
-- Divorce or separation — Services that may matter when a marriage or partnership ends.
-- New baby — Services that may matter when a baby joins your family.
-- Becoming a caregiver — Services that may matter when you begin caring for someone.
-- Adoption — Services that may matter when you adopt a child.
-- Leaving a household — Services that may matter when you leave a household.
-- First job — Services that may matter when you start your first job.
-- Changing jobs — Services that may matter when you move from one job to another.
-- Going freelance — Services that may matter when you begin working independently.
-- Starting a business — Services that may matter when you start a business.
-- Workplace injury — Services that may matter after an injury at work.
-- Retirement — Services that may matter when you retire from work.
-- Unorganised worker registration — Services related to registration as an unorganised worker.
-- Cyber fraud — Services that may matter after cyber fraud.
-- A benefit that never arrived — Services that may matter when an expected benefit has not arrived.
-- Debt trouble — Services that may matter when you are having trouble with debt.
-- Insurance claims — Services that may matter when you need to make an insurance claim.
-- Finding lost money — Services that may help you look for money held in your name.
-- Starting school — Services that may matter when a child starts school.
-- Changing schools or boards — Services that may matter when a child changes schools or boards.
-- Scholarships — Services related to finding and applying for scholarships.
-- College in another state — Services that may matter when you attend college in another state.
-- Studying abroad — Services that may matter when you study outside India.
-- Hospitalisation — Services that may matter during or after a hospital stay.
-- Acquiring a disability — Services that may matter when you acquire a disability.
-- Ageing parents — Services that may matter as your parents grow older.
-- Mental health support — Services related to finding mental health support.
-- Lost documents — Services that may matter when important documents are lost.
-- Name or gender change — Services related to changing your name or gender in records.
-- Fixing a records mismatch — Services that may matter when your records do not match.
-- Turning 18 — Services that may matter when you turn 18.
+- Moving within a state: Services that may matter when you move within the same state.
+- Moving abroad or returning: Services that may matter when you move abroad or return to India.
+- Buying or renting a home: Services that may matter when you buy or rent a home.
+- Losing a home to disaster: Services that may matter after a disaster leaves you without a home.
+- Marriage: Services that may matter when you get married.
+- Divorce or separation: Services that may matter when a marriage or partnership ends.
+- New baby: Services that may matter when a baby joins your family.
+- Becoming a caregiver: Services that may matter when you begin caring for someone.
+- Adoption: Services that may matter when you adopt a child.
+- Leaving a household: Services that may matter when you leave a household.
+- First job: Services that may matter when you start your first job.
+- Changing jobs: Services that may matter when you move from one job to another.
+- Going freelance: Services that may matter when you begin working independently.
+- Starting a business: Services that may matter when you start a business.
+- Workplace injury: Services that may matter after an injury at work.
+- Retirement: Services that may matter when you retire from work.
+- Unorganised worker registration: Services related to registration as an unorganised worker.
+- Cyber fraud: Services that may matter after cyber fraud.
+- A benefit that never arrived: Services that may matter when an expected benefit has not arrived.
+- Debt trouble: Services that may matter when you are having trouble with debt.
+- Insurance claims: Services that may matter when you need to make an insurance claim.
+- Finding lost money: Services that may help you look for money held in your name.
+- Starting school: Services that may matter when a child starts school.
+- Changing schools or boards: Services that may matter when a child changes schools or boards.
+- Scholarships: Services related to finding and applying for scholarships.
+- College in another state: Services that may matter when you attend college in another state.
+- Studying abroad: Services that may matter when you study outside India.
+- Hospitalisation: Services that may matter during or after a hospital stay.
+- Acquiring a disability: Services that may matter when you acquire a disability.
+- Ageing parents: Services that may matter as your parents grow older.
+- Mental health support: Services related to finding mental health support.
+- Lost documents: Services that may matter when important documents are lost.
+- Name or gender change: Services related to changing your name or gender in records.
+- Fixing a records mismatch: Services that may matter when your records do not match.
+- Turning 18: Services that may matter when you turn 18.
 
 ## Categories
 
@@ -130,7 +130,7 @@ Scholarships, accredited institutions and employment services.
 
 ## Haq promo
 
-- Heading: Haq — what you are entitled to
+- Heading: Haq: what you are entitled to
 - Line: Nobody ever sat you down and told you what you can claim. Answer a few questions and find out.
 - Button: Start
 
@@ -145,7 +145,7 @@ Scholarships, accredited institutions and employment services.
 - Sharpen singular: Answer one more to sharpen this.
 - Sharpen plural: Answer {count} more to sharpen this.
 - Final action: View your ordered plan
-- No change: Nothing changed — this answer doesn't affect what you need to do.
+- No change: Nothing changed: this answer doesn't affect what you need to do.
 - Change summary: Join the non-zero changes: {added} row/rows added, {removed} no longer applies, {warnings} warning/warnings added.
 - Update error: We could not update the plan. Try again.
 
@@ -423,7 +423,7 @@ The working interface dictionaries for English, Hindi and Kannada live in `conte
 - Eyebrow: Simulated tracker
 - Heading: See a department update arrive
 - Description: Run a labelled simulation against this browser-only plan. It changes task status and unlocks dependent work using the same deterministic plan logic as a saved reference number.
-- Trigger: Simulate a status update
+- Trigger: See a status update arrive
 - Pending: Simulating an update
 - Trigger note: Explicit demo control. No department is contacted.
 - Update summary singular: {count} simulated update added.
@@ -434,7 +434,7 @@ The working interface dictionaries for English, Hindi and Kannada live in `conte
 - Failure: The simulated update could not be added. Try again.
 - Sync feed heading: Simulated event feed
 - Empty feed: No department event has been simulated yet.
-- Mock badge: Mock — simulated
+- Simulation label: Simulated data
 - Status labels: Received | In progress | Approved | Rejected
 
 ### WhatsApp panel
@@ -448,7 +448,7 @@ The working interface dictionaries for English, Hindi and Kannada live in `conte
 - Grounding: MyGov already runs a WhatsApp helpdesk that authenticates DigiLocker and delivers documents at national scale. This adds status to an existing channel; it does not create a new one.
 - Received message: {authority} received “{task}”. Reply 1 and we’ll send the document checklist.
 - In-progress message: “{task}” is being reviewed by {authority}. Reply 1 and we’ll send the documents that may be needed.
-- Approved with unlocks: “{task}” was approved. {count} opened up because of it — {titles}. Reply 1 and we’ll send the filled form(s).
+- Approved with unlocks: “{task}” was approved. {count} opened up because of it: {titles}. Reply 1 and we’ll send the filled form(s).
 - Approved without unlocks: “{task}” was approved. Reply 1 and we’ll send the confirmation and next steps.
 - Rejected message: {authority} marked “{task}” as rejected in this simulation. Reply 1 and we’ll send the source and document checklist.
 

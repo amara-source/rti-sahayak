@@ -11,7 +11,6 @@ interface CompareToggleProps {
   code: string;
   highlightedNodeIds: string[];
   nodes: RenderedNode[];
-  simulatedNodeIds: string[];
   statuses: Record<string, Status>;
 }
 
@@ -21,7 +20,6 @@ export function CompareToggle({
   code,
   highlightedNodeIds,
   nodes,
-  simulatedNodeIds,
   statuses,
 }: CompareToggleProps) {
   const [view, setView] = useState<"ordered" | "categories">("ordered");
@@ -57,7 +55,6 @@ export function CompareToggle({
           code={code}
           highlightedNodeIds={highlightedNodeIds}
           nodes={nodes}
-          simulatedNodeIds={simulatedNodeIds}
           statuses={statuses}
         />
       ) : (
@@ -81,7 +78,6 @@ export function CompareToggle({
                       key={node.id}
                       node={node}
                       highlighted={highlightedNodeIds.includes(node.id)}
-                      simulated={simulatedNodeIds.includes(node.id)}
                       status={statuses[node.id] ?? "none"}
                     />
                   ))}

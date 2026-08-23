@@ -8,7 +8,7 @@ import { layoutCopy } from "@/content/layout-copy";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${layoutCopy.wordmark} — ${layoutCopy.tagline}`,
+  title: `${layoutCopy.wordmark}, ${layoutCopy.tagline}`,
   description: layoutCopy.disclaimer,
 };
 

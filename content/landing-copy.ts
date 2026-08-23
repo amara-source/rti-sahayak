@@ -76,7 +76,7 @@ export const landingCopy = {
     ],
   },
   haq: {
-    heading: "Haq — what you are entitled to",
+    heading: "Haq, what you are entitled to",
     line:
       "Nobody ever sat you down and told you what you can claim. Answer a few questions and find out.",
     button: "Start",

@@ -11,11 +11,10 @@ export function PlanHeader({ code, eventLabel }: PlanHeaderProps) {
       <p>{journeyCopy.list.eyebrow}</p>
       <h1>{eventLabel}</h1>
       <span>{journeyCopy.list.intro}</span>
-      <div className="plan-code">
-        <strong>{journeyCopy.list.planCode}</strong>
+      <p className="plan-code">
+        <span>{journeyCopy.list.planCode}</span>
         <code>{code}</code>
-        <small>{journeyCopy.list.browserNote}</small>
-      </div>
+      </p>
     </header>
   );
 }

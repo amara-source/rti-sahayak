@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { trackerCopy } from "@/content/tracker-copy";
 import type {
   Plan,
@@ -35,10 +35,6 @@ export function PlanWorkspace({
   const [isPending, setIsPending] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const simulatedNodeIds = useMemo(
-    () => [...new Set(plan.syncEvents.map((event) => event.nodeId))],
-    [plan.syncEvents],
-  );
 
   async function simulate() {
     setIsPending(true);
@@ -88,7 +84,6 @@ export function PlanWorkspace({
           code={code}
           highlightedNodeIds={highlightedNodeIds}
           nodes={nodes}
-          simulatedNodeIds={simulatedNodeIds}
           statuses={plan.statuses}
         />
       </div>

@@ -16,7 +16,7 @@ export const journeyCopy = {
         : `Answer ${count} more to sharpen this.`,
     finalAction: "View your ordered plan",
     noChange:
-      "Nothing changed — this answer doesn't affect what you need to do.",
+      "Nothing changed, this answer doesn't affect what you need to do.",
     changeSummary: (counts: {
       added: number;
       removed: number;
@@ -42,7 +42,7 @@ export const journeyCopy = {
   },
   list: {
     eyebrow: "Your plan",
-    planCode: "Plan code",
+    planCode: "Saved plan",
     browserNote: "This code identifies the plan stored in this browser.",
     intro: "Tasks are ordered by dependency and urgency.",
     orderedView: "Ordered plan",

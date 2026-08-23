@@ -1,4 +1,3 @@
-import { MockBadge } from "@/components/shared/MockBadge";
 import { trackerCopy } from "@/content/tracker-copy";
 import type { SyncEvent } from "@/lib/engine/types";
 
@@ -22,7 +21,6 @@ export function WhatsAppPanel({ events }: WhatsAppPanelProps) {
           <p>{trackerCopy.whatsapp.eyebrow}</p>
           <h2>{trackerCopy.whatsapp.heading}</h2>
         </div>
-        <MockBadge />
       </header>
 
       <strong className="whatsapp-panel__rendered-only">
@@ -44,7 +42,6 @@ export function WhatsAppPanel({ events }: WhatsAppPanelProps) {
               key={`${event.nodeId}-${event.at}-${index}`}
             >
               <div className="whatsapp-message__meta">
-                <MockBadge />
                 <span>{trackerCopy.status[event.status]}</span>
               </div>
               <p>{event.message}</p>

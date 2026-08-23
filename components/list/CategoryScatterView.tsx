@@ -6,7 +6,6 @@ interface CategoryScatterViewProps {
   code: string;
   highlightedNodeIds: string[];
   nodes: RenderedNode[];
-  simulatedNodeIds: string[];
   statuses: Record<string, Status>;
 }
 
@@ -14,7 +13,6 @@ export function CategoryScatterView({
   code,
   highlightedNodeIds,
   nodes,
-  simulatedNodeIds,
   statuses,
 }: CategoryScatterViewProps) {
   const grouped = new Map<
@@ -49,7 +47,6 @@ export function CategoryScatterView({
                 key={node.id}
                 node={node}
                 highlighted={highlightedNodeIds.includes(node.id)}
-                simulated={simulatedNodeIds.includes(node.id)}
                 status={statuses[node.id] ?? "none"}
               />
             ))}

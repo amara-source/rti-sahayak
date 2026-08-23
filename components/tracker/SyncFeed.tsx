@@ -1,4 +1,3 @@
-import { MockBadge } from "@/components/shared/MockBadge";
 import { trackerCopy } from "@/content/tracker-copy";
 import type { SyncEvent } from "@/lib/engine/types";
 
@@ -19,7 +18,6 @@ export function SyncFeed({ events }: SyncFeedProps) {
     <section className="sync-feed" aria-live="polite">
       <header>
         <h3>{trackerCopy.feed.heading}</h3>
-        <MockBadge />
       </header>
 
       {events.length === 0 ? (

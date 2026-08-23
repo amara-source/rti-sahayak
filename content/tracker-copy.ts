@@ -19,7 +19,7 @@ function countLabel(count: number): string {
 }
 
 export const trackerCopy = {
-  mockBadge: "Mock — simulated",
+  mockBadge: "Simulated data",
   status: {
     received: "Received",
     in_progress: "In progress",
@@ -31,7 +31,7 @@ export const trackerCopy = {
     heading: "See a department update arrive",
     description:
       "Run a labelled simulation against this browser-only plan. It changes task status and unlocks dependent work using the same deterministic plan logic as a saved reference number.",
-    trigger: "Simulate a status update",
+    trigger: "See a status update arrive",
     pending: "Simulating an update",
     note: "Explicit demo control. No department is contacted.",
     updateSummary: (count: number) =>
@@ -70,7 +70,7 @@ export const trackerCopy = {
       `“${task}” is being reviewed by ${authority}. Reply 1 and we’ll send the documents that may be needed.`,
     approved: (task: string, unlockedTitles: readonly string[]) =>
       unlockedTitles.length > 0
-        ? `“${task}” was approved. ${countLabel(unlockedTitles.length)} opened up because of it — ${list(unlockedTitles)}. Reply 1 and we’ll send the filled ${unlockedTitles.length === 1 ? "form" : "forms"}.`
+        ? `“${task}” was approved. ${countLabel(unlockedTitles.length)} opened up because of it, ${list(unlockedTitles)}. Reply 1 and we’ll send the filled ${unlockedTitles.length === 1 ? "form" : "forms"}.`
         : `“${task}” was approved. Reply 1 and we’ll send the confirmation and next steps.`,
     rejected: (authority: string, task: string) =>
       `${authority} marked “${task}” as rejected in this simulation. Reply 1 and we’ll send the source and document checklist.`,
