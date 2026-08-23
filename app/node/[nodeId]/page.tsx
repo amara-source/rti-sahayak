@@ -95,10 +95,13 @@ export default async function NodePage({ params, searchParams }: NodePageProps) 
           ))}
 
           <DetailActions
+            authority={node.authority}
             code={plan.code}
             initialAck={plan.acks[node.id] ?? ""}
             initialStatus={plan.statuses[node.id] ?? "none"}
             nodeId={node.id}
+            planHref={`/events/${plan.eventId}/list?code=${plan.code}`}
+            sourceUrl={node.sourceUrl}
           />
 
           <SourceLine

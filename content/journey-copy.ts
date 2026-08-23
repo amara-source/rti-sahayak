@@ -81,8 +81,26 @@ export const journeyCopy = {
     documents: "Documents to prepare",
     noDocuments: "No documents are listed for this task.",
     status: "Your status",
+    openService: (authority: string) => `Open the service on ${authority}`,
+    openServiceNote:
+      "This opens the real government service in a new tab. Nothing is submitted by this prototype.",
+    returnQuestion: "Did you file it?",
+    returnOptions: {
+      yes: "Yes",
+      notYet: "Not yet",
+      stuck: "I got stuck",
+    },
+    appliedWaiting:
+      "Marked as Applied. A simulated department update will arrive shortly.",
+    notYetSaved: "No change. You can return to this service when you are ready.",
+    stuckSaved:
+      "Marked as Stuck. Your plan keeps this task visible so you can return to it.",
+    approved:
+      "Approved in this simulation. Your updated plan and message are ready.",
+    viewUpdate: "View updated plan and message",
     reference: "Reference number",
-    referenceHelp: "Use a synthetic reference number only.",
+    referenceHelp:
+      "Optional. If you add one, use a synthetic reference number only.",
     referencePlaceholder: "Example: SYNTHETIC-REF-1",
     referenceAction: "Save reference and mark complete",
     saved: "Reference saved. This task is complete.",

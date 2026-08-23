@@ -376,6 +376,19 @@ entitlement-specific sentence is written in code.
 - Restricted identifiers: Remove government identifiers before continuing.
 - Unsupported language path: Only Hindi to Kannada is available in this prototype.
 
+## Service return loop
+
+- Primary action: Open the service on {authority}
+- Link note: This opens the real government service in a new tab. Nothing is submitted by this prototype.
+- Return question: Did you file it?
+- Return options: Yes | Not yet | I got stuck
+- Applied state: Marked as Applied. A simulated department update will arrive shortly.
+- Not-yet state: No change. You can return to this service when you are ready.
+- Stuck state: Marked as Stuck. Your plan keeps this task visible so you can return to it.
+- Approved state: Approved in this simulation. Your updated plan and message are ready.
+- Updated-plan action: View updated plan and message
+- Reference help: Optional. If you add one, use a synthetic reference number only.
+
 ## Tracker and notifications
 
 - Eyebrow: Simulated tracker

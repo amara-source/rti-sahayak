@@ -45,6 +45,49 @@ export function applySyncEvent(
   );
 }
 
+export function approveFiledTask(
+  plan: Plan,
+  nodeId: string,
+  asOf: Date = new Date(),
+): SimulatedSyncResult {
+  const nodes = computeJourney(plan.eventId, plan.answers, plan.statuses);
+  const target = nodes.find((node) => node.id === nodeId);
+
+  if (!target) {
+    throw new Error(`Task is not part of this plan: ${nodeId}`);
+  }
+
+  if (target.locked) {
+    throw new Error(`Plan node is locked: ${nodeId}`);
+  }
+
+  const patched = patchPlan(plan, { nodeId, status: "done" });
+  const nodesAfterApproval = computeJourney(
+    patched.plan.eventId,
+    patched.plan.answers,
+    patched.plan.statuses,
+  );
+  const unlockedTitles = patched.unlocked.flatMap((unlockedId) => {
+    const node = nodesAfterApproval.find(
+      (candidate) => candidate.id === unlockedId,
+    );
+    return node ? [node.title] : [];
+  });
+  const event: SyncEvent = {
+    nodeId,
+    at: asOf.toISOString(),
+    from: target.authority,
+    status: "approved",
+    message: messageFor("approved", target, unlockedTitles),
+    simulated: true,
+  };
+
+  return {
+    ...appendEvent(patched, event),
+    events: [event],
+  };
+}
+
 function firstSimulationTarget(
   nodes: readonly RenderedNode[],
 ): RenderedNode | undefined {

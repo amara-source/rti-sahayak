@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { trackerCopy } from "@/content/tracker-copy";
 import { computeJourney } from "@/lib/engine/journey";
 import {
+  approveFiledTask,
   NoSyncCandidateError,
   simulateSync,
 } from "@/lib/plans/sync";
@@ -43,7 +44,16 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = simulateSync(plan);
+    const filedApproval =
+      "mode" in body &&
+      body.mode === "filed-approval" &&
+      "nodeId" in body &&
+      typeof body.nodeId === "string"
+        ? body.nodeId
+        : null;
+    const result = filedApproval
+      ? approveFiledTask(plan, filedApproval)
+      : simulateSync(plan);
     const nodes = computeJourney(
       result.plan.eventId,
       result.plan.answers,

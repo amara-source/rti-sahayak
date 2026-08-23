@@ -2447,6 +2447,84 @@ a.task-row:hover {
   opacity: 0.7;
 }
 
+.detail-actions > .task-status {
+  display: inline-flex;
+  margin-top: 14px;
+}
+
+.service-out-link,
+.detail-plan-link {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 22px;
+  padding: 11px 18px;
+  border-radius: var(--radius-sm);
+  color: white;
+  background: var(--orange);
+  font-weight: 800;
+  gap: 10px;
+}
+
+.service-out-link:hover,
+.detail-plan-link:hover {
+  background: #b84b09;
+}
+
+.service-out-note {
+  max-width: 660px;
+  margin: 10px 0 0;
+  color: var(--grey);
+  font-size: 0.875rem;
+}
+
+.return-check {
+  margin-top: 24px;
+  padding: 20px;
+  border: 2px solid var(--blue);
+  border-radius: var(--radius-md);
+  background: var(--icon-bg);
+}
+
+.return-check > strong {
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.return-check > div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  gap: 10px;
+}
+
+.return-check button {
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  color: var(--blue-dk);
+  background: white;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.return-check button:first-child {
+  color: white;
+  background: var(--blue);
+}
+
+.return-check button:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+.detail-plan-link {
+  background: var(--blue);
+}
+
 .ack-input {
   margin-top: 28px;
 }
