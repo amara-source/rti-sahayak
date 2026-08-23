@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { profileFactForEntitlement } from "../profile-facts";
+import { renderWhyYouMayQualify } from "../profile-facts";
 import type { Entitlement, Profile } from "../../engine/types";
 
 const fixture: Entitlement = {
@@ -18,47 +18,65 @@ const fixture: Entitlement = {
   verifiedOn: "2026-08-22",
 };
 
-describe("profileFactForEntitlement", () => {
-  it("renders the person's declared gender as their own fact", () => {
+describe("renderWhyYouMayQualify", () => {
+  it("renders the JSON sentence as authored and interpolates a declared gender", () => {
     const entitlement = {
       ...fixture,
+      whyYouMayQualify: "You told us you selected {{gender}}.",
       appliesIf: [{ field: "gender", op: "eq" as const, value: "F" }],
     };
 
-    expect(profileFactForEntitlement(entitlement, { gender: "F" })).toBe(
-      "You told us you are a woman.",
+    expect(renderWhyYouMayQualify(entitlement, { gender: "F" })).toBe(
+      "You told us you selected Woman.",
     );
   });
 
-  it("renders the category that directly triggered the rule", () => {
+  it("interpolates every placeholder in an authored sentence", () => {
     const entitlement = {
       ...fixture,
+      whyYouMayQualify:
+        "You declared {{category}} and answered {{hasDisability}} to disability.",
       appliesIf: [
         { field: "category", op: "in" as const, value: ["sc", "st"] },
+        { field: "hasDisability", op: "eq" as const, value: true },
       ],
     };
 
-    expect(profileFactForEntitlement(entitlement, { category: "st" })).toBe(
-      "You told us you selected Scheduled Tribe.",
+    expect(
+      renderWhyYouMayQualify(entitlement, {
+        category: "st",
+        hasDisability: true,
+      }),
+    ).toBe(
+      "You declared Scheduled Tribe and answered Yes to disability.",
     );
   });
 
-  it("renders a direct household fact for a children-ages rule", () => {
+  it("formats age arrays without entitlement-specific phrasing", () => {
     const entitlement = {
       ...fixture,
+      whyYouMayQualify:
+        "You told us the children in your household are aged {{childrenAges}}.",
       appliesIf: [
         { field: "childrenAges", op: "exists" as const, value: "" },
       ],
     };
 
     expect(
-      profileFactForEntitlement(entitlement, { childrenAges: [2, 8] }),
-    ).toBe("You told us there are children aged 2 and 8 in your household.");
+      renderWhyYouMayQualify(entitlement, { childrenAges: [2, 8] }),
+    ).toBe("You told us the children in your household are aged 2 and 8.");
   });
 
-  it("never infers a sensitive fact from an unrelated answer", () => {
+  it("leaves an authored sentence with no placeholder unchanged", () => {
+    expect(renderWhyYouMayQualify(fixture, {})).toBe(
+      "The rule says this accurately.",
+    );
+  });
+
+  it("never fills a sensitive placeholder from an unrelated answer", () => {
     const entitlement = {
       ...fixture,
+      whyYouMayQualify: "You told us you selected {{gender}}.",
       appliesIf: [{ field: "gender", op: "eq" as const, value: "F" }],
     };
     const unrelatedProfile: Profile = {
@@ -66,6 +84,8 @@ describe("profileFactForEntitlement", () => {
       currentDistrict: "Bengaluru Urban",
     };
 
-    expect(profileFactForEntitlement(entitlement, unrelatedProfile)).toBeNull();
+    expect(renderWhyYouMayQualify(entitlement, unrelatedProfile)).toBe(
+      "You told us you selected {{gender}}.",
+    );
   });
 });
