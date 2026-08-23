@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { ProfileForm } from "@/components/haq/ProfileForm";
 import { haqCopy } from "@/content/haq-copy";
 import {
-  entitlementProfileFields,
+  haqProfileFields,
   type EntitlementProfileField,
 } from "@/lib/engine/profile-fields";
 import { cookieHaqProfileStorage } from "@/lib/haq/storage";
@@ -15,7 +15,7 @@ interface HaqPageProps {
 export const metadata: Metadata = { title: haqCopy.profile.heading };
 
 export default async function HaqPage({ searchParams }: HaqPageProps) {
-  const activeFields = entitlementProfileFields();
+  const activeFields = haqProfileFields();
   const { fields: requested } = await searchParams;
   const requestedFields = requested
     ?.split(",")

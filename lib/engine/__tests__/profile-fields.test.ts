@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   entitlementProfileFields,
   entitlementProfileFieldsFromRules,
+  haqProfileFields,
   missingEntitlementFields,
 } from "../profile-fields";
 import type { Entitlement, Profile } from "../types";
@@ -28,6 +29,28 @@ describe("entitlement profile fields", () => {
       "gender",
       "category",
       "childrenAges",
+    ]);
+  });
+
+  it("keeps the like-for-like UMANG comparison fields before ordering fields", () => {
+    expect(haqProfileFields()).toEqual([
+      "currentState",
+      "category",
+      "gender",
+      "bpl",
+      "hasDisability",
+      "isSeniorCitizen",
+      "residenceArea",
+      "occupation",
+      "employmentStatus",
+      "minority",
+      "dob",
+      "parentsAges",
+      "childrenAges",
+      "homeState",
+      "housing",
+      "marital",
+      "isSingleParent",
     ]);
   });
 

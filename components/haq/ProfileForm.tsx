@@ -17,12 +17,32 @@ interface ProfileFormProps {
 type Option = { label: string; value: string };
 
 function standardOptions(field: EntitlementProfileField): readonly Option[] | null {
+  if (field === "gender") return haqCopy.profile.options.gender;
+  if (field === "category") return haqCopy.profile.options.category;
+  if (field === "incomeBand") return haqCopy.profile.options.incomeBand;
+  if (field === "hasDisability") return haqCopy.profile.options.disability;
   if (field === "employment") return haqCopy.profile.options.employment;
   if (field === "marital") return haqCopy.profile.options.marital;
   if (field === "isSingleParent") return haqCopy.profile.options.yesNo;
+  if (field === "bpl") return haqCopy.profile.options.yesNo;
+  if (field === "isSeniorCitizen") return haqCopy.profile.options.yesNo;
+  if (field === "minority") return haqCopy.profile.options.yesNo;
+  if (field === "residenceArea") return haqCopy.profile.options.residenceArea;
+  if (field === "occupation") return haqCopy.profile.options.occupation;
+  if (field === "employmentStatus") {
+    return haqCopy.profile.options.employmentStatus;
+  }
   if (field === "housing") return haqCopy.profile.options.housing;
   return null;
 }
+
+const booleanFields = new Set<EntitlementProfileField>([
+  "hasDisability",
+  "isSingleParent",
+  "bpl",
+  "isSeniorCitizen",
+  "minority",
+]);
 
 export function ProfileForm({ fields, initialProfile }: ProfileFormProps) {
   const router = useRouter();
@@ -64,62 +84,30 @@ export function ProfileForm({ fields, initialProfile }: ProfileFormProps) {
     else setIndex(index + 1);
   }
 
-  function sensitiveValue(value: string): unknown {
-    if (field === "hasDisability") {
-      return value === "NA" ? null : value === "yes";
+  function optionValue(value: string): unknown {
+    return booleanFields.has(field)
+      ? value === "NA"
+        ? null
+        : value === "yes"
+      : value;
+  }
+
+  function selectedOption(): string | undefined {
+    const value = profile[field];
+    if (booleanFields.has(field)) {
+      return value === null
+        ? "NA"
+        : value === undefined
+          ? undefined
+          : value
+            ? "yes"
+            : "no";
     }
-    return value;
+
+    return typeof value === "string" ? value : undefined;
   }
 
   function renderControl() {
-    if (field === "gender") {
-      return (
-        <SensitiveField
-          legend={haqCopy.profile.question[field]}
-          onSelect={(value) => moveForward(value)}
-          options={haqCopy.profile.options.gender}
-          selected={profile.gender}
-        />
-      );
-    }
-    if (field === "category") {
-      return (
-        <SensitiveField
-          legend={haqCopy.profile.question[field]}
-          onSelect={(value) => moveForward(value)}
-          options={haqCopy.profile.options.category}
-          selected={profile.category}
-        />
-      );
-    }
-    if (field === "incomeBand") {
-      return (
-        <SensitiveField
-          legend={haqCopy.profile.question[field]}
-          onSelect={(value) => moveForward(value)}
-          options={haqCopy.profile.options.incomeBand}
-          selected={profile.incomeBand}
-        />
-      );
-    }
-    if (field === "hasDisability") {
-      const selected =
-        profile.hasDisability === null
-          ? "NA"
-          : profile.hasDisability === undefined
-            ? undefined
-            : profile.hasDisability
-              ? "yes"
-              : "no";
-      return (
-        <SensitiveField
-          legend={haqCopy.profile.question[field]}
-          onSelect={(value) => moveForward(sensitiveValue(value))}
-          options={haqCopy.profile.options.disability}
-          selected={selected}
-        />
-      );
-    }
     if (field === "childrenAges" || field === "parentsAges") {
       return (
         <AgeListField
@@ -133,24 +121,12 @@ export function ProfileForm({ fields, initialProfile }: ProfileFormProps) {
     const options = standardOptions(field);
     if (options) {
       return (
-        <div className="profile-option-list">
-          {options.map((option) => (
-            <button
-              className="profile-option"
-              key={option.value}
-              onClick={() =>
-                moveForward(
-                  field === "isSingleParent"
-                    ? option.value === "yes"
-                    : option.value,
-                )
-              }
-              type="button"
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
+        <SensitiveField
+          legend={haqCopy.profile.question[field]}
+          onSelect={(value) => moveForward(optionValue(value))}
+          options={options}
+          selected={selectedOption()}
+        />
       );
     }
 

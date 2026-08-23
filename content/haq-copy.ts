@@ -3,7 +3,7 @@ export const haqCopy = {
     eyebrow: "Haq",
     heading: "Tell us about your household",
     description:
-      "Only questions used by the entitlement rules appear here. Every answer is self-declared.",
+      "The first ten questions mirror UMANG's eligibility finder. The rest let the rule engine order what matters. Every answer is optional and self-declared.",
     browserNote:
       "This prototype stores your answers in this browser only.",
     progress: (current: number, total: number) =>
@@ -32,6 +32,12 @@ export const haqCopy = {
       category: "Which category do you declare?",
       hasDisability: "Do you declare a disability?",
       housing: "What type of housing do you live in?",
+      bpl: "Do you declare that you belong to the BPL category?",
+      isSeniorCitizen: "Do you declare that you are a senior citizen?",
+      residenceArea: "Do you live in an urban or rural area?",
+      occupation: "Which occupation best describes you?",
+      employmentStatus: "What is your current employment status?",
+      minority: "Do you declare that you belong to a minority community?",
     },
     controls: {
       addChild: "Add another child",
@@ -46,15 +52,15 @@ export const haqCopy = {
         { label: "Woman", value: "F" },
         { label: "Prefer not to say", value: "NA" },
         { label: "Man", value: "M" },
-        { label: "Another gender", value: "O" },
+        { label: "Transgender", value: "T" },
       ],
       category: [
         { label: "General", value: "general" },
         { label: "Other Backward Class", value: "obc" },
         { label: "Prefer not to say", value: "NA" },
+        { label: "Particularly Vulnerable Tribal Group", value: "pvtg" },
         { label: "Scheduled Caste", value: "sc" },
         { label: "Scheduled Tribe", value: "st" },
-        { label: "Economically Weaker Section", value: "ews" },
       ],
       incomeBand: [
         { label: "Below 1 lakh", value: "<1L" },
@@ -86,11 +92,37 @@ export const haqCopy = {
       ],
       yesNo: [
         { label: "Yes", value: "yes" },
+        { label: "Prefer not to say", value: "NA" },
         { label: "No", value: "no" },
+      ],
+      residenceArea: [
+        { label: "Urban", value: "urban" },
+        { label: "Prefer not to say", value: "NA" },
+        { label: "Rural", value: "rural" },
+      ],
+      occupation: [
+        { label: "Student", value: "student" },
+        { label: "Homemaker", value: "homemaker" },
+        { label: "Prefer not to say", value: "NA" },
+        { label: "Farmer", value: "farmer" },
+        { label: "Wage worker", value: "wage-worker" },
+        { label: "Professional", value: "professional" },
+        { label: "Business owner", value: "business" },
+        { label: "Retired", value: "retired" },
+        { label: "Other", value: "other" },
+      ],
+      employmentStatus: [
+        { label: "Employed", value: "employed" },
+        { label: "Self-employed", value: "self-employed" },
+        { label: "Prefer not to say", value: "NA" },
+        { label: "Unemployed", value: "unemployed" },
+        { label: "Student", value: "student" },
+        { label: "Retired", value: "retired" },
       ],
       housing: [
         { label: "Own home", value: "own" },
         { label: "Registered rental", value: "rent-registered" },
+        { label: "Prefer not to say", value: "NA" },
         { label: "Stamp-paper rental", value: "rent-stamp" },
         { label: "Employer housing", value: "employer" },
         { label: "With family", value: "family" },
@@ -117,6 +149,37 @@ export const haqCopy = {
     hidden: (count: number, fields: number) =>
       `${count} more may apply. Answer ${fields} more ${fields === 1 ? "question" : "questions"} to see them.`,
     edit: "Edit your answers",
+    comparison: {
+      label: "Compare result views",
+      current: "How this looks on UMANG today",
+      yours: "Your list",
+      legacyEyebrow: "Eligibility is not an answer",
+      legacyHeading: "770 possible schemes",
+      legacyDescription:
+        "The observed UMANG flow asks for the same ten declared facts, then asks you to choose a category before it shows a browse list.",
+      categoryPrompt: "Choose one or more categories to view",
+      observedNote:
+        "Observed on UMANG in August 2026. This count is shown for comparison and is not recalculated by this prototype.",
+      selected: (count: number) =>
+        count === 0
+          ? "No category selected"
+          : `${count} ${count === 1 ? "category" : "categories"} selected`,
+      categories: [
+        { label: "Social welfare and empowerment", count: 22 },
+        { label: "Skills and employment", count: 14 },
+        { label: "Banking and financial services", count: 12 },
+        { label: "Education and learning", count: 11 },
+        { label: "Health and wellness", count: 8 },
+        { label: "Business and entrepreneurship", count: 7 },
+        { label: "Utility and sanitation", count: 7 },
+        { label: "Women and child", count: 7 },
+        { label: "Agriculture, rural and environment", count: 6 },
+        { label: "Science, IT and communications", count: 4 },
+        { label: "Housing and shelter", count: 3 },
+        { label: "Transport and infrastructure", count: 3 },
+        { label: "Sports and culture", count: 2 },
+      ],
+    },
   },
   api: {
     invalid: "The request is not valid.",
@@ -126,13 +189,15 @@ export const haqCopy = {
       F: "You told us you are a woman.",
       M: "You told us you are a man.",
       O: "You told us you use another description for your gender.",
+      T: "You told us you are transgender.",
     },
     category: {
       general: "You told us you selected General.",
       obc: "You told us you selected Other Backward Class.",
       sc: "You told us you selected Scheduled Caste.",
       st: "You told us you selected Scheduled Tribe.",
-      ews: "You told us you selected Economically Weaker Section.",
+      pvtg:
+        "You told us you selected Particularly Vulnerable Tribal Group.",
     },
     childrenOne: (age: number) =>
       `You told us there is a child aged ${age} in your household.`,

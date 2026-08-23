@@ -6,6 +6,26 @@ const coreEntitlements = coreEntitlementsJson as unknown as Entitlement[];
 
 export type EntitlementProfileField = keyof Profile;
 
+const haqComparisonFields: readonly EntitlementProfileField[] = [
+  "currentState",
+  "category",
+  "gender",
+  "bpl",
+  "hasDisability",
+  "isSeniorCitizen",
+  "residenceArea",
+  "occupation",
+  "employmentStatus",
+  "minority",
+  "dob",
+  "parentsAges",
+  "childrenAges",
+  "homeState",
+  "housing",
+  "marital",
+  "isSingleParent",
+];
+
 export function entitlementProfileFieldsFromRules(
   rules: readonly Entitlement[],
 ): EntitlementProfileField[] {
@@ -26,6 +46,10 @@ export function entitlementProfileFieldsFromRules(
 
 export function entitlementProfileFields(): EntitlementProfileField[] {
   return entitlementProfileFieldsFromRules(coreEntitlements);
+}
+
+export function haqProfileFields(): EntitlementProfileField[] {
+  return [...haqComparisonFields];
 }
 
 export function missingEntitlementFields(

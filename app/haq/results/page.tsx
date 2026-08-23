@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { EntitlementCard } from "@/components/haq/EntitlementCard";
 import { HiddenCount } from "@/components/haq/HiddenCount";
+import { HaqComparison } from "@/components/haq/HaqComparison";
 import { haqCopy } from "@/content/haq-copy";
 import { computeEntitlements } from "@/lib/engine/entitlement";
 import { missingEntitlementFields } from "@/lib/engine/profile-fields";
@@ -38,38 +39,40 @@ export default async function HaqResultsPage() {
           </Link>
         </header>
 
-        <HiddenCount
-          fields={missingFields}
-          hiddenCount={result.hiddenCount}
-        />
+        <HaqComparison>
+          <HiddenCount
+            fields={missingFields}
+            hiddenCount={result.hiddenCount}
+          />
 
-        <div className="entitlement-sections">
-          {sections.map((section) => {
-            const items = grouped.get(section) ?? [];
+          <div className="entitlement-sections">
+            {sections.map((section) => {
+              const items = grouped.get(section) ?? [];
 
-            return (
-              <section className="entitlement-section" key={section}>
-                <header className="entitlement-section__header">
-                  <h2>{haqCopy.results.section[section]}</h2>
-                  <span>{items.length}</span>
-                </header>
-                {items.length > 0 ? (
-                  <div className="entitlement-list">
-                    {items.map((entitlement) => (
-                      <EntitlementCard
-                        entitlement={entitlement}
-                        key={entitlement.id}
-                        profile={profile}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="entitlement-empty">{haqCopy.results.empty}</p>
-                )}
-              </section>
-            );
-          })}
-        </div>
+              return (
+                <section className="entitlement-section" key={section}>
+                  <header className="entitlement-section__header">
+                    <h2>{haqCopy.results.section[section]}</h2>
+                    <span>{items.length}</span>
+                  </header>
+                  {items.length > 0 ? (
+                    <div className="entitlement-list">
+                      {items.map((entitlement) => (
+                        <EntitlementCard
+                          entitlement={entitlement}
+                          key={entitlement.id}
+                          profile={profile}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="entitlement-empty">{haqCopy.results.empty}</p>
+                  )}
+                </section>
+              );
+            })}
+          </div>
+        </HaqComparison>
       </div>
     </section>
   );

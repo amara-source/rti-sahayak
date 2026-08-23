@@ -222,7 +222,7 @@ Scholarships, accredited institutions and employment services.
 
 - Eyebrow: Haq
 - Heading: Tell us about your household
-- Description: Only questions used by the entitlement rules appear here. Every answer is self-declared.
+- Description: The first ten questions mirror UMANG's eligibility finder. The rest let the rule engine order what matters. Every answer is optional and self-declared.
 - Browser note: This prototype stores your answers in this browser only.
 - Progress: Question {current} of {total}
 - Skip: Skip this question
@@ -250,6 +250,12 @@ Scholarships, accredited institutions and employment services.
 - Category: Which category do you declare?
 - Disability: Do you declare a disability?
 - Housing: What type of housing do you live in?
+- BPL: Do you declare that you belong to the BPL category?
+- Senior citizen: Do you declare that you are a senior citizen?
+- Area: Do you live in an urban or rural area?
+- Occupation: Which occupation best describes you?
+- Employment status: What is your current employment status?
+- Minority: Do you declare that you belong to a minority community?
 
 ### Profile controls
 
@@ -262,10 +268,14 @@ Scholarships, accredited institutions and employment services.
 
 ### Sensitive options
 
-- Gender: Woman | Prefer not to say | Man | Another gender
-- Category: General | Other Backward Class | Prefer not to say | Scheduled Caste | Scheduled Tribe | Economically Weaker Section
+- Gender: Woman | Prefer not to say | Man | Transgender
+- Category: General | Other Backward Class | Prefer not to say | Particularly Vulnerable Tribal Group | Scheduled Caste | Scheduled Tribe
 - Income: Below 1 lakh | 1 to 3 lakh | Prefer not to say | 3 to 5 lakh | 5 to 8 lakh | Above 8 lakh
 - Disability: Yes | Prefer not to say | No
+- BPL, senior citizen, minority and single parent: Yes | Prefer not to say | No
+- Area: Urban | Prefer not to say | Rural
+- Occupation: Student | Homemaker | Prefer not to say | Farmer | Wage worker | Professional | Business owner | Retired | Other
+- Employment status: Employed | Self-employed | Prefer not to say | Unemployed | Student | Retired
 
 ## Haq results
 
@@ -283,6 +293,20 @@ Scholarships, accredited institutions and employment services.
 - Authority: Authority
 - Hidden count: {count} more may apply. Answer {fields} more question(s) to see them.
 - Edit answers: Edit your answers
+
+### Result comparison
+
+- Toggle label: Compare result views
+- UMANG view: How this looks on UMANG today
+- Personal view: Your list
+- Eyebrow: Eligibility is not an answer
+- Count: 770
+- Heading: 770 possible schemes
+- Description: The observed UMANG flow asks for the same ten declared facts, then asks you to choose a category before it shows a browse list.
+- Category prompt: Choose one or more categories to view
+- No selection: No category selected
+- Selection: {count} category/categories selected
+- Source note: Observed on UMANG in August 2026. This count is shown for comparison and is not recalculated by this prototype.
 
 ### Entitlement profile placeholders
 

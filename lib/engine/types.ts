@@ -86,7 +86,7 @@ export interface Profile {
   name?: string;
   aadhaarLast4?: string;
   dob?: string;
-  gender?: "M" | "F" | "O" | "NA";
+  gender?: "M" | "F" | "T" | "O" | "NA";
   currentState?: string;
   currentDistrict?: string;
   homeState?: string;
@@ -100,12 +100,39 @@ export interface Profile {
     | "student"
     | "none";
   marital?: "single" | "married" | "widowed" | "separated" | "NA";
-  isSingleParent?: boolean;
+  isSingleParent?: boolean | null;
   childrenAges?: number[];
   parentsAges?: number[];
-  category?: "general" | "obc" | "sc" | "st" | "ews" | "NA";
+  category?: "general" | "obc" | "pvtg" | "sc" | "st" | "NA";
   hasDisability?: boolean | null;
-  housing?: "own" | "rent-registered" | "rent-stamp" | "employer" | "family";
+  housing?:
+    | "own"
+    | "rent-registered"
+    | "rent-stamp"
+    | "employer"
+    | "family"
+    | "NA";
+  bpl?: boolean | null;
+  isSeniorCitizen?: boolean | null;
+  residenceArea?: "urban" | "rural" | "NA";
+  occupation?:
+    | "student"
+    | "homemaker"
+    | "farmer"
+    | "wage-worker"
+    | "professional"
+    | "business"
+    | "retired"
+    | "other"
+    | "NA";
+  employmentStatus?:
+    | "employed"
+    | "self-employed"
+    | "unemployed"
+    | "student"
+    | "retired"
+    | "NA";
+  minority?: boolean | null;
 }
 
 export interface SyncEvent {

@@ -1695,6 +1695,125 @@ main {
   padding-right: 180px;
 }
 
+.haq-comparison-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 34px;
+  padding: 5px;
+  border: 1px solid var(--blue);
+  border-radius: 999px;
+  background: white;
+}
+
+.haq-comparison-toggle button {
+  min-height: 48px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--blue-dk);
+  background: transparent;
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.haq-comparison-toggle button[aria-pressed="true"] {
+  color: white;
+  background: var(--blue);
+}
+
+.haq-legacy-view {
+  margin-top: 34px;
+  padding: clamp(28px, 6vw, 58px);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 90% 10%, rgb(245 130 32 / 12%), transparent 24%),
+    white;
+}
+
+.haq-legacy-view > p:first-child {
+  margin: 0;
+  color: var(--orange);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.haq-legacy-count {
+  display: block;
+  margin-top: 18px;
+  color: var(--blue);
+  font-size: clamp(4.5rem, 15vw, 8.5rem);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.haq-legacy-view h2 {
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.haq-legacy-view > span {
+  display: block;
+  max-width: 720px;
+  margin-top: 14px;
+  line-height: 1.65;
+}
+
+.haq-legacy-view h3 {
+  margin: 38px 0 0;
+  color: var(--ink);
+}
+
+.haq-legacy-categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 16px;
+  gap: 10px;
+}
+
+.haq-legacy-categories button {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border: var(--card-border);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--wash);
+  font: inherit;
+  text-align: left;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.haq-legacy-categories button[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: var(--icon-bg);
+}
+
+.haq-legacy-categories button strong {
+  color: var(--blue-dk);
+}
+
+.haq-legacy-selection {
+  margin: 18px 0 0;
+  color: var(--blue-dk);
+  font-weight: 850;
+}
+
+.haq-legacy-view > small {
+  display: block;
+  max-width: 720px;
+  margin-top: 14px;
+  color: var(--grey);
+  line-height: 1.55;
+}
+
 .haq-edit-link {
   position: absolute;
   top: 4px;
@@ -3105,6 +3224,11 @@ a.task-row:hover {
     gap: 6px;
   }
 
+  .haq-comparison-toggle,
+  .haq-legacy-categories {
+    grid-template-columns: 1fr;
+  }
+
   .provisional-row {
     align-items: flex-start;
     flex-direction: column;
@@ -3115,9 +3239,12 @@ a.task-row:hover {
   }
 
   .sync-control,
-  .whatsapp-panel,
   .sync-feed {
     padding: 18px;
+  }
+
+  .whatsapp-panel {
+    padding: 0;
   }
 
   .plan-code {
