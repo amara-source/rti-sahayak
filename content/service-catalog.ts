@@ -7,16 +7,21 @@ import { serviceCategory } from "./service-categories";
 const eventPacks = [deathPack, jobLossPack, movingStatePack] as const;
 
 const supportingServices: Record<string, readonly string[]> = {
+  farmers: ["Agriculture service directory", "Crop support service listings"],
+  "social-security-pensioners": ["Pension services", "Provident fund services"],
+  "education-skills-employment": ["Scholarship services", "Employment services", "Accredited institution search"],
+  "women-child-senior-citizens": ["Women and child service directory", "Senior citizen service directory"],
+  "youth-skills-employment": ["Youth programme listings", "Skills and training services"],
+  bfsi: ["Banking service directory", "Insurance service listings"],
+  "e-district-services": ["Income certificate", "Domicile certificate"],
   travel: ["Rail journey services", "Metro services", "National highway services"],
   "health-wellness": ["Vaccination services", "Government health scheme signposting"],
   "police-legal": ["Police citizen services", "Court service signposting"],
   "mera-ration": ["Ration card details", "Ration portability services"],
   transport: ["Driving licence services", "Vehicle registration services"],
-  "education-skills-employment": [
-    "Scholarship services",
-    "Employment services",
-    "Accredited institution search",
-  ],
+  "public-grievance": ["Public grievance directory", "Complaint status listings"],
+  "utility-bill-payments": ["Utility account services", "Bill payment listings"],
+  general: ["General citizen service directory", "Identity service listings"],
 };
 
 export interface CatalogService {

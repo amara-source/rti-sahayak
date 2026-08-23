@@ -1,0 +1,100 @@
+export const shellCopy = {
+  loggedOut: {
+    utility: {
+      accessibility: "Accessibility tools",
+      theme: "Change colour theme",
+      isl: "ISL",
+      islNote: "Not available in this prototype",
+    },
+    nav: [
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
+      { label: "Schemes", href: "/haq" },
+      { label: "DigiLocker", href: "/login" },
+      { label: "Dashboard", href: "/login" },
+      { label: "Jobs", href: "/services?category=youth-skills-employment" },
+    ],
+    search: "Search",
+    login: "Login/Register",
+  },
+  loggedIn: {
+    menu: "Open navigation",
+    searchLabel: "Search services",
+    searchNames: ["EPFO", "Aadhaar services", "eKYC", "Pension passbook"],
+    isl: "ISL",
+    islUnavailable: "ISL is not available in this prototype.",
+    accessibility: "Accessibility tools",
+    notifications: "Notifications",
+    notificationEmpty: "No new notifications in this prototype.",
+    account: "Open demo profile menu",
+    changeProfile: "Change demo profile",
+    nav: [
+      { label: "Home", href: "/dashboard" },
+      { label: "Services", href: "/app/services" },
+      { label: "DigiLocker", href: "/honesty#storage" },
+      { label: "Schemes", href: "/haq" },
+      { label: "Jobs", href: "/app/services#jobs" },
+      { label: "Dashboard", href: "/dashboard" },
+    ],
+  },
+  personas: [
+    { id: "asha", name: "Asha Rao", initials: "AR", state: "Karnataka", score: 6 },
+    { id: "imran", name: "Imran Khan", initials: "IK", state: "Bihar", score: 7 },
+    { id: "meera", name: "Meera Das", initials: "MD", state: "Odisha", score: 5 },
+  ],
+  footer: {
+    columns: [
+      {
+        title: "Get to know",
+        links: ["Privacy policy", "FAQ", "Terms of service", "UMANG case study"],
+        subheading: "Grievance",
+        secondary: ["CPGRAMS", "National Consumer Helpline"],
+      },
+      {
+        title: "Quick links",
+        links: ["About us", "Dashboard", "Schemes", "Contact us", "Accessibility", "Jobs"],
+      },
+      {
+        title: "Useful links",
+        links: ["Digital India", "MyGov", "India.gov.in"],
+      },
+    ],
+    visitors: "Visitors",
+    visitorNote: "Prototype counter",
+    ownership:
+      "Concept prototype for a public-service redesign hackathon. Not affiliated with or endorsed by the Government of India, MeitY, NeGD or UMANG.",
+    updated: "Last updated: 23 August 2026 | prototype v0.9",
+  },
+  floating: {
+    top: "Back to top",
+    chat: "Open help preview",
+    chatHeading: "Prototype help",
+    chatBody: "No live chat is connected. Call the national UMANG helpline at 10505 for the real service.",
+    close: "Close",
+  },
+  theme: {
+    light: "Use light theme",
+    dark: "Use dark theme",
+  },
+  login: {
+    heading: "Login",
+    welcome: "Welcome back to UMANG",
+    prototypeNote:
+      "This prototype does not use real accounts. Choose a demo profile.",
+    mobile: "Mobile number",
+    mobilePlaceholder: "Real mobile numbers are not accepted",
+    mpin: "Enter MPIN",
+    mpinPlaceholder: "Real MPINs are not accepted",
+    forgot: "Forgot MPIN?",
+    login: "Login",
+    otp: "Login with OTP",
+    registerLead: "New here?",
+    register: "Register",
+    divider: "or Login/Register with",
+    sso: "National single sign-on",
+    chooseHeading: "Choose a demo profile",
+    chooseDescription:
+      "Each profile is synthetic and opens the logged-in application.",
+    close: "Close profile chooser",
+  },
+} as const;

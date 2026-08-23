@@ -8,7 +8,7 @@ export default function HonestyPage() {
           Rule packs deterministically decide eligibility, ordering, clocks and consequences. The language model only reads, writes and translates.
         </p>
         <ul>
-          <li>Plan and profile data is stored in this browser only.</li>
+          <li id="storage">Plan and profile data is stored in this browser only.</li>
           <li>Department status events and WhatsApp messages are simulated.</li>
           <li>No message is sent and no government system is contacted.</li>
           <li>Government links open the real source in a separate tab.</li>

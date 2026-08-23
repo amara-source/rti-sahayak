@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { DisclaimerStrip } from "@/components/layout/DisclaimerStrip";
-import { Footer } from "@/components/layout/Footer";
-import { GovStrip } from "@/components/layout/GovStrip";
-import { Header } from "@/components/layout/Header";
+import { AppChrome } from "@/components/layout/AppChrome";
 import { InterfaceTranslator } from "@/components/layout/InterfaceTranslator";
 import { layoutCopy } from "@/content/layout-copy";
 import "./globals.css";
@@ -22,12 +20,7 @@ export default function RootLayout({
       <body>
         <InterfaceTranslator />
         <DisclaimerStrip />
-        <GovStrip />
-        <Header />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        <AppChrome>{children}</AppChrome>
       </body>
     </html>
   );

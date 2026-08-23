@@ -1,28 +1,28 @@
 import { landingCopy } from "./landing-copy";
 
 const categoryByNodeId: Record<string, string> = {
-  register_death: "police-legal",
-  certificate_copies: "police-legal",
-  bank_nominee: "police-legal",
-  bank_no_nominee: "police-legal",
+  register_death: "e-district-services",
+  certificate_copies: "e-district-services",
+  bank_nominee: "bfsi",
+  bank_no_nominee: "bfsi",
   legal_heir_cert: "police-legal",
-  epf_form20: "education-skills-employment",
-  eps_form10d: "education-skills-employment",
-  edli_form5if: "education-skills-employment",
-  employer_refusal: "education-skills-employment",
+  epf_form20: "social-security-pensioners",
+  eps_form10d: "social-security-pensioners",
+  edli_form5if: "social-security-pensioners",
+  employer_refusal: "social-security-pensioners",
   vehicle_form31: "transport",
   aadhaar_deactivate: "police-legal",
-  insurance_claim: "police-legal",
-  abvky: "education-skills-employment",
-  pf_75: "education-skills-employment",
-  epfo_kyc: "education-skills-employment",
-  aadhaar_address: "police-legal",
+  insurance_claim: "bfsi",
+  abvky: "social-security-pensioners",
+  pf_75: "social-security-pensioners",
+  epfo_kyc: "social-security-pensioners",
+  aadhaar_address: "e-district-services",
   onorc: "mera-ration",
   vehicle_intimation: "transport",
 };
 
 export function serviceCategory(nodeId: string) {
-  const categoryId = categoryByNodeId[nodeId] ?? "police-legal";
+  const categoryId = categoryByNodeId[nodeId] ?? "general";
 
   return (
     landingCopy.categories.items.find((category) => category.id === categoryId) ??

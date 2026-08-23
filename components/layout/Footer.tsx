@@ -1,22 +1,38 @@
-import { layoutCopy } from "@/content/layout-copy";
+import Link from "next/link";
+import { shellCopy } from "@/content/shell-copy";
+import { VisitorCounter } from "./VisitorCounter";
 
 export function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer marketing-footer">
       <div className="site-shell">
         <div className="site-footer__columns">
-          {layoutCopy.footerColumns.map((column) => (
+          {shellCopy.footer.columns.map((column) => (
             <section key={column.title}>
               <h2>{column.title}</h2>
               <ul>
                 {column.links.map((link) => (
-                  <li key={link}>{link}</li>
+                  <li key={link}><Link href="/honesty">{link}</Link></li>
                 ))}
               </ul>
+              {"subheading" in column ? (
+                <>
+                  <h3>{column.subheading}</h3>
+                  <ul>
+                    {column.secondary.map((link) => (
+                      <li key={link}><Link href="/honesty">{link}</Link></li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+              {column.title === "Useful links" ? <VisitorCounter /> : null}
             </section>
           ))}
         </div>
-        <p className="site-footer__note">{layoutCopy.footerNote}</p>
+        <div className="site-footer__note">
+          <p>{shellCopy.footer.ownership}</p>
+          <p>{shellCopy.footer.updated}</p>
+        </div>
       </div>
     </footer>
   );
