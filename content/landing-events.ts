@@ -31,7 +31,19 @@ export type LandingIconName =
   | "travel"
   | "legal"
   | "ration"
-  | "transport";
+  | "transport"
+  | "crisis"
+  | "ageing"
+  | "farmers"
+  | "pensioners"
+  | "learning"
+  | "familyCare"
+  | "youth"
+  | "bank"
+  | "district"
+  | "grievance"
+  | "utility"
+  | "general";
 
 const clusterBlueprints: readonly ClusterBlueprint[] = [
   {
@@ -49,9 +61,9 @@ const clusterBlueprints: readonly ClusterBlueprint[] = [
     icon: "work",
     tierOne: { pack: jobLossPack, insertionIndex: 2 },
   },
-  { name: "Money and crisis", icon: "money" },
+  { name: "Money and crisis", icon: "crisis" },
   { name: "Education", icon: "education" },
-  { name: "Health and ageing", icon: "health" },
+  { name: "Health and ageing", icon: "ageing" },
   { name: "Identity", icon: "identity" },
 ];
 

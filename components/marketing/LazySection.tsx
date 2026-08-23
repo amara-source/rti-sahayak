@@ -27,7 +27,7 @@ export function LazySection({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={marker}>
+    <div className={visible ? "lazy-section is-visible" : "lazy-section"} ref={marker}>
       {visible ? children : (
         <div className="marketing-section-skeleton" role="status">
           <span>{marketingCopy.lazy.loading}</span>
