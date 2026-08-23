@@ -53,9 +53,9 @@ export const trackerCopy = {
   whatsapp: {
     eyebrow: "WhatsApp-style preview",
     heading: "The message finds you",
+    sender: "UMANG plan assistant",
+    senderLine: "Prototype status thread",
     renderedOnly: "Rendered preview only. Nothing is sent.",
-    description:
-      "Each message below comes directly from a simulated status event stored with this plan.",
     empty:
       "No status message yet. Use the simulation control to create the first useful update.",
     platformConstraint:

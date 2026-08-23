@@ -441,6 +441,8 @@ The working interface dictionaries for English, Hindi and Kannada live in `conte
 
 - Eyebrow: WhatsApp-style preview
 - Heading: The message finds you
+- Sender: UMANG plan assistant
+- Sender line: Prototype status thread
 - Rendered-only label: Rendered preview only. Nothing is sent.
 - Description: Each message below comes directly from a simulated status event stored with this plan.
 - Empty state: No status message yet. Use the simulation control to create the first useful update.

@@ -17,18 +17,13 @@ export function WhatsAppPanel({ events }: WhatsAppPanelProps) {
   return (
     <section className="whatsapp-panel" aria-live="polite">
       <header className="whatsapp-panel__header">
+        <span className="whatsapp-panel__avatar" aria-hidden="true">UP</span>
         <div>
-          <p>{trackerCopy.whatsapp.eyebrow}</p>
-          <h2>{trackerCopy.whatsapp.heading}</h2>
+          <h2>{trackerCopy.whatsapp.sender}</h2>
+          <p>{trackerCopy.whatsapp.senderLine}</p>
         </div>
+        <span className="whatsapp-panel__menu" aria-hidden="true">•••</span>
       </header>
-
-      <strong className="whatsapp-panel__rendered-only">
-        {trackerCopy.whatsapp.renderedOnly}
-      </strong>
-      <p className="whatsapp-panel__description">
-        {trackerCopy.whatsapp.description}
-      </p>
 
       <div className="whatsapp-thread">
         {events.length === 0 ? (
@@ -41,22 +36,22 @@ export function WhatsAppPanel({ events }: WhatsAppPanelProps) {
               className="whatsapp-message"
               key={`${event.nodeId}-${event.at}-${index}`}
             >
-              <div className="whatsapp-message__meta">
-                <span>{trackerCopy.status[event.status]}</span>
-              </div>
+              <strong>{event.from}</strong>
               <p>{event.message}</p>
-              <time dateTime={event.at}>{eventTime(event.at)}</time>
+              <footer>
+                <span>{trackerCopy.status[event.status]}</span>
+                <time dateTime={event.at}>{eventTime(event.at)}</time>
+              </footer>
             </article>
           ))
         )}
       </div>
 
-      <p className="whatsapp-panel__constraint">
-        {trackerCopy.whatsapp.platformConstraint}
-      </p>
-      <p className="whatsapp-panel__grounding">
-        {trackerCopy.whatsapp.grounding}
-      </p>
+      <div className="whatsapp-panel__notes">
+        <p><strong>{trackerCopy.whatsapp.renderedOnly}</strong></p>
+        <p>{trackerCopy.whatsapp.platformConstraint}</p>
+        <p>{trackerCopy.whatsapp.grounding}</p>
+      </div>
     </section>
   );
 }
