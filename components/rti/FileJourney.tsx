@@ -62,11 +62,9 @@ function useStoredDraft() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setDraftState(loadDraft());
-      setReady(true);
-    });
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setDraftState(loadDraft());
+    setReady(true);
   }, []);
 
   function update(next: RtiDraft) {
@@ -253,11 +251,9 @@ function JurisdictionStep() {
 
   useEffect(() => {
     if (!draft) return;
-    const frame = window.requestAnimationFrame(() => {
-      setBodyLevel(draft.bodyLevel ?? "unknown");
-      setState(draft.state ?? "");
-    });
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setBodyLevel(draft.bodyLevel ?? "unknown");
+    setState(draft.state ?? "");
   }, [draft]);
 
   if (!ready) return null;
@@ -342,22 +338,20 @@ function AuthorityStep() {
       draft.bodyLevel === "central"
         ? matchAuthority(draft.subject)
         : authorities.find((item) => item.id === "unknown_central")!;
-    const frame = window.requestAnimationFrame(() => {
-      setAuthorityId(draft.authorityId ?? match.id);
-      setAuthorityName(
-        draft.authorityName ??
-          (match.id === "unknown_central" ? "" : match.name),
-      );
-      setOfficer(
-        draft.officer ??
-          (draft.bodyLevel === "state"
-            ? "State Public Information Officer"
-            : draft.bodyLevel === "unknown"
-              ? "Public Information Officer"
-              : match.officer),
-      );
-    });
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setAuthorityId(draft.authorityId ?? match.id);
+    setAuthorityName(
+      draft.authorityName ??
+        (match.id === "unknown_central" ? "" : match.name),
+    );
+    setOfficer(
+      draft.officer ??
+        (draft.bodyLevel === "state"
+          ? "State Public Information Officer"
+          : draft.bodyLevel === "unknown"
+            ? "Public Information Officer"
+            : match.officer),
+    );
   }, [authorities, draft]);
 
   if (!ready) return null;
@@ -430,12 +424,10 @@ function DraftStep() {
 
   useEffect(() => {
     if (!draft) return;
-    const frame = window.requestAnimationFrame(() => {
-      setRewritten(draft.rewritten ?? draft.rawText);
-      setChanges(draft.changes ?? []);
-      if (draft.rewritten) setPending(false);
-    });
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setRewritten(draft.rewritten ?? draft.rawText);
+    setChanges(draft.changes ?? []);
+    if (draft.rewritten) setPending(false);
   }, [draft]);
 
   useEffect(() => {
@@ -537,16 +529,14 @@ function ChecksStep() {
 
   useEffect(() => {
     if (!draft) return;
-    const frame = window.requestAnimationFrame(() => {
-      setSingleSubject(draft.singleSubject ?? true);
-      setAsksForRecords(
-        draft.asksForRecords ?? draft.wantsAction !== "action",
-      );
-      setHasIdentityDocuments(draft.hasIdentityDocuments ?? false);
-      setHasBplCertificate(draft.hasBplCertificate ?? false);
-      setAttachment(draft.attachment);
-    });
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setSingleSubject(draft.singleSubject ?? true);
+    setAsksForRecords(
+      draft.asksForRecords ?? draft.wantsAction !== "action",
+    );
+    setHasIdentityDocuments(draft.hasIdentityDocuments ?? false);
+    setHasBplCertificate(draft.hasBplCertificate ?? false);
+    setAttachment(draft.attachment);
   }, [draft]);
 
   if (!ready) return null;

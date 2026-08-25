@@ -17,8 +17,8 @@ export function AccentPicker() {
     const stored = window.localStorage.getItem("rti-accent");
     const initial = accents.includes(stored as Accent) ? (stored as Accent) : "blue";
     applyAccent(initial, false);
-    const frame = window.requestAnimationFrame(() => setAccent(initial));
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setAccent(initial);
   }, []);
 
   return (

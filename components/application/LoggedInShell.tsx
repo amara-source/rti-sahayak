@@ -32,7 +32,8 @@ export function LoggedInShell({ children }: { children: ReactNode }) {
       () => setPlaceholderIndex((index) => (index + 1) % shellCopy.loggedIn.searchNames.length),
       2_800,
     );
-    const frame = window.requestAnimationFrame(() => setPersona(storedPersona()));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setPersona(storedPersona());
     fetch("/api/case")
       .then((response) => response.ok ? response.json() : null)
       .then((result: { case?: { code?: string } } | null) => {
@@ -41,7 +42,6 @@ export function LoggedInShell({ children }: { children: ReactNode }) {
       .catch(() => undefined);
     return () => {
       window.clearInterval(timer);
-      window.cancelAnimationFrame(frame);
     };
   }, []);
 

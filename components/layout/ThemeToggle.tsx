@@ -19,8 +19,8 @@ export function ThemeToggle() {
       ? stored
       : "light";
     applyTheme(initial, false);
-    const frame = window.requestAnimationFrame(() => setTheme(initial));
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setTheme(initial);
   }, []);
 
   const label = theme === "dark" ? shellCopy.theme.light : shellCopy.theme.dark;

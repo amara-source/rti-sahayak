@@ -24,8 +24,8 @@ export function FontSizeControls() {
     const initial =
       stored === "small" || stored === "large" ? stored : "medium";
     applySize(initial);
-    const frame = window.requestAnimationFrame(() => setSize(initial));
-    return () => window.cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
+    setSize(initial);
   }, []);
 
   return (
