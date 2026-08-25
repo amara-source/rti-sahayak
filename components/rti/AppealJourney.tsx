@@ -1,0 +1,160 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { rtiCopy } from "@/content/rti-copy";
+import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
+import { PageHero } from "./PageHero";
+import { FilledIcon } from "./FilledIcon";
+
+type AppealKind = "first" | "second" | "complaint";
+
+interface CaseResponse {
+  case: Plan;
+  nodes: RenderedNode[];
+}
+
+const nodeIds: Record<AppealKind, string> = {
+  first: "first_appeal",
+  second: "second_appeal",
+  complaint: "section_18_complaint",
+};
+
+function initialDraft(kind: AppealKind, registration: string): string {
+  if (kind === "first") {
+    return `To: The First Appellate Authority\n\nSubject: First Appeal under the Right to Information Act\n\nOriginal RTI registration: ${registration}\n\nNo reply was received within the statutory reply period. I ask that this appeal be decided and the records requested in the original application be provided.`;
+  }
+  if (kind === "second") {
+    return `To: The Information Commission\n\nSubject: Second Appeal under the Right to Information Act\n\nOriginal RTI registration: ${registration}\n\nI completed the First Appeal route. I ask the Commission to consider this Second Appeal and the record of the original request and First Appeal.`;
+  }
+  return `To: The Information Commission\n\nSubject: Complaint under Section 18 of the Right to Information Act\n\nOriginal RTI registration: ${registration}\n\nI ask the Commission to examine the Public Information Officer's conduct in relation to this request.`;
+}
+
+export function AppealJourney({ kind }: { kind: AppealKind }) {
+  const [data, setData] = useState<CaseResponse | null>(null);
+  const [draft, setDraft] = useState("");
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
+  const copy = rtiCopy.appeals[kind];
+  const nodeId = nodeIds[kind];
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/case")
+      .then((response) => {
+        if (!response.ok) throw new Error("case");
+        return response.json();
+      })
+      .then((result: CaseResponse) => {
+        if (cancelled) return;
+        setData(result);
+        setDraft(initialDraft(kind, String(result.case.answers.registrationNumber ?? "Not recorded")));
+      })
+      .catch(() => {
+        if (!cancelled) setError(rtiCopy.api.notFound);
+      });
+    return () => { cancelled = true; };
+  }, [kind]);
+
+  const node = data?.nodes.find((item) => item.id === nodeId);
+  const dependency = useMemo(() => {
+    if (!data || !node) return "";
+    return node.dependsOn
+      .map((id) => data.nodes.find((item) => item.id === id)?.title)
+      .filter(Boolean)
+      .join(", ");
+  }, [data, node]);
+
+  async function setStatus(status: Status) {
+    if (!data) return;
+    setPending(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/case/${data.case.code}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nodeId, status }),
+      });
+      if (!response.ok) throw new Error("status");
+      setData(await response.json() as CaseResponse);
+    } catch {
+      setError(rtiCopy.common.error);
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function advanceDecision() {
+    if (!data) return;
+    setPending(true);
+    try {
+      const response = await fetch(`/api/case/${data.case.code}/advance`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ days: 46 }),
+      });
+      if (!response.ok) throw new Error("advance");
+      setData(await response.json() as CaseResponse);
+    } catch {
+      setError(rtiCopy.common.error);
+    } finally {
+      setPending(false);
+    }
+  }
+
+  if (error && !data) return <p className="rti-error">{error}</p>;
+  if (!data || !node) return <p className="rti-loading">{rtiCopy.common.loading}</p>;
+
+  const status = data.case.statuses[nodeId] ?? "none";
+  const registration = String(data.case.answers.registrationNumber ?? "Not recorded");
+  const startedAt = data.case.startedAtHours?.[nodeId];
+  const decisionElapsed = startedAt === undefined ? 0 : Math.max(0, Math.floor(((data.case.elapsedHours ?? 0) - startedAt) / 24));
+  const decisionRemaining = Math.max(0, 45 - decisionElapsed);
+
+  return (
+    <article className="rti-detail-page rti-appeal-page">
+      <PageHero eyebrow={copy.eyebrow} illustration="/illustrations/tracker.png" supporting={copy.intro} title={copy.heading} tone={kind === "complaint" ? "orange" : "violet"} />
+      <div className="rti-detail-content rti-overlap-card rti-appeal-content">
+        <Link className="rti-back-link" href={`/case/${data.case.code}`}>{rtiCopy.appeals.back}</Link>
+        {node.locked ? (
+          <section className="rti-appeal-lock" role="status">
+            <FilledIcon seed={`appeal:${kind}:locked`} />
+            <div><h2>{rtiCopy.appeals.locked}</h2><p>{rtiCopy.appeals.lockedUntil} <strong>{dependency}</strong></p></div>
+          </section>
+        ) : (
+          <>
+            <div className="rti-appeal-facts">
+              <section><FilledIcon seed={`appeal:${kind}:facts`} /><h2>{rtiCopy.appeals.statutoryFacts}</h2><p>{node.body}</p></section>
+              <section><FilledIcon seed={`appeal:${kind}:registration`} /><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
+              {kind === "complaint" ? <section className="rti-appeal-no-limit"><FilledIcon seed="appeal:complaint:no-limit" /><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
+            </div>
+            {node.warnings.map((warning) => <div className={`rti-warning rti-warning--${warning.severity}`} key={warning.text}>{warning.text}</div>)}
+            {kind !== "complaint" ? (
+              <section className="rti-appeal-draft">
+                <h2>{kind === "first" ? rtiCopy.appeals.first.draftHeading : rtiCopy.appeals.second.draftHeading}</h2>
+                <label className="rti-field"><span>{rtiCopy.appeals.draftLabel}</span><textarea onChange={(event) => setDraft(event.target.value)} rows={12} value={draft} /></label>
+              </section>
+            ) : null}
+            {kind === "first" && status === "applied" ? (
+              <section className="rti-appeal-clock">
+                <div><strong>{decisionElapsed}</strong><span>{rtiCopy.appeals.daysElapsed}</span></div>
+                <div><strong>{decisionRemaining}</strong><span>{rtiCopy.appeals.daysRemaining}</span></div>
+                <p>{rtiCopy.appeals.first.clockReason}</p>
+              </section>
+            ) : null}
+            <div className="rti-appeal-actions">
+              {status === "none" || status === "stuck" ? <button className="rti-primary" disabled={pending} onClick={() => setStatus("applied")} type="button">{kind === "first" ? rtiCopy.appeals.first.submit : kind === "second" ? rtiCopy.appeals.second.submit : rtiCopy.appeals.complaint.submit}</button> : null}
+              {kind === "first" && status === "applied" && decisionElapsed <= 45 ? <button className="rti-secondary" disabled={pending} onClick={advanceDecision} type="button">{rtiCopy.tracker.next}</button> : null}
+              {kind === "first" && status === "applied" && decisionElapsed > 45 ? <button className="rti-primary" disabled={pending} onClick={() => setStatus("done")} type="button">{rtiCopy.appeals.first.complete}</button> : null}
+              {status === "applied" && kind !== "first" ? <button className="rti-secondary" disabled={pending} onClick={() => setStatus("done")} type="button">{rtiCopy.detail.save}</button> : null}
+              {status !== "none" ? <p role="status">{kind === "first" ? rtiCopy.appeals.first.submitted : kind === "second" ? rtiCopy.appeals.second.submitted : rtiCopy.appeals.complaint.submitted}</p> : null}
+              <small>{rtiCopy.appeals.simulation}</small>
+            </div>
+            <div className="rti-source-line"><a href={node.sourceUrl} rel="noreferrer" target="_blank">{rtiCopy.appeals.source}</a><small>{node.verifiedOn}</small></div>
+          </>
+        )}
+        {error ? <p className="rti-error" role="alert">{error}</p> : null}
+      </div>
+    </article>
+  );
+}

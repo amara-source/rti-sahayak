@@ -4,52 +4,41 @@ import { createPlan, patchPlan } from "../plan";
 describe("plan lifecycle", () => {
   it("creates a six-character code with no vowels", () => {
     for (let index = 0; index < 100; index += 1) {
-      const plan = createPlan("death", {});
+      const plan = createPlan("rti", {});
 
       expect(plan.code).toMatch(/^[B-DF-HJ-NP-TV-Z2-9]{6}$/);
     }
   });
 
   it("marks a referenced task done and reports newly unlocked dependents", () => {
-    const plan = createPlan("death", {
-      employment: "none",
-      nominee: "yes",
-      vehicle: "no",
-      insurance: "no",
-    });
+    const plan = createPlan("rti", {});
     const result = patchPlan(plan, {
-      nodeId: "register_death",
-      ack: "SYNTHETIC-REF-1",
+      nodeId: "jurisdiction_check",
+      ack: "CONFIRMED",
     });
 
-    expect(result.plan.statuses.register_death).toBe("done");
-    expect(result.plan.acks.register_death).toBe("SYNTHETIC-REF-1");
-    expect(result.unlocked).toContain("certificate_copies");
-    expect(result.unlocked).toContain("bank_nominee");
+    expect(result.plan.statuses.jurisdiction_check).toBe("done");
+    expect(result.plan.acks.jurisdiction_check).toBe("CONFIRMED");
+    expect(result.unlocked).toContain("identify_authority");
   });
 
   it("updates status without completing a task", () => {
-    const plan = createPlan("job-loss", { esi: "yes" });
+    const plan = createPlan("rti", {});
     const result = patchPlan(plan, {
-      nodeId: "abvky",
+      nodeId: "jurisdiction_check",
       status: "stuck",
     });
 
-    expect(result.plan.statuses.abvky).toBe("stuck");
+    expect(result.plan.statuses.jurisdiction_check).toBe("stuck");
     expect(result.unlocked).toEqual([]);
   });
 
   it("does not allow a locked task to be updated through the plan API layer", () => {
-    const plan = createPlan("death", {
-      employment: "none",
-      nominee: "yes",
-      vehicle: "no",
-      insurance: "no",
-    });
+    const plan = createPlan("rti", {});
 
     expect(() =>
       patchPlan(plan, {
-        nodeId: "certificate_copies",
+        nodeId: "draft_request",
         status: "applied",
       }),
     ).toThrow(/locked/i);

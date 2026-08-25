@@ -7,33 +7,20 @@ type Theme = "light" | "dark";
 
 function applyTheme(theme: Theme, persist = true) {
   document.documentElement.dataset.theme = theme;
-  if (persist) window.localStorage.setItem("umang-theme", theme);
+  if (persist) window.localStorage.setItem("rti-theme", theme);
 }
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("umang-theme");
-    const preference = window.matchMedia("(prefers-color-scheme: dark)");
+    const stored = window.localStorage.getItem("rti-theme");
     const initial: Theme = stored === "dark" || stored === "light"
       ? stored
-      : preference.matches ? "dark" : "light";
+      : "light";
     applyTheme(initial, false);
     const frame = window.requestAnimationFrame(() => setTheme(initial));
-
-    function followSystem(event: MediaQueryListEvent) {
-      if (window.localStorage.getItem("umang-theme")) return;
-      const next = event.matches ? "dark" : "light";
-      setTheme(next);
-      applyTheme(next, false);
-    }
-
-    preference.addEventListener("change", followSystem);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      preference.removeEventListener("change", followSystem);
-    };
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const label = theme === "dark" ? shellCopy.theme.light : shellCopy.theme.dark;

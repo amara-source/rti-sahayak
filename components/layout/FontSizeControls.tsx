@@ -13,14 +13,14 @@ const sizeOptions: readonly { label: string; value: TextSize }[] = [
 
 function applySize(size: TextSize) {
   document.documentElement.dataset.textSize = size;
-  window.localStorage.setItem("umang-text-size", size);
+  window.localStorage.setItem("rti-text-size", size);
 }
 
 export function FontSizeControls() {
   const [size, setSize] = useState<TextSize>("medium");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("umang-text-size");
+    const stored = window.localStorage.getItem("rti-text-size");
     const initial =
       stored === "small" || stored === "large" ? stored : "medium";
     applySize(initial);

@@ -1,22 +1,21 @@
 # AGENTS.md
 
-## Hard constraints — never violate
-1. NEVER call, scrape or submit to any live government system.
-2. NEVER use real Aadhaar, PAN, OTP or payment data. Generated Aadhaar
-   numbers MUST fail the Verhoeff checksum. Write a test asserting this.
-3. NEVER clone a government login page. Simulated destinations live
-   inside our own site with a visible mock banner.
-4. Eligibility, deadlines and legal consequences are decided by the
-   DETERMINISTIC RULE ENGINE ONLY. The language model reads, writes and
-   translates. It never decides who qualifies for anything.
-5. Sensitive attributes — category, disability, income, gender — are
-   SELF-DECLARED ONLY. Never inferred from any other field.
-6. Output says "you may be entitled to", never "you are entitled to".
-7. Every node and entitlement carries sourceUrl, confidence and
-   verifiedOn. confidence:"unverified" never renders in Tier 1.
-8. Health content is signposting only. Never diagnose or advise.
-9. NO RUPEE FIGURE ANYWHERE ON SCREEN. Fees conflict across all sources.
-10. Name only statutory bodies and national helplines. Never a named NGO.
+## Hard constraints
+1. NEVER submit to, or interact with, rtionline.gov.in or any live government system.
+2. NEVER clone a government login page. Simulated OTP and payment screens are
+   visibly ours and labelled.
+3. NEVER use real Aadhaar or PAN data. Synthetic only.
+4. Deadlines, jurisdiction, eligibility and legal consequences come from the
+   DETERMINISTIC RULE ENGINE ONLY. The model reads and writes. It never decides.
+5. Rule content lives in /rules. NEVER invent a node, a deadline, a section
+   number or an authority. If something is missing, STOP AND ASK.
+6. Every node carries sourceUrl, confidence and verifiedOn. Nothing with
+   confidence "unverified" renders as fact.
+7. No rupee figure for any fee except the statutory ₹10 application fee and
+   the ₹2 per page copying charge, both of which are set in the RTI Rules 2012.
+8. Every simulated step is labelled once, clearly. Not on every row.
+9. No em dashes anywhere in user-facing copy.
+10. Not an official Government of India product. Non-dismissible strip on every page.
 
 ## Working method
 - Rule content lives in /rules as JSON. NEVER invent rule content.

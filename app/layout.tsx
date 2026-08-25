@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { DisclaimerStrip } from "@/components/layout/DisclaimerStrip";
 import { AppChrome } from "@/components/layout/AppChrome";
-import { InterfaceTranslator } from "@/components/layout/InterfaceTranslator";
 import { layoutCopy } from "@/content/layout-copy";
 import "./globals.css";
+import "./consistency.css";
 
 export const metadata: Metadata = {
   title: `${layoutCopy.wordmark}, ${layoutCopy.tagline}`,
@@ -12,11 +12,15 @@ export const metadata: Metadata = {
 
 const themeBootstrap = `
   try {
-    const saved = localStorage.getItem("umang-theme");
+    const saved = localStorage.getItem("rti-theme");
     const theme = saved === "light" || saved === "dark"
       ? saved
-      : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      : "light";
     document.documentElement.dataset.theme = theme;
+    const accent = localStorage.getItem("rti-accent");
+    document.documentElement.dataset.accent = ["blue", "teal", "orange", "violet"].includes(accent)
+      ? accent
+      : "blue";
   } catch (_) {
     document.documentElement.dataset.theme = "light";
   }
@@ -33,7 +37,6 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body>
-        <InterfaceTranslator />
         <DisclaimerStrip />
         <AppChrome>{children}</AppChrome>
       </body>

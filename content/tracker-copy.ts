@@ -53,7 +53,7 @@ export const trackerCopy = {
   whatsapp: {
     eyebrow: "WhatsApp-style preview",
     heading: "The message finds you",
-    sender: "UMANG plan assistant",
+    sender: "RTI Sahayak case assistant",
     senderLine: "Prototype status thread",
     renderedOnly: "Rendered preview only. Nothing is sent.",
     empty:
@@ -61,7 +61,7 @@ export const trackerCopy = {
     platformConstraint:
       "Proactive status updates use approved template messages. Free-form replies are available only inside the 24-hour window opened by the user’s reply.",
     grounding:
-      "MyGov already runs a WhatsApp helpdesk that authenticates DigiLocker and delivers documents at national scale. This adds status to an existing channel; it does not create a new one.",
+      "This is a rendered preview. No message is sent and no government system is contacted.",
   },
   message: {
     received: (authority: string, task: string) =>

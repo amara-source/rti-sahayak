@@ -14,6 +14,14 @@ export interface PatchedPlan {
   unlocked: string[];
 }
 
+const submittedNodeIds = [
+  "jurisdiction_check",
+  "identify_authority",
+  "draft_request",
+  "preflight",
+  "submit",
+] as const;
+
 function createCode(): string {
   const values = crypto.getRandomValues(new Uint8Array(6));
 
@@ -36,14 +44,70 @@ export function createPlan(
     statuses: {},
     acks: {},
     syncEvents: [],
+    elapsedHours: 0,
+    startedAtHours: {},
     lang: "en",
     createdAt: now,
     updatedAt: now,
   };
 }
 
+export function createSubmittedCase(
+  answers: Record<string, unknown>,
+): Plan {
+  const plan = createPlan("rti", answers);
+  plan.statuses = Object.fromEntries(
+    submittedNodeIds.map((id) => [id, "done" as const]),
+  );
+  return plan;
+}
+
+export function advancePlan(
+  plan: Plan,
+  hours: number,
+): { plan: Plan; fired: string[] } {
+  if (!Number.isFinite(hours) || hours <= 0) {
+    throw new Error("Advance hours must be positive");
+  }
+
+  const before = computeJourney(
+    plan.eventId,
+    plan.answers,
+    plan.statuses,
+    plan.elapsedHours ?? 0,
+  );
+  const nextPlan: Plan = {
+    ...plan,
+    elapsedHours: (plan.elapsedHours ?? 0) + hours,
+    statuses: { ...plan.statuses },
+    acks: { ...plan.acks },
+    syncEvents: [...plan.syncEvents],
+    startedAtHours: { ...(plan.startedAtHours ?? {}) },
+    updatedAt: new Date().toISOString(),
+  };
+  const after = computeJourney(
+    nextPlan.eventId,
+    nextPlan.answers,
+    nextPlan.statuses,
+    nextPlan.elapsedHours,
+  );
+  const firedBefore = new Set(
+    before.filter((node) => node.fired).map((node) => node.id),
+  );
+  const fired = after
+    .filter((node) => node.fired && !firedBefore.has(node.id))
+    .map((node) => node.id);
+
+  return { plan: nextPlan, fired };
+}
+
 export function patchPlan(plan: Plan, patch: PlanPatch): PatchedPlan {
-  const before = computeJourney(plan.eventId, plan.answers, plan.statuses);
+  const before = computeJourney(
+    plan.eventId,
+    plan.answers,
+    plan.statuses,
+    plan.elapsedHours ?? 0,
+  );
   const target = before.find((node) => node.id === patch.nodeId);
 
   if (!target) {
@@ -59,11 +123,18 @@ export function patchPlan(plan: Plan, patch: PlanPatch): PatchedPlan {
     statuses: { ...plan.statuses },
     acks: { ...plan.acks },
     syncEvents: [...plan.syncEvents],
+    startedAtHours: { ...(plan.startedAtHours ?? {}) },
     updatedAt: new Date().toISOString(),
   };
 
   if (patch.status) {
     nextPlan.statuses[patch.nodeId] = patch.status;
+    if (
+      patch.status === "applied" &&
+      nextPlan.startedAtHours?.[patch.nodeId] === undefined
+    ) {
+      nextPlan.startedAtHours![patch.nodeId] = nextPlan.elapsedHours ?? 0;
+    }
   }
 
   if (patch.ack !== undefined) {
@@ -75,6 +146,7 @@ export function patchPlan(plan: Plan, patch: PlanPatch): PatchedPlan {
     nextPlan.eventId,
     nextPlan.answers,
     nextPlan.statuses,
+    nextPlan.elapsedHours ?? 0,
   );
   const previouslyLocked = new Set(
     before.filter((node) => node.locked).map((node) => node.id),

@@ -1,0 +1,58 @@
+.directory-page,
+.ask-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 var(--section-space);
+  background: var(--surface-soft);
+}
+
+.directory-page__content,
+.ask-page__content {
+  width: min(var(--content-width), calc(100% - 48px));
+  max-width: var(--content-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.utility-page__content,
+.manual-steps,
+.rti-flow-shell,
+.rti-case-content,
+.rti-detail-content,
+.honesty-page__content {
+  max-width: var(--content-width);
+}
+
+.utility-card,
+.authority-card,
+.authority-directory__empty,
+.scripted-assistant__answer,
+.manual-step,
+.rti-node,
+.rti-process-card,
+.rti-appeal-facts > section {
+  border-radius: var(--card-radius);
+  background: var(--surface);
+}
+
+.rti-primary,
+.rti-secondary,
+.demo-profile-link,
+.utility-card > a,
+.authority-directory__empty > a {
+  min-height: 48px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+@media (max-width: 620px) {
+  .directory-page__content,
+  .ask-page__content {
+    width: min(var(--content-width), calc(100% - 28px));
+  }
+}
+
+@media print {
+  .filled-icon { filter: none; }
+}

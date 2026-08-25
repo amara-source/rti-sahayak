@@ -50,7 +50,12 @@ export function approveFiledTask(
   nodeId: string,
   asOf: Date = new Date(),
 ): SimulatedSyncResult {
-  const nodes = computeJourney(plan.eventId, plan.answers, plan.statuses);
+  const nodes = computeJourney(
+    plan.eventId,
+    plan.answers,
+    plan.statuses,
+    plan.elapsedHours ?? 0,
+  );
   const target = nodes.find((node) => node.id === nodeId);
 
   if (!target) {
@@ -66,6 +71,7 @@ export function approveFiledTask(
     patched.plan.eventId,
     patched.plan.answers,
     patched.plan.statuses,
+    patched.plan.elapsedHours ?? 0,
   );
   const unlockedTitles = patched.unlocked.flatMap((unlockedId) => {
     const node = nodesAfterApproval.find(
@@ -174,7 +180,12 @@ export function simulateSync(
   plan: Plan,
   asOf: Date = new Date(),
 ): SimulatedSyncResult {
-  const initialNodes = computeJourney(plan.eventId, plan.answers, plan.statuses);
+  const initialNodes = computeJourney(
+    plan.eventId,
+    plan.answers,
+    plan.statuses,
+    plan.elapsedHours ?? 0,
+  );
   const target = simulationTarget(plan, initialNodes);
 
   if (!target) {
@@ -195,6 +206,7 @@ export function simulateSync(
       patched.plan.eventId,
       patched.plan.answers,
       patched.plan.statuses,
+      patched.plan.elapsedHours ?? 0,
     );
     const unlockedTitles = patched.unlocked.flatMap((nodeId) => {
       const node = nodesAfterEvent.find((candidate) => candidate.id === nodeId);

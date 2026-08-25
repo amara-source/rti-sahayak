@@ -58,6 +58,7 @@ export async function POST(request: Request) {
       result.plan.eventId,
       result.plan.answers,
       result.plan.statuses,
+      result.plan.elapsedHours ?? 0,
     );
 
     await storage.save(result.plan);

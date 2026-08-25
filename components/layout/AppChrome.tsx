@@ -10,21 +10,15 @@ import { Header } from "./Header";
 
 function usesApplicationShell(pathname: string): boolean {
   return (
-    pathname === "/dashboard" ||
-    pathname.startsWith("/app/") ||
-    pathname.startsWith("/haq") ||
-    pathname.startsWith("/language-demo") ||
-    pathname.startsWith("/node/") ||
-    /^\/events\/[^/]+/.test(pathname)
+    pathname === "/case" ||
+    pathname.startsWith("/case/") ||
+    pathname.startsWith("/appeal/") ||
+    pathname === "/complaint"
   );
 }
 
 export function AppChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-
-  if (pathname === "/login") {
-    return <main id="main-content" tabIndex={-1}>{children}</main>;
-  }
 
   if (usesApplicationShell(pathname)) {
     return <LoggedInShell>{children}</LoggedInShell>;

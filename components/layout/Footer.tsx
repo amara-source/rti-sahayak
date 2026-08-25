@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { shellCopy } from "@/content/shell-copy";
-import { VisitorCounter } from "./VisitorCounter";
 
 export function Footer() {
   return (
@@ -15,19 +14,26 @@ export function Footer() {
                   <li key={link.label}><Link href={link.href}>{link.label}</Link></li>
                 ))}
               </ul>
-              {"subheading" in column ? (
-                <>
-                  <h3>{column.subheading}</h3>
-                  <ul>
-                    {column.secondary.map((link) => (
-                      <li key={link.label}><Link href={link.href}>{link.label}</Link></li>
-                    ))}
-                  </ul>
-                </>
-              ) : null}
-              {column.title === "Useful links" ? <VisitorCounter /> : null}
             </section>
           ))}
+          <section className="site-footer__contact">
+            <h2>{shellCopy.footer.contact.title}</h2>
+            <ul>
+              {shellCopy.footer.contact.numbers.map((number) => (
+                <li key={number.label}><a href={number.href}>{number.label}</a></li>
+              ))}
+              <li>{shellCopy.footer.contact.hours}</li>
+            </ul>
+            <h3>{shellCopy.footer.contact.follow}</h3>
+            <div className="footer-social-row" aria-label={shellCopy.footer.contact.socialNote}>
+              {shellCopy.footer.contact.socialLabels.map((label, index) => (
+                <span aria-hidden="true" className="footer-social-icon" key={label}>
+                  {index === 0 ? "X" : index === 1 ? "f" : "▶"}
+                </span>
+              ))}
+              <small>{shellCopy.footer.contact.socialNote}</small>
+            </div>
+          </section>
         </div>
         <div className="site-footer__note">
           <p>{shellCopy.footer.ownership}</p>

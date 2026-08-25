@@ -1,109 +1,64 @@
 import { describe, expect, it } from "vitest";
-import {
-  computeJourney,
-  computeJourneyFromPack,
-} from "../journey";
-import type { EventRulePack } from "../types";
+import { computeJourney } from "../journey";
 
-describe("computeJourney", () => {
-  it("filters nodes only when every appliesIf condition passes", () => {
-    const nodes = computeJourney("death", {
-      employment: "none",
-      nominee: "yes",
-      vehicle: "no",
-      insurance: "no",
-    });
-    const ids = nodes.map((node) => node.id);
+function node(
+  id: string,
+  answers: Record<string, unknown> = {},
+  statuses: Record<string, "none" | "applied" | "stuck" | "done"> = {},
+  elapsedHours = 0,
+) {
+  return computeJourney("rti", answers, statuses, elapsedHours).find(
+    (item) => item.id === id,
+  );
+}
 
-    expect(ids).toContain("bank_nominee");
-    expect(ids).not.toContain("bank_no_nominee");
-    expect(ids).not.toContain("epf_form20");
-    expect(ids).not.toContain("vehicle_form31");
-    expect(ids).not.toContain("insurance_claim");
+describe("RTI journey rules", () => {
+  it("fires deemed refusal on day 31 and not before", () => {
+    expect(node("deemed_refusal", {}, { submit: "done" }, 30 * 24)?.fired).toBe(false);
+    expect(node("deemed_refusal", {}, { submit: "done" }, 31 * 24)?.fired).toBe(true);
   });
 
-  it("injects eventId from the containing rule pack", () => {
-    const nodes = computeJourney("job-loss", { esi: "no" });
-
-    expect(nodes.length).toBeGreaterThan(0);
-    expect(nodes.every((node) => node.eventId === "job-loss")).toBe(true);
+  it("fires deemed refusal at 48 hours for life or liberty", () => {
+    expect(node("deemed_refusal", { lifeLiberty: "yes" }, { submit: "done" }, 47)?.fired).toBe(false);
+    expect(node("deemed_refusal", { lifeLiberty: "yes" }, { submit: "done" }, 48)?.fired).toBe(true);
   });
 
-  it("reassigns before nodes to urgent after the move", () => {
-    const pack: EventRulePack = {
-      eventId: "__bucket_fixture__",
-      tier: 1,
-      label: "Bucket fixture",
-      intake: [],
-      nodes: [
-        {
-          id: "prepare",
-          job: "DO",
-          bucket: "before",
-          title: "Prepare",
-          summary: "Prepare before moving.",
-          body: "Prepare before moving.",
-          appliesIf: [],
-          dependsOn: [],
-          authority: "Test authority",
-          typicalDays: ",",
-          documents: [],
-          warnings: [],
-          confidence: "verified",
-          sourceLabel: "Test fixture",
-          sourceUrl: "https://example.invalid",
-          verifiedOn: "2026-08-22",
-        },
-      ],
-    };
-
-    expect(
-      computeJourneyFromPack(pack, { when: "moved" })[0]?.bucket,
-    ).toBe("urgent");
-    expect(
-      computeJourneyFromPack(pack, { when: "soon" })[0]?.bucket,
-    ).toBe("before");
+  it("keeps second appeal locked until first appeal is done", () => {
+    expect(node("second_appeal", {}, { submit: "done" }, 31 * 24)?.locked).toBe(true);
+    expect(node("second_appeal", {}, { submit: "done", first_appeal: "done" }, 31 * 24)?.locked).toBe(false);
   });
 
-  it("locks a node until every dependency is done", () => {
-    const initial = computeJourney("death", {
-      employment: "none",
-      nominee: "yes",
-      vehicle: "no",
-      insurance: "no",
-    });
-    const unlocked = computeJourney(
-      "death",
-      {
-        employment: "none",
-        nominee: "yes",
-        vehicle: "no",
-        insurance: "no",
-      },
-      { register_death: "done" },
-    );
-
-    expect(initial.find((node) => node.id === "certificate_copies")?.locked).toBe(
-      true,
-    );
-    expect(unlocked.find((node) => node.id === "certificate_copies")?.locked).toBe(
-      false,
-    );
+  it("keeps first appeal locked until deemed refusal fires", () => {
+    expect(node("first_appeal", {}, { submit: "done" }, 30 * 24)?.locked).toBe(true);
+    expect(node("first_appeal", {}, { submit: "done" }, 31 * 24)?.locked).toBe(false);
   });
 
-  it("returns only conditional warnings whose showIf conditions pass", () => {
-    const stampWarnings = computeJourney("moving-state", {
-      housing: "stamp",
-      work: "salaried",
-      vehicle: "no",
-    }).find((node) => node.id === "aadhaar_address")?.warnings;
-    const registeredWarnings = computeJourney("moving-state", {
-      housing: "registered",
-      work: "salaried",
-      vehicle: "no",
-    }).find((node) => node.id === "aadhaar_address")?.warnings;
+  it("makes the section 18 complaint depend on submit, not the appeal chain", () => {
+    expect(node("section_18_complaint")?.locked).toBe(true);
+    expect(node("section_18_complaint", {}, { submit: "done" })?.locked).toBe(false);
+  });
 
-    expect(stampWarnings).toHaveLength(2);
-    expect(registeredWarnings).toHaveLength(0);
+  it("resolves jurisdiction warnings for state and central bodies", () => {
+    const stateWarnings = node("jurisdiction_check", { bodyLevel: "state" })?.warnings;
+    const centralWarnings = node("jurisdiction_check", { bodyLevel: "central" })?.warnings;
+
+    expect(stateWarnings).toHaveLength(1);
+    expect(stateWarnings?.[0]?.severity).toBe("critical");
+    expect(centralWarnings).toHaveLength(0);
+  });
+
+  it("keeps unknown jurisdiction as a caution", () => {
+    const warnings = node("jurisdiction_check", {
+      bodyLevel: "unknown",
+    })?.warnings;
+
+    expect(warnings).toHaveLength(1);
+    expect(warnings?.[0]?.severity).toBe("caution");
+  });
+
+  it("applies not_an_rti only when the user wants action", () => {
+    expect(node("not_an_rti", { wantsAction: "action" })).toBeDefined();
+    expect(node("not_an_rti", { wantsAction: "records" })).toBeUndefined();
+    expect(node("not_an_rti", { wantsAction: "status" })).toBeUndefined();
   });
 });

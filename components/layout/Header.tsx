@@ -13,7 +13,7 @@ export function Header() {
           </span>
           <span>
             <span className="brand__wordmark">{layoutCopy.wordmark}</span>
-            <span className="brand__tagline">{layoutCopy.tagline}</span>
+            <span className="brand__full-name">{layoutCopy.fullName}</span>
           </span>
         </Link>
 
@@ -26,14 +26,7 @@ export function Header() {
         </nav>
 
         <div className="marketing-header__actions">
-          <Link
-            aria-label={shellCopy.loggedOut.search}
-            className="header-search-link"
-            href="/#service-search"
-          >
-            <span aria-hidden="true">⌕</span>
-          </Link>
-          <Link className="demo-profile-link" href="/login">
+          <Link className="demo-profile-link" href="/file">
             {shellCopy.loggedOut.login}
           </Link>
         </div>
