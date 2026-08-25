@@ -7333,3 +7333,181 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   outline: 3px solid var(--accent-deep);
   outline-offset: 2px;
 }
+
+/* ---------------------------------------------------------------------------
+   HOME: the five traps
+   Each card is a button. Pointers with hover get a flip; coarse pointers get
+   the same content as an expansion, because a hover-only reveal is unusable on
+   a phone. Reduced motion gets the expansion too.
+   --------------------------------------------------------------------------- */
+
+.home-traps {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+
+.trap-grid {
+  display: grid;
+  /* Five short cards sit in one row on a wide screen and reflow evenly below. */
+  grid-template-columns: repeat(auto-fit, minmax(198px, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trap-card__button {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.trap-card__face {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-area: 1 / 1;
+  min-height: 196px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgb(20 56 52 / 6%);
+}
+
+.trap-card__face strong {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.trap-card__line {
+  color: var(--muted);
+  font-size: .92rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.trap-card__face small {
+  color: var(--accent-deep);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.trap-card__hint {
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--accent);
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.trap-card__back {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 60%, var(--surface));
+}
+
+.trap-card__button:focus-visible .trap-card__face {
+  outline: 3px solid var(--accent-deep);
+  outline-offset: 3px;
+}
+
+/* Default, and the touch behaviour: show one face at a time by expanding. */
+.trap-card__back { display: none; }
+.trap-card.is-open .trap-card__front { display: none; }
+.trap-card.is-open .trap-card__back { display: flex; }
+
+/* Devices that can hover and accept motion get the actual flip. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .trap-card {
+    perspective: 1200px;
+  }
+
+  .trap-card__button {
+    transform-style: preserve-3d;
+    transition: transform .55s ease;
+  }
+
+  .trap-card.is-open .trap-card__button {
+    transform: rotateY(180deg);
+  }
+
+  .trap-card__face {
+    backface-visibility: hidden;
+  }
+
+  .trap-card__back {
+    display: flex;
+    transform: rotateY(180deg);
+  }
+
+  .trap-card.is-open .trap-card__front {
+    display: flex;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   HOME: the government helpdesk. Bordered panel in the style of the real
+   government sites, clearly labelled as theirs and not ours.
+   --------------------------------------------------------------------------- */
+
+.home-helpdesk {
+  width: 100%;
+  border: 2px solid var(--accent-deep);
+  border-radius: 18px;
+  background: var(--surface);
+}
+
+.home-helpdesk__body {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: 26px;
+}
+
+.home-helpdesk h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+}
+
+.home-helpdesk p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.home-helpdesk__numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin: 4px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-helpdesk__numbers a {
+  color: var(--accent-deep);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.home-helpdesk__hours {
+  font-weight: 800;
+  color: var(--ink) !important;
+}
+
+.home-helpdesk__disclaimer {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: .88rem;
+}

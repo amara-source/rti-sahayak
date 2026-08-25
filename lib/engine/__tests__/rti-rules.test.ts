@@ -3,6 +3,8 @@ import { listAuthorities, matchAuthority, matchAuthorityWithReason } from "../au
 import { evaluatePreflightChecks } from "../checks";
 import { computeJourney } from "../journey";
 import { listJurisdictions } from "../jurisdictions";
+import { loadRtiRulePack } from "../journey";
+import { homeCopy } from "../../../content/home-copy";
 
 describe("RTI authority rules", () => {
   it("matches an authored central authority and falls back honestly", () => {
@@ -162,5 +164,42 @@ describe("RTI authority pack completeness", () => {
     const unmatched = matchAuthorityWithReason("something with no authored term");
     expect(unmatched.authority.id).toBe("unknown_central");
     expect(unmatched.matchedTerm).toBeNull();
+  });
+});
+
+describe("home page traps stay tied to the rule pack", () => {
+  it("names only checks the pack actually authors", () => {
+    const authored = new Set(loadRtiRulePack().checks.map((check) => check.id));
+
+    expect(homeCopy.traps.items).toHaveLength(5);
+    for (const trap of homeCopy.traps.items) {
+      expect(authored.has(trap.checkId)).toBe(true);
+      expect(trap.basis.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("quotes no rupee figure other than the statutory fee", () => {
+    const prose = [
+      ...homeCopy.traps.items.flatMap((trap) => [trap.front, trap.back]),
+      ...homeCopy.why.cards.map((card) => card.body),
+      homeCopy.helpdesk.intro,
+      homeCopy.helpdesk.disclaimer,
+    ].join(" ");
+
+    // Constraint 7: the only fee figures are the statutory ten rupee
+    // application fee and the two rupee per page copying charge. "hundreds of
+    // rupees" describes what middlemen charge, which is not a fee.
+    const amounts =
+      prose.match(
+        /(?:₹\s?\d+|\b(?:one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+rupee)/gi,
+      ) ?? [];
+    for (const amount of amounts) {
+      expect(amount.toLowerCase()).toMatch(/ten rupee|two rupee/);
+    }
+  });
+
+  it("uses no em dash in user-facing copy", () => {
+    const prose = JSON.stringify(homeCopy);
+    expect(prose).not.toMatch(/[—–]/);
   });
 });

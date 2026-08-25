@@ -3,7 +3,13 @@ import type { UtilityPageCopy } from "@/content/utility-copy";
 import { FilledIcon } from "./FilledIcon";
 import { PageHero } from "./PageHero";
 
-export function UtilityPage({ copy }: { copy: UtilityPageCopy }) {
+export function UtilityPage({
+  copy,
+  children,
+}: {
+  copy: UtilityPageCopy;
+  children?: React.ReactNode;
+}) {
   return (
     <article className="utility-page">
       <PageHero eyebrow={copy.eyebrow} illustration={copy.illustration} supporting={copy.intro} title={copy.heading} tone={copy.tone} />
@@ -31,6 +37,7 @@ export function UtilityPage({ copy }: { copy: UtilityPageCopy }) {
             </div>
           </section>
         ))}
+        {children}
       </div>
     </article>
   );
