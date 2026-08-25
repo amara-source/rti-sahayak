@@ -203,3 +203,29 @@ describe("home page traps stay tied to the rule pack", () => {
     expect(prose).not.toMatch(/[—–]/);
   });
 });
+
+describe("home journey strip stays tied to the rule pack", () => {
+  it("keeps the clocks the strip reads its day counts from", () => {
+    const pack = loadRtiRulePack();
+    const days = (id: string) =>
+      pack.nodes.find((node) => node.id === id)?.clock?.days;
+
+    // If any of these move, the home page moves with them rather than lying.
+    expect(days("await_reply")).toBe(30);
+    expect(days("first_appeal")).toBe(30);
+    expect(days("second_appeal")).toBe(90);
+  });
+
+  it("tells the same story in the same number of stages", () => {
+    expect(homeCopy.journey.stages).toHaveLength(6);
+    expect(homeCopy.journey.href).toBe("/example");
+    expect(homeCopy.journey.stages.map((stage) => stage.id)).toEqual([
+      "ask",
+      "wait",
+      "silence",
+      "first",
+      "decide",
+      "second",
+    ]);
+  });
+});

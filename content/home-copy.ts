@@ -62,6 +62,51 @@ export const homeCopy = {
     ] as TrapCopy[],
   },
 
+  /**
+   * The same statutory path as the case map, told as a journey rather than a
+   * diagram. Day counts are not written here: they are read from the rule pack
+   * at render time so this can never drift from the engine.
+   */
+  journey: {
+    heading: "How it actually goes",
+    intro: "One request, and the law that runs after it. This is the whole path, start to finish.",
+    linkLabel: "See it on a real case",
+    href: "/example",
+    footnote: "Every day count above is read from the same rule pack the case tracker uses.",
+    stages: [
+      {
+        id: "ask",
+        title: "You ask",
+        line: "Ten rupees, and you never have to say why you want it.",
+      },
+      {
+        id: "wait",
+        title: "They have to reply",
+        line: "The officer must give the records, or refuse with reasons.",
+      },
+      {
+        id: "silence",
+        title: "Silence becomes a refusal",
+        line: "No reply is a refusal in law. You do not need a rejection letter.",
+      },
+      {
+        id: "first",
+        title: "First Appeal",
+        line: "Free, to an officer senior to the one who stayed silent.",
+      },
+      {
+        id: "decide",
+        title: "The Authority decides",
+        line: "Thirty days, extendable to forty five with reasons in writing.",
+      },
+      {
+        id: "second",
+        title: "Second Appeal",
+        line: "The Information Commission can penalise the officer personally.",
+      },
+    ],
+  },
+
   why: {
     heading: "Why this exists",
     cards: [
