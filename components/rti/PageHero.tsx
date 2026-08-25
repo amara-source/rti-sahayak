@@ -1,7 +1,5 @@
 export type HeroTone = "blue" | "teal" | "orange" | "violet";
 
-const assetOrigin = "https://you-are-building-a-working-web.vercel.app";
-
 export function PageHero({
   eyebrow,
   title,
@@ -27,7 +25,7 @@ export function PageHero({
           <img
             alt=""
             height={667}
-            src={`${assetOrigin}${illustration}`}
+            src={illustration}
             width={1000}
           />
         </div>
