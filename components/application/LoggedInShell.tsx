@@ -70,7 +70,8 @@ export function LoggedInShell({ children }: { children: ReactNode }) {
         >
           <span aria-hidden="true">☰</span>
         </button>
-        <Link className="application-brand" href={caseHome}>
+        {/* The wordmark always goes home. The case keeps its own nav item. */}
+        <Link className="application-brand" href="/">
           <span className="application-brand__mark" aria-hidden="true">R</span>
           <span className="application-brand__text">
             <strong>{layoutCopy.wordmark}</strong>
