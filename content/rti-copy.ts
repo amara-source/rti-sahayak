@@ -56,8 +56,17 @@ export const rtiCopy = {
   authority: {
     eyebrow: "Authority and officer",
     heading: "Send it to the right public authority",
-    reasoning: (subject: string, authority: string) =>
-      `You mentioned “${subject}”, so the authored directory match is ${authority}.`,
+    reasoning: (matchedTerm: string, authority: string) =>
+      `You mentioned "${matchedTerm}", so this goes to the ${authority}.`,
+    reasoningManual: (authority: string) =>
+      `You chose the ${authority}. We did not pick this, so check it against the directory before filing.`,
+    searchLabel: "Search the authored directory",
+    searchHint: "Type to filter, or type your own if nothing here fits.",
+    searchPlaceholder: "Start typing, for example pension or provident fund",
+    holdsHeading: "What this authority holds",
+    officerNoteHeading: "Which office to address",
+    termsHeading: "Search terms that point here",
+    noMatch: "No authored entry matches what you typed. That is fine. Enter the authority yourself below and check the government directory first.",
     unknown: "We could not work out which authority this belongs to. The government's own directory of Public Information Officers is at rti.gov.in. Search there, then come back and enter it.",
     name: "Public authority",
     officer: "Officer title",

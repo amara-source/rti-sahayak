@@ -7162,3 +7162,55 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   border-width: 2px;
   background: color-mix(in srgb, var(--accent-soft) 65%, var(--surface));
 }
+
+/* Authority detail: what the body holds and which office to address, so the
+   directory match is explainable rather than a bare name. */
+
+.rti-authority-detail {
+  display: grid;
+  gap: 16px;
+  margin: 18px 0 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  background: var(--surface-soft);
+}
+
+.rti-authority-detail h3 {
+  margin: 0;
+  color: var(--accent-deep);
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.rti-authority-detail h4 {
+  margin: 0 0 5px;
+  font-size: .95rem;
+}
+
+.rti-authority-detail p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.rti-authority-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rti-authority-terms li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+}

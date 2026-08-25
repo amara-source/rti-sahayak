@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { FilledIcon } from "@/components/rti/FilledIcon";
-import { listAuthorities, matchAuthority } from "@/lib/engine/authority";
+import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import {
   evaluatePreflightChecks,
@@ -355,20 +355,26 @@ function AuthorityStep() {
   const [authorityId, setAuthorityId] = useState("");
   const [authorityName, setAuthorityName] = useState("");
   const [officer, setOfficer] = useState("Central Public Information Officer");
+  const [query, setQuery] = useState("");
+  const [matchedTerm, setMatchedTerm] = useState<string | null>(null);
+  const [pickedManually, setPickedManually] = useState(false);
   const authorities = useMemo(() => listAuthorities(), []);
 
   useEffect(() => {
     if (!draft) return;
-    const match =
+    const matched =
       draft.bodyLevel === "central"
-        ? matchAuthority(draft.subject)
-        : authorities.find((item) => item.id === "unknown_central")!;
+        ? matchAuthorityWithReason(draft.subject)
+        : { authority: authorities.find((item) => item.id === "unknown_central")!, matchedTerm: null };
+    const match = matched.authority;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
     setAuthorityId(draft.authorityId ?? match.id);
+    setMatchedTerm(matched.matchedTerm);
     setAuthorityName(
       draft.authorityName ??
         (match.id === "unknown_central" ? "" : match.name),
     );
+    setQuery(draft.authorityName ?? (match.id === "unknown_central" ? "" : match.name));
     setOfficer(
       draft.officer ??
         (draft.bodyLevel === "state"
@@ -382,14 +388,29 @@ function AuthorityStep() {
   if (!ready) return null;
   if (!draft) return <Shell eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
+  const selected = authorities.find((item) => item.id === authorityId);
   const unknown = authorityId === "unknown_central" || !authorityName.trim();
+  const isCentral = draft.bodyLevel === "central";
+  // The datalist filters natively. This only decides whether to warn that
+  // nothing authored matches what the citizen typed.
+  const typedMatchesAnEntry = authorities.some(
+    (item) => item.id !== "unknown_central" && item.name === query,
+  );
 
-  function choose(id: string) {
-    const selected = authorities.find((item) => item.id === id);
-    if (!selected) return;
-    setAuthorityId(id);
-    setAuthorityName(selected.id === "unknown_central" ? "" : selected.name);
-    setOfficer(selected.officer);
+  function choose(name: string) {
+    setQuery(name);
+    const picked = authorities.find(
+      (item) => item.id !== "unknown_central" && item.name === name,
+    );
+    if (picked) {
+      setPickedManually(true);
+      setAuthorityId(picked.id);
+      setAuthorityName(picked.name);
+      setOfficer(picked.officer);
+      return;
+    }
+    setAuthorityId("unknown_central");
+    setAuthorityName(name);
   }
 
   function proceed() {
@@ -399,21 +420,67 @@ function AuthorityStep() {
 
   return (
     <Shell eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}>
-      {draft.bodyLevel === "central" && !unknown ? (
+      {isCentral && !unknown && selected ? (
         <p className="rti-reasoning">
-          {rtiCopy.authority.reasoning(draft.subject, authorityName)}
+          {pickedManually || !matchedTerm
+            ? rtiCopy.authority.reasoningManual(selected.name)
+            : rtiCopy.authority.reasoning(matchedTerm, selected.name)}
         </p>
       ) : null}
-      {draft.bodyLevel === "central" ? (
+
+      {isCentral ? (
         <label className="rti-field">
-          <span>{rtiCopy.authority.name}</span>
-          <select onChange={(event) => choose(event.target.value)} value={authorityId}>
-            {authorities.map((authority) => (
-              <option key={authority.id} value={authority.id}>{authority.name}</option>
-            ))}
-          </select>
+          <span>{rtiCopy.authority.searchLabel}</span>
+          <input
+            autoComplete="off"
+            list="rti-authority-options"
+            onChange={(event) => choose(event.target.value)}
+            placeholder={rtiCopy.authority.searchPlaceholder}
+            value={query}
+          />
+          <small>{rtiCopy.authority.searchHint}</small>
+          <datalist id="rti-authority-options">
+            {authorities
+              .filter((item) => item.id !== "unknown_central")
+              .map((authority) => (
+                <option key={authority.id} value={authority.name}>
+                  {authority.ministry}
+                </option>
+              ))}
+          </datalist>
         </label>
       ) : null}
+
+      {isCentral && query.trim() && !typedMatchesAnEntry ? (
+        <p className="rti-warning rti-warning--caution">{rtiCopy.authority.noMatch}</p>
+      ) : null}
+
+      {selected && selected.id !== "unknown_central" ? (
+        <section className="rti-authority-detail">
+          <div>
+            <h3>{selected.ministry}</h3>
+          </div>
+          <div>
+            <h4>{rtiCopy.authority.holdsHeading}</h4>
+            <p>{selected.records}</p>
+          </div>
+          <div>
+            <h4>{rtiCopy.authority.officerNoteHeading}</h4>
+            <p>{selected.officerNote}</p>
+          </div>
+          {selected.matches.length ? (
+            <div>
+              <h4>{rtiCopy.authority.termsHeading}</h4>
+              <ul className="rti-authority-terms">
+                {selected.matches.map((term) => (
+                  <li key={term}>{term}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
       {unknown ? <p className="rti-warning rti-warning--caution">{rtiCopy.authority.unknown}</p> : null}
       <label className="rti-field">
         <span>{rtiCopy.authority.name}</span>

@@ -5,7 +5,17 @@ export interface AuthorityRule {
   name: string;
   ministry: string;
   officer: string;
+  /** Which office actually holds the file. The designation alone is not enough. */
+  officerNote: string;
+  /** The kinds of record this authority holds, so the citizen can aim the request. */
+  records: string;
   matches: string[];
+}
+
+export interface AuthorityMatch {
+  authority: AuthorityRule;
+  /** The authored term that matched, so the UI can show its reasoning. */
+  matchedTerm: string | null;
 }
 
 const authorities = authorityRules.authorities as AuthorityRule[];
@@ -17,18 +27,25 @@ export function listAuthorities(): AuthorityRule[] {
   }));
 }
 
-export function matchAuthority(subject: string): AuthorityRule {
+export function matchAuthorityWithReason(subject: string): AuthorityMatch {
   const normalized = subject.toLocaleLowerCase("en-IN");
-  const match = authorities.find(
-    (authority) =>
-      authority.id !== "unknown_central" &&
-      authority.matches.some((term) =>
-        normalized.includes(term.toLocaleLowerCase("en-IN")),
-      ),
-  );
 
-  return (
-    match ??
-    authorities.find((authority) => authority.id === "unknown_central")!
-  );
+  for (const authority of authorities) {
+    if (authority.id === "unknown_central") continue;
+    const matchedTerm = authority.matches.find((term) =>
+      normalized.includes(term.toLocaleLowerCase("en-IN")),
+    );
+    if (matchedTerm) {
+      return { authority, matchedTerm };
+    }
+  }
+
+  return {
+    authority: authorities.find((item) => item.id === "unknown_central")!,
+    matchedTerm: null,
+  };
+}
+
+export function matchAuthority(subject: string): AuthorityRule {
+  return matchAuthorityWithReason(subject).authority;
 }

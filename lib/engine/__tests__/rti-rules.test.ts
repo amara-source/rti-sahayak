@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchAuthority } from "../authority";
+import { listAuthorities, matchAuthority, matchAuthorityWithReason } from "../authority";
 import { evaluatePreflightChecks } from "../checks";
 import { computeJourney } from "../journey";
 import { listJurisdictions } from "../jurisdictions";
@@ -133,5 +133,34 @@ describe("RTI jurisdiction reference data", () => {
     expect(states).not.toContain("Delhi, National Capital Territory");
     expect(unionTerritories).toContain("Delhi, National Capital Territory");
     expect(unionTerritories).toContain("Ladakh");
+  });
+});
+
+describe("RTI authority pack completeness", () => {
+  it("gives every real authority routing guidance and a record description", () => {
+    for (const authority of listAuthorities()) {
+      expect(authority.officerNote.length).toBeGreaterThan(0);
+      if (authority.id !== "unknown_central") {
+        expect(authority.records.length).toBeGreaterThan(0);
+        expect(authority.ministry.length).toBeGreaterThan(0);
+        expect(authority.matches.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("names no individual officer, only designations", () => {
+    for (const authority of listAuthorities()) {
+      expect(authority.officer).toMatch(/Information Officer$/);
+    }
+  });
+
+  it("reports which authored term produced the match", () => {
+    const matched = matchAuthorityWithReason("my UAN provident fund transfer");
+    expect(matched.authority.id).toBe("epfo");
+    expect(matched.matchedTerm).toBeTruthy();
+
+    const unmatched = matchAuthorityWithReason("something with no authored term");
+    expect(unmatched.authority.id).toBe("unknown_central");
+    expect(unmatched.matchedTerm).toBeNull();
   });
 });
