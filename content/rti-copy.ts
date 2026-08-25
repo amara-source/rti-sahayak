@@ -197,6 +197,15 @@ export const rtiCopy = {
       withinNinety: "within 90 days",
       noLimit: "no time limit",
       caption: "This is the same process the government publishes as a diagram. We made it move.",
+      states: {
+        complete: "Done",
+        current: "Now",
+        available: "Open to you",
+        locked: "Not open yet",
+      },
+      parallel: "Parallel route",
+      outcome: "One of two outcomes",
+      open: "Open",
     },
   },
   detail: {

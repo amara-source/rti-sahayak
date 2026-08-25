@@ -5534,7 +5534,7 @@ html[data-theme="dark"] {
   min-width: 840px;
 }
 
-.rti-process-map__mobile { display: none !important; }
+.rti-process-stepper { display: none; }
 
 .rti-process-edge {
   fill: none;
@@ -5542,12 +5542,6 @@ html[data-theme="dark"] {
   stroke-dasharray: 7 9;
   stroke-linecap: round;
   stroke-width: 3;
-}
-
-.rti-process-edge.is-active {
-  stroke: var(--accent);
-  stroke-dasharray: none;
-  stroke-width: 5;
 }
 
 .rti-process-map marker path { fill: var(--muted); }
@@ -5582,7 +5576,34 @@ html[data-theme="dark"] {
   animation: rti-process-pulse 1.8s ease-in-out infinite;
 }
 
-.rti-process-node.is-future { opacity: .42; }
+.rti-process-node.is-available rect {
+  fill: color-mix(in srgb, var(--accent-soft) 82%, var(--surface));
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-dasharray: 8 6;
+}
+
+.rti-process-node.is-available text { fill: var(--accent-deep); }
+
+.rti-process-node.is-locked { opacity: .38; }
+
+.rti-process-node.is-locked rect {
+  fill: var(--surface);
+  stroke: var(--line);
+}
+
+/* Edges draw themselves in as the case travels the path. */
+.rti-process-edge__draw {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-width: 5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset .85s ease-in-out;
+}
+
+.rti-process-edge__draw.is-active { stroke-dashoffset: 0; }
 
 .rti-process-labels text {
   fill: var(--muted);
@@ -5876,7 +5897,7 @@ html[data-theme="dark"] .rti-node-groups > section {
   .rti-process-card__heading { padding: 24px 22px 0; }
   .rti-process-map { overflow: hidden; padding: 8px 2px 0; }
   .rti-process-map__desktop { display: none !important; }
-  .rti-process-map__mobile { display: block !important; min-width: 0 !important; }
+  .rti-process-stepper { display: grid !important; }
   .rti-process-caption { padding: 18px 22px 22px; }
 
   .rti-appeal-facts,
@@ -6956,4 +6977,123 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
 .rti-case-request details p {
   margin: 10px 0 0;
   color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Process map on narrow screens: a real vertical stepper, never a shrunken
+   diagram. Same four states as the desktop map.
+   --------------------------------------------------------------------------- */
+
+.rti-process-stepper {
+  gap: 0;
+  margin: 0;
+  padding: 4px 4px 8px;
+  list-style: none;
+}
+
+.rti-process-step {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 14px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.rti-process-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 24px;
+  bottom: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.rti-process-step.is-complete:not(:last-child)::before,
+.rti-process-step.is-current:not(:last-child)::before {
+  background: var(--accent);
+}
+
+.rti-process-step__marker {
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.rti-process-step.is-complete .rti-process-step__marker {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.rti-process-step.is-current .rti-process-step__marker {
+  border-color: var(--accent-deep);
+  background: var(--accent-deep);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 26%, transparent);
+  animation: rti-process-pulse 1.8s ease-in-out infinite;
+}
+
+.rti-process-step.is-available .rti-process-step__marker {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+
+.rti-process-step.is-locked { opacity: .45; }
+
+.rti-process-step__body { display: grid; gap: 4px; justify-items: start; }
+
+.rti-process-step__label {
+  margin: 0;
+  font-size: .96rem;
+  font-weight: 900;
+  letter-spacing: .03em;
+}
+
+.rti-process-step__label em {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: .7rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.rti-process-step__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+.rti-process-step__meta span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 9px;
+  color: var(--ink);
+  font-size: .74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.rti-process-step.is-current .rti-process-step__meta span,
+.rti-process-step.is-available .rti-process-step__meta span {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.rti-process-step__body a {
+  font-weight: 900;
+  font-size: .88rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rti-process-step.is-current .rti-process-step__marker { animation: none; }
+  .rti-process-edge__draw { transition: none; }
 }
