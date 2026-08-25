@@ -9,7 +9,7 @@ import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authorit
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
 import { Icon } from "./Icon";
-import { checkIcon, stepIcons } from "@/lib/rti/icon-map";
+import { authorityIcon, checkIcon, stepIcons } from "@/lib/rti/icon-map";
 import {
   evaluatePreflightChecks,
   type PreflightInput,
@@ -359,7 +359,7 @@ function AuthorityStep() {
   const [authorityId, setAuthorityId] = useState("");
   const [authorityName, setAuthorityName] = useState("");
   const [officer, setOfficer] = useState("Central Public Information Officer");
-  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("");
   const [matchedTerm, setMatchedTerm] = useState<string | null>(null);
   const [pickedManually, setPickedManually] = useState(false);
   const authorities = useMemo(() => listAuthorities(), []);
@@ -378,7 +378,6 @@ function AuthorityStep() {
       draft.authorityName ??
         (match.id === "unknown_central" ? "" : match.name),
     );
-    setQuery(draft.authorityName ?? (match.id === "unknown_central" ? "" : match.name));
     setOfficer(
       draft.officer ??
         (draft.bodyLevel === "state"
@@ -395,26 +394,28 @@ function AuthorityStep() {
   const selected = authorities.find((item) => item.id === authorityId);
   const unknown = authorityId === "unknown_central" || !authorityName.trim();
   const isCentral = draft.bodyLevel === "central";
-  // The datalist filters natively. This only decides whether to warn that
-  // nothing authored matches what the citizen typed.
-  const typedMatchesAnEntry = authorities.some(
-    (item) => item.id !== "unknown_central" && item.name === query,
-  );
-
-  function choose(name: string) {
-    setQuery(name);
-    const picked = authorities.find(
-      (item) => item.id !== "unknown_central" && item.name === name,
+  const needle = filter.trim().toLocaleLowerCase("en-IN");
+  const filtered = authorities.filter((item) => {
+    if (item.id === "unknown_central") return false;
+    if (!needle) return true;
+    // Match the name, the ministry or any authored search term, so typing
+    // "provident fund" or "UAN" both find EPFO.
+    return (
+      item.name.toLocaleLowerCase("en-IN").includes(needle) ||
+      item.ministry.toLocaleLowerCase("en-IN").includes(needle) ||
+      item.matches.some((term) =>
+        term.toLocaleLowerCase("en-IN").includes(needle),
+      )
     );
-    if (picked) {
-      setPickedManually(true);
-      setAuthorityId(picked.id);
-      setAuthorityName(picked.name);
-      setOfficer(picked.officer);
-      return;
-    }
-    setAuthorityId("unknown_central");
-    setAuthorityName(name);
+  });
+
+  function choose(id: string) {
+    const picked = authorities.find((item) => item.id === id);
+    if (!picked) return;
+    setPickedManually(true);
+    setAuthorityId(picked.id);
+    setAuthorityName(picked.name);
+    setOfficer(picked.officer);
   }
 
   function proceed() {
@@ -433,30 +434,46 @@ function AuthorityStep() {
       ) : null}
 
       {isCentral ? (
-        <label className="rti-field">
-          <span>{rtiCopy.authority.searchLabel}</span>
-          <input
-            autoComplete="off"
-            list="rti-authority-options"
-            onChange={(event) => choose(event.target.value)}
-            placeholder={rtiCopy.authority.searchPlaceholder}
-            value={query}
-          />
-          <small>{rtiCopy.authority.searchHint}</small>
-          <datalist id="rti-authority-options">
-            {authorities
-              .filter((item) => item.id !== "unknown_central")
-              .map((authority) => (
-                <option key={authority.id} value={authority.name}>
-                  {authority.ministry}
-                </option>
-              ))}
-          </datalist>
-        </label>
-      ) : null}
+        <section className="rti-authority-search">
+          <label className="rti-field">
+            <span>{rtiCopy.authority.searchLabel}</span>
+            <input
+              autoComplete="off"
+              onChange={(event) => setFilter(event.target.value)}
+              placeholder={rtiCopy.authority.searchPlaceholder}
+              type="search"
+              value={filter}
+            />
+            <small>{rtiCopy.authority.searchHint}</small>
+          </label>
 
-      {isCentral && query.trim() && !typedMatchesAnEntry ? (
-        <p className="rti-warning rti-warning--caution">{rtiCopy.authority.noMatch}</p>
+          {/* A visible list, not a datalist. A datalist renders nothing until
+              the field is focused and gives no sign it exists at all. */}
+          <ul className="rti-authority-options">
+            {filtered.map((authority) => (
+              <li key={authority.id}>
+                <button
+                  aria-pressed={authorityId === authority.id}
+                  className={authorityId === authority.id ? "is-selected" : undefined}
+                  onClick={() => choose(authority.id)}
+                  type="button"
+                >
+                  <span className="rti-icon-tile rti-icon-tile--sm">
+                    <Icon name={authorityIcon(authority.id)} />
+                  </span>
+                  <span>
+                    <strong>{authority.name}</strong>
+                    <small>{authority.ministry}</small>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          {filtered.length === 0 ? (
+            <p className="rti-warning rti-warning--caution">{rtiCopy.authority.noMatch}</p>
+          ) : null}
+        </section>
       ) : null}
 
       {selected && selected.id !== "unknown_central" ? (
@@ -482,6 +499,11 @@ function AuthorityStep() {
               </ul>
             </div>
           ) : null}
+          <div>
+            <a href={selected.siteUrl} rel="noreferrer" target="_blank">
+              {selected.siteLabel}
+            </a>
+          </div>
         </section>
       ) : null}
 
@@ -651,17 +673,32 @@ function ChecksStep() {
   const results = evaluatePreflightChecks(input);
   const blocked = results.some((result) => result.status === "block");
 
-  function download() {
-    const text = [
-      `To: ${draft!.authorityName}`,
-      `Officer: ${draft!.officer}`,
-      "",
-      draft!.rewritten || draft!.rawText,
-    ].join("\n");
-    const url = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
+  async function download() {
+    const current = draft!;
+    const authority = listAuthorities().find(
+      (item) => item.id === current.authorityId,
+    );
+    // pdf-lib is only needed when the citizen actually asks for the file, so it
+    // is loaded on demand rather than shipped in the page bundle.
+    const { buildApplicationPdf } = await import("@/lib/rti/application-pdf");
+    const bytes = await buildApplicationPdf({
+      authorityName: current.authorityName || rtiCopy.checks.unknownAuthority,
+      officer: current.officer || "Public Information Officer",
+      ministry: authority?.ministry || undefined,
+      body: current.rewritten || current.rawText,
+      registrationNumber: current.registrationNumber,
+      date: new Date().toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+      simulated: true,
+    });
+    const blob = new Blob([bytes as BlobPart], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "rti-application.txt";
+    anchor.download = "rti-application.pdf";
     anchor.click();
     URL.revokeObjectURL(url);
   }

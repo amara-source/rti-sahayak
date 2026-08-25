@@ -229,3 +229,19 @@ describe("home journey strip stays tied to the rule pack", () => {
     ]);
   });
 });
+
+describe("authority outbound links", () => {
+  it("gives every authority a link and a label", () => {
+    for (const authority of listAuthorities()) {
+      expect(authority.siteUrl, `no link for ${authority.id}`).toMatch(/^https:\/\//);
+      expect(authority.siteLabel.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("only points at government hosts", () => {
+    for (const authority of listAuthorities()) {
+      const host = new URL(authority.siteUrl).hostname;
+      expect(host.endsWith(".gov.in"), `${authority.id} -> ${host}`).toBe(true);
+    }
+  });
+});

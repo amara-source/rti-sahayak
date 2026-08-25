@@ -9,6 +9,9 @@ export interface AuthorityRule {
   officerNote: string;
   /** The kinds of record this authority holds, so the citizen can aim the request. */
   records: string;
+  /** The body's own RTI page, or the government directory when it has none. */
+  siteUrl: string;
+  siteLabel: string;
   matches: string[];
 }
 

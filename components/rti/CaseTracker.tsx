@@ -265,6 +265,24 @@ export function CaseTracker({ code }: { code: string }) {
   // Once silence is a refusal, the next real event depends on the citizen
   // filing the appeal, so advancing time further would change nothing.
   const advanceBlocked = hasLapsed && !appealFiled;
+  // The First Appeal runs its own clock. Without it on this page, advancing
+  // time after filing only moved the original overdue count, which is not the
+  // deadline that matters any more.
+  const appealStartedAt = data.case.startedAtHours?.first_appeal;
+  const appealElapsedDays =
+    appealStartedAt === undefined
+      ? null
+      : Math.max(
+          0,
+          Math.floor(((data.case.elapsedHours ?? 0) - appealStartedAt) / 24),
+        );
+  const APPEAL_DECISION_DAYS = 45;
+  const appealRemainingDays =
+    appealElapsedDays === null
+      ? null
+      : Math.max(0, APPEAL_DECISION_DAYS - appealElapsedDays);
+  const appealDecisionLapsed =
+    appealElapsedDays !== null && appealElapsedDays > APPEAL_DECISION_DAYS;
 
   return (
     <section className="rti-case-page">
@@ -291,8 +309,33 @@ export function CaseTracker({ code }: { code: string }) {
               <span className="rti-icon-tile"><Icon name={nodeIcon("deemed_refusal")} /></span>
               <div className="rti-escalation__copy">
                 <p className="rti-escalation__eyebrow">{rtiCopy.tracker.lapsed.eyebrow}</p>
-                <h2>{appealFiled ? rtiCopy.tracker.lapsed.filedHeading : rtiCopy.tracker.lapsed.heading}</h2>
-                <p>{appealFiled ? rtiCopy.tracker.lapsed.filedBody : deemed?.summary}</p>
+                <h2>
+                  {appealDecisionLapsed
+                    ? rtiCopy.tracker.appealLapsed
+                    : appealFiled
+                      ? rtiCopy.tracker.appealRunning
+                      : rtiCopy.tracker.lapsed.heading}
+                </h2>
+                <p>
+                  {appealDecisionLapsed
+                    ? rtiCopy.tracker.appealLapsedBody
+                    : appealFiled
+                      ? rtiCopy.tracker.lapsed.filedBody
+                      : deemed?.summary}
+                </p>
+                {appealFiled && appealElapsedDays !== null ? (
+                  <div className="rti-appeal-progress">
+                    <div>
+                      <strong>{appealElapsedDays}</strong>
+                      <span>{rtiCopy.appeals.daysElapsed}</span>
+                    </div>
+                    <div>
+                      <strong>{appealRemainingDays}</strong>
+                      <span>{rtiCopy.appeals.daysRemaining}</span>
+                    </div>
+                    <p>{rtiCopy.appeals.first.clockReason}</p>
+                  </div>
+                ) : null}
                 {!appealFiled && firstAppeal?.clock ? (
                   <p className="rti-escalation__deadline">
                     {rtiCopy.tracker.lapsed.deadline(firstAppeal.clock.label, firstAppeal.clock.days ?? 0)}

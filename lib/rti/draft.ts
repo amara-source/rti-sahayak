@@ -27,6 +27,7 @@ export interface RtiDraft {
     size: number;
   };
   hasBplCertificate?: boolean;
+  registrationNumber?: string;
 }
 
 const key = "rti-sahayak-draft";

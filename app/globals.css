@@ -5455,6 +5455,9 @@ html[data-theme="dark"] {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+  /* Cards take the height of their own content. Stretching them to match the
+     tallest in the row left a card saying only "Pass" three times too tall. */
+  align-items: start;
 }
 
 .rti-check-controls .rti-field {
@@ -5463,7 +5466,6 @@ html[data-theme="dark"] {
 }
 
 .rti-check {
-  min-height: 150px;
   border-left-width: 4px;
   box-shadow: none;
 }
@@ -7262,6 +7264,23 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   .rti-case-progress__track span { transition: none; }
 }
 
+
+/* Optical centring.
+   The UI font has asymmetric vertical metrics (ascent 12, descent 8), so the
+   baseline sits at 60% of the em box. Centring the line box geometrically
+   therefore leaves the glyph ink 2 to 3px above the true centre and the label
+   reads as sitting high. These two variables push the text back down without
+   changing the 48px button height: they always sum to 24. */
+:root {
+  /* Cap height is 10.4px against a 15.8px line box, so a geometrically centred
+     label leaves 13.6px above the capitals and 20px below the baseline. These
+     shift the text down by 3px, most of the way to true cap centring, stopping
+     short of it so descenders do not hang low. They always sum to 24, so the
+     48px button height is unchanged. */
+  --btn-pad-top: 17px;
+  --btn-pad-bottom: 7px;
+}
+
 /* ---------------------------------------------------------------------------
    ONE BUTTON SYSTEM
    Primary, secondary, disabled. Defined last so it settles the cascade, which
@@ -7279,7 +7298,7 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   justify-content: center;
   gap: .5rem;
   box-sizing: border-box;
-  padding: 12px 22px;
+  padding: var(--btn-pad-top) 22px var(--btn-pad-bottom);
   /* accent-deep, not accent: white on the teal and orange accents falls to
      4.18:1 and 3.17:1, under the 4.5:1 AA threshold. accent-deep clears it on
      every theme. */
@@ -7313,7 +7332,7 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   justify-content: center;
   gap: .5rem;
   box-sizing: border-box;
-  padding: 12px 22px;
+  padding: var(--btn-pad-top) 22px var(--btn-pad-bottom);
   border: 1px solid var(--accent);
   border-radius: 999px;
   color: var(--accent-deep);
@@ -7653,7 +7672,7 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
 
 .ask-chips__row .rti-secondary {
   min-height: 44px;
-  padding: 10px 18px;
+  padding: 15px 18px 5px;
   font-size: .9rem;
 }
 
@@ -7668,7 +7687,7 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
 /* A four column row makes the cards narrower, so the call to action needs a
    tighter box to stay on one line. */
 .utility-card > a {
-  padding: 12px 16px;
+  padding: var(--btn-pad-top) 16px var(--btn-pad-bottom);
   font-size: .94rem;
 }
 
@@ -7852,4 +7871,88 @@ html[data-theme="dark"] .rti-icon-tile {
 html[data-theme="dark"] .rti-icon,
 html[data-theme="dark"] .rti-icon .icon-fill {
   stroke: color-mix(in srgb, var(--accent) 45%, #ffffff);
+}
+
+/* Authority picker: a list you can see and browse, not a hidden datalist. */
+
+.rti-authority-search {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.rti-authority-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 10px;
+  max-height: 340px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+}
+
+.rti-authority-options button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rti-authority-options button:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+}
+
+.rti-authority-options button.is-selected {
+  border-color: var(--accent-deep);
+  border-width: 2px;
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface));
+}
+
+.rti-authority-options strong {
+  display: block;
+  font-size: .95rem;
+  line-height: 1.3;
+}
+
+.rti-authority-options small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+/* The First Appeal's own clock, shown on the case page once it is filed. */
+.rti-appeal-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 26px;
+  margin: 4px 0;
+}
+
+.rti-appeal-progress > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.rti-appeal-progress strong { font-size: 1.7rem; line-height: 1; }
+.rti-appeal-progress span { color: var(--muted); font-size: .82rem; font-weight: 800; }
+.rti-appeal-progress p { flex-basis: 100%; margin: 0; color: var(--muted); font-size: .86rem; }
+
+.authority-card__link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accent-deep);
+  font-weight: 800;
+  font-size: .9rem;
 }

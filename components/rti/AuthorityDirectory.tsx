@@ -4,13 +4,9 @@ import { useMemo, useState } from "react";
 import { Icon } from "./Icon";
 import { authorityIcon } from "@/lib/rti/icon-map";
 
-export interface DirectoryAuthority {
-  id: string;
-  name: string;
-  ministry: string;
-  officer: string;
-  matches: string[];
-}
+// The directory renders the authored authority record as-is.
+export type { AuthorityRule as DirectoryAuthority } from "@/lib/engine/authority";
+import type { AuthorityRule as DirectoryAuthority } from "@/lib/engine/authority";
 
 export function AuthorityDirectory({ authorities }: { authorities: DirectoryAuthority[] }) {
   const [query, setQuery] = useState("");
@@ -51,8 +47,18 @@ export function AuthorityDirectory({ authorities }: { authorities: DirectoryAuth
               <dl>
                 <div><dt>Ministry</dt><dd>{authority.ministry}</dd></div>
                 <div><dt>Officer title</dt><dd>{authority.officer}</dd></div>
+                <div><dt>Records it holds</dt><dd>{authority.records}</dd></div>
+                <div><dt>Which office</dt><dd>{authority.officerNote}</dd></div>
               </dl>
               <p><strong>Useful search terms:</strong> {authority.matches.join(", ")}</p>
+              <a
+                className="authority-card__link"
+                href={authority.siteUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {authority.siteLabel}
+              </a>
             </article>
           ))}
         </div>

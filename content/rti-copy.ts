@@ -85,6 +85,7 @@ export const rtiCopy = {
     fallbackReason: "The rewriting service is unavailable, so nothing was changed. You can edit the filing text yourself.",
   },
   checks: {
+    unknownAuthority: "The public authority concerned",
     eyebrow: "Pre-flight",
     heading: "Check it before submission",
     intro: "Every check comes from the authored RTI rule pack.",
@@ -181,6 +182,10 @@ export const rtiCopy = {
       filedAction: "Open your First Appeal",
       deadline: (label: string, days: number) => `${label}: ${days} days`,
     },
+    appealRunning: "Your First Appeal is running",
+    appealLapsed: "The Authority did not decide in time",
+    appealLapsedBody: "The forty five day limit has passed with no decision. That is the ground for a Second Appeal to the Information Commission.",
+    appealOpen: "Open your First Appeal",
     advanceBlocked:
       "Time moves again once the First Appeal is filed. The next deadline belongs to the Appellate Authority, not to the officer who stayed silent.",
     planCode: "Case code",
