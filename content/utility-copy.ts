@@ -21,7 +21,15 @@ export interface UtilityPageCopy {
   sections: UtilitySectionCopy[];
 }
 
-const officialAct = "https://rti.gov.in/";
+// The Right to Information Act 2005 as amended, published by the Department of
+// Personnel and Training. India Code has no stable per-section URL for this Act,
+// so every section card opens the full text and names the section to look for.
+const actPdf =
+  "https://rti.gov.in/Writereaddata/RTI%20Act,%202005%20(Amended)-English%20Version.PDF";
+
+function actLink(section: string) {
+  return { href: actPdf, linkLabel: `Open the Act PDF, then find ${section}` };
+}
 
 export const utilityPages = {
   home: {
@@ -95,19 +103,20 @@ export const utilityPages = {
     sections: [
       {
         heading: "Sections used by RTI Sahayak",
+        intro: "The government publishes the Act as a single PDF with no link to an individual section, so each card below opens the full text and tells you which section to look for. The version linked is the Act as amended, published by the Department of Personnel and Training.",
         cards: [
-          { title: "Sections 2(f) and 2(j)", body: "Information means material already held as records, documents, memos, file notings, reports and other recorded forms. We use this when rewriting a question as a request for records.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 5", body: "Every public authority must appoint Public Information Officers. We use this when proposing the officer title and authority for the request.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 6(2)", body: "A citizen does not need to give a reason for asking, or provide personal details beyond what is needed for contact. We use this in the identity-document warning.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 6(3)", body: "A request sent to the wrong public authority should be transferred to the correct authority within five days. We use this for the transfer branch and its clock.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 7(1)", body: "The Public Information Officer normally has thirty days to reply. A life or liberty request has a forty eight hour period. We use this for the main reply clock.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 7(3)", body: "If the authority asks for an additional fee to supply records, it must give the calculation and the reply clock pauses until payment. We show this as a clock warning.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 7(2)", body: "Silence after the reply period is a deemed refusal. We use this event to unlock the First Appeal without waiting for a rejection letter.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 8", body: "The Act contains exemptions for protected information. A refusal should identify the exemption used; the citizen can challenge how it was applied.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 11", body: "Where requested records concern a third party, that party is notified and the decision period may extend to forty days. We explain this exception beside the reply clock.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 18", body: "A complaint challenges the officer's conduct and has no time limit. We keep it as a parallel route directly from the original request.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Sections 19(1) and 19(6)", body: "A First Appeal is normally filed within thirty days. The Appellate Authority must decide within thirty days, extendable to forty five days with recorded reasons. We use both clocks in the First Appeal journey.", href: officialAct, linkLabel: "Read the official text" },
-          { title: "Section 19(3)", body: "A Second Appeal goes to the Information Commission within ninety days. We unlock it only after the First Appeal is complete.", href: officialAct, linkLabel: "Read the official text" },
+          { title: "Sections 2(f) and 2(j)", body: "Information means material already held as records, documents, memos, file notings, reports and other recorded forms. We use this when rewriting a question as a request for records.", ...actLink("Sections 2(f) and 2(j)") },
+          { title: "Section 5", body: "Every public authority must appoint Public Information Officers. We use this when proposing the officer title and authority for the request.", ...actLink("Section 5") },
+          { title: "Section 6(2)", body: "A citizen does not need to give a reason for asking, or provide personal details beyond what is needed for contact. We use this in the identity-document warning.", ...actLink("Section 6(2)") },
+          { title: "Section 6(3)", body: "A request sent to the wrong public authority should be transferred to the correct authority within five days. We use this for the transfer branch and its clock.", ...actLink("Section 6(3)") },
+          { title: "Section 7(1)", body: "The Public Information Officer normally has thirty days to reply. A life or liberty request has a forty eight hour period. We use this for the main reply clock.", ...actLink("Section 7(1)") },
+          { title: "Section 7(3)", body: "If the authority asks for an additional fee to supply records, it must give the calculation and the reply clock pauses until payment. We show this as a clock warning.", ...actLink("Section 7(3)") },
+          { title: "Section 7(2)", body: "Silence after the reply period is a deemed refusal. We use this event to unlock the First Appeal without waiting for a rejection letter.", ...actLink("Section 7(2)") },
+          { title: "Section 8", body: "The Act contains exemptions for protected information. A refusal should identify the exemption used; the citizen can challenge how it was applied.", ...actLink("Section 8") },
+          { title: "Section 11", body: "Where requested records concern a third party, that party is notified and the decision period may extend to forty days. We explain this exception beside the reply clock.", ...actLink("Section 11") },
+          { title: "Section 18", body: "A complaint challenges the officer's conduct and has no time limit. We keep it as a parallel route directly from the original request.", ...actLink("Section 18") },
+          { title: "Sections 19(1) and 19(6)", body: "A First Appeal is normally filed within thirty days. The Appellate Authority must decide within thirty days, extendable to forty five days with recorded reasons. We use both clocks in the First Appeal journey.", ...actLink("Sections 19(1) and 19(6)") },
+          { title: "Section 19(3)", body: "A Second Appeal goes to the Information Commission within ninety days. We unlock it only after the First Appeal is complete.", ...actLink("Section 19(3)") },
         ],
       },
     ],
