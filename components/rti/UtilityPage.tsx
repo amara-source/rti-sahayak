@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { UtilityPageCopy } from "@/content/utility-copy";
-import { FilledIcon } from "./FilledIcon";
+import { Icon } from "./Icon";
+import type { IconName } from "./Icon";
 import { PageHero } from "./PageHero";
 
 export function UtilityPage({
@@ -23,7 +24,11 @@ export function UtilityPage({
             <div className="utility-card-grid">
               {section.cards.map((card) => (
                 <article className="utility-card" key={card.title}>
-                  <FilledIcon seed={`utility:${copy.heading}:${section.heading}:${card.title}`} />
+                  {card.icon ? (
+                    <span className="rti-icon-tile">
+                      <Icon name={card.icon as IconName} />
+                    </span>
+                  ) : null}
                   <h3>{card.title}</h3>
                   {card.detail ? <strong>{card.detail}</strong> : null}
                   <p>{card.body}</p>

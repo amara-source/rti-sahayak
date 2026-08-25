@@ -1,4 +1,6 @@
 export interface UtilityCardCopy {
+  /** Optional. Cards that identify a thing get an icon; list items do not. */
+  icon?: string;
   title: string;
   body: string;
   href?: string;
@@ -42,10 +44,10 @@ export const utilityPages = {
       {
         heading: "One continuous journey",
         cards: [
-          { title: "See the day 31 example", body: "Open a pre-populated pension case after the reply window has lapsed. Deemed refusal has fired and the First Appeal is ready.", href: "/example", linkLabel: "Open the example case" },
-          { title: "File an RTI", body: "Describe the records you need, confirm the jurisdiction, choose the authority and run every pre-flight check before the simulated submission.", href: "/file", linkLabel: "Start a request" },
-          { title: "Track your case", body: "Keep the reply deadline visible and watch the statutory process map change as simulated time advances.", href: "/case", linkLabel: "Open your case" },
-          { title: "Understand the law", body: "Read the sections of the RTI Act that power each warning, clock, appeal and complaint route.", href: "/act", linkLabel: "Read the RTI Act guide" },
+          { icon: "route", title: "See the day 31 example", body: "Open a pre-populated pension case after the reply window has lapsed. Deemed refusal has fired and the First Appeal is ready.", href: "/example", linkLabel: "Open the example case" },
+          { icon: "form", title: "File an RTI", body: "Describe the records you need, confirm the jurisdiction, choose the authority and run every pre-flight check before the simulated submission.", href: "/file", linkLabel: "Start a request" },
+          { icon: "timeline", title: "Track your case", body: "Keep the reply deadline visible and watch the statutory process map change as simulated time advances.", href: "/case", linkLabel: "Open your case" },
+          { icon: "book", title: "Understand the law", body: "Read the sections of the RTI Act that power each warning, clock, appeal and complaint route.", href: "/act", linkLabel: "Read the RTI Act guide" },
         ],
       },
     ],
@@ -212,14 +214,14 @@ export const utilityPages = {
       {
         heading: "Common failure points",
         cards: [
-          { title: "Wrong government", body: "The central portal returns state-government matters. Identify whether the records belong to a central or state body before filing." },
-          { title: "Too much text", body: "The online request field accepts up to 3,000 characters. Put necessary supporting detail into one PDF attachment under 1 MB." },
-          { title: "Unsupported characters", body: "Rupee signs, curly quotes and long dash characters can break the form. Use plain characters in the request text." },
-          { title: "Several subjects together", body: "Keep one application to one subject and one public authority. Split unrelated requests before filing." },
-          { title: "Asking for reasons", body: "Ask for the record, such as file notings or an order, instead of asking an officer to explain why something happened." },
-          { title: "Identity documents", body: "Do not attach Aadhaar, PAN or another identity document. Identity proof is not required for an RTI application." },
-          { title: "Attachment problems", body: "Use one PDF under 1 MB with a filename that contains no spaces." },
-          { title: "Missing BPL certificate", body: "A person claiming free filing must attach the certificate issued by the appropriate state government." },
+          { icon: "map-pin", title: "Wrong government", body: "The central portal returns state-government matters. Identify whether the records belong to a central or state body before filing." },
+          { icon: "text-length", title: "Too much text", body: "The online request field accepts up to 3,000 characters. Put necessary supporting detail into one PDF attachment under 1 MB." },
+          { icon: "keyboard", title: "Unsupported characters", body: "Rupee signs, curly quotes and long dash characters can break the form. Use plain characters in the request text." },
+          { icon: "split", title: "Several subjects together", body: "Keep one application to one subject and one public authority. Split unrelated requests before filing." },
+          { icon: "folder", title: "Asking for reasons", body: "Ask for the record, such as file notings or an order, instead of asking an officer to explain why something happened." },
+          { icon: "id-off", title: "Identity documents", body: "Do not attach Aadhaar, PAN or another identity document. Identity proof is not required for an RTI application." },
+          { icon: "paperclip", title: "Attachment problems", body: "Use one PDF under 1 MB with a filename that contains no spaces." },
+          { icon: "certificate", title: "Missing BPL certificate", body: "A person claiming free filing must attach the certificate issued by the appropriate state government." },
         ],
       },
     ],
@@ -249,12 +251,12 @@ export const manualCopy = {
   heading: "From a problem to a tracked case",
   intro: "Follow the complete prototype journey. Each image is captured from the working screen it describes.",
   steps: [
-    { title: "1. Describe the request", body: "Write what happened in your own words, or start from a template. Confirm the plain-language reading before continuing.", image: "/manual/01-describe.jpg", alt: "Describe an RTI request screen" },
-    { title: "2. Check jurisdiction", body: "Choose central or state government. The central portal cannot accept a state matter, so this gate runs before the rest of the journey.", image: "/manual/02-jurisdiction.jpg", alt: "Jurisdiction gate screen" },
-    { title: "3. Choose the authority", body: "Review the proposed public authority and officer title. Change either if the directory points somewhere else.", image: "/manual/03-authority.jpg", alt: "Public authority selection screen" },
-    { title: "4. Review the rewrite", body: "Compare the original wording with the records-focused draft. The filed version stays editable and the changes are explained.", image: "/manual/04-draft.jpg", alt: "Side-by-side RTI draft screen" },
-    { title: "5. Run pre-flight checks", body: "Resolve every blocking item. Warnings show both the likely consequence and the specific fix.", image: "/manual/05-checks.jpg", alt: "RTI pre-flight checks screen" },
-    { title: "6. Practice submission", body: "Use the labelled simulated OTP, fee and registration steps. No real email, payment gateway or government portal is contacted.", image: "/manual/06-submit.jpg", alt: "Simulated RTI submission screen" },
-    { title: "7. Track the legal clock", body: "The case page shows time remaining, the live statutory process map and the next route that unlocks when a deadline lapses.", image: "/manual/07-case.jpg", alt: "RTI case tracker and live process map" },
+    { title: "1. Describe the request", body: "Write what happened in your own words, or start from a template. Confirm the plain-language reading before continuing.", image: "/manual/01-describe.jpg", alt: "Describe an RTI request screen" , icon: "describe" },
+    { title: "2. Check jurisdiction", body: "Choose central or state government. The central portal cannot accept a state matter, so this gate runs before the rest of the journey.", image: "/manual/02-jurisdiction.jpg", alt: "Jurisdiction gate screen" , icon: "jurisdiction" },
+    { title: "3. Choose the authority", body: "Review the proposed public authority and officer title. Change either if the directory points somewhere else.", image: "/manual/03-authority.jpg", alt: "Public authority selection screen" , icon: "authority" },
+    { title: "4. Review the rewrite", body: "Compare the original wording with the records-focused draft. The filed version stays editable and the changes are explained.", image: "/manual/04-draft.jpg", alt: "Side-by-side RTI draft screen" , icon: "draft" },
+    { title: "5. Run pre-flight checks", body: "Resolve every blocking item. Warnings show both the likely consequence and the specific fix.", image: "/manual/05-checks.jpg", alt: "RTI pre-flight checks screen" , icon: "checks" },
+    { title: "6. Practice submission", body: "Use the labelled simulated OTP, fee and registration steps. No real email, payment gateway or government portal is contacted.", image: "/manual/06-submit.jpg", alt: "Simulated RTI submission screen" , icon: "submit" },
+    { title: "7. Track the legal clock", body: "The case page shows time remaining, the live statutory process map and the next route that unlocks when a deadline lapses.", image: "/manual/07-case.jpg", alt: "RTI case tracker and live process map" , icon: "track" },
   ],
 } as const;

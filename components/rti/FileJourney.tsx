@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
-import { FilledIcon } from "@/components/rti/FilledIcon";
 import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
+import { Icon } from "./Icon";
+import { checkIcon, stepIcons } from "@/lib/rti/icon-map";
 import {
   evaluatePreflightChecks,
   type PreflightInput,
@@ -80,8 +81,10 @@ function useStoredDraft() {
 function Shell({
   eyebrow,
   heading,
+  step,
   children,
 }: {
+  step?: keyof typeof stepIcons;
   eyebrow: string;
   heading: string;
   children: React.ReactNode;
@@ -97,7 +100,7 @@ function Shell({
         tone={hero.tone}
       />
       <div className="rti-flow-shell rti-overlap-card">
-        <FilledIcon seed={`file-step:${eyebrow}:${heading}`} />
+        {step ? <span className="rti-icon-tile"><Icon name={stepIcons[step]} /></span> : null}
         {children}
       </div>
     </section>
@@ -157,7 +160,7 @@ function DescribeStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.describe.eyebrow} heading={rtiCopy.describe.heading}>
+    <Shell step="describe" eyebrow={rtiCopy.describe.eyebrow} heading={rtiCopy.describe.heading}>
       <label className="rti-field">
         <span>{rtiCopy.describe.original}</span>
         <textarea
@@ -271,7 +274,7 @@ function JurisdictionStep() {
   }, [draft]);
 
   if (!ready) return null;
-  if (!draft) return <Shell eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
   const warning = computeJourney("rti", { bodyLevel }).find(
     (node) => node.id === "jurisdiction_check",
@@ -284,7 +287,7 @@ function JurisdictionStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}>
+    <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}>
       <fieldset className="rti-choice-group">
         <legend>{rtiCopy.jurisdiction.bodyLevel}</legend>
         {([
@@ -387,7 +390,7 @@ function AuthorityStep() {
   }, [authorities, draft]);
 
   if (!ready) return null;
-  if (!draft) return <Shell eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
   const selected = authorities.find((item) => item.id === authorityId);
   const unknown = authorityId === "unknown_central" || !authorityName.trim();
@@ -420,7 +423,7 @@ function AuthorityStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}>
+    <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}>
       {isCentral && !unknown && selected ? (
         <p className="rti-reasoning">
           {pickedManually || !matchedTerm
@@ -559,7 +562,7 @@ function DraftStep() {
   }, [draft]);
 
   if (!ready) return null;
-  if (!draft) return <Shell eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="draft" eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
   function proceed() {
     update({ ...draft!, rewritten, changes });
@@ -567,7 +570,7 @@ function DraftStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}>
+    <Shell step="draft" eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}>
       <div className="rti-rewrite-grid">
         <section>
           <h2>{rtiCopy.draft.original}</h2>
@@ -633,7 +636,7 @@ function ChecksStep() {
   }, [draft]);
 
   if (!ready) return null;
-  if (!draft?.bodyLevel) return <Shell eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft?.bodyLevel) return <Shell step="checks" eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
   const input: PreflightInput = {
     bodyLevel: draft.bodyLevel,
@@ -676,7 +679,7 @@ function ChecksStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}>
+    <Shell step="checks" eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}>
       <div className="rti-check-controls">
         <label><input checked={singleSubject} onChange={(event) => setSingleSubject(event.target.checked)} type="checkbox" /> {rtiCopy.checks.singleSubject}</label>
         <label><input checked={asksForRecords} onChange={(event) => setAsksForRecords(event.target.checked)} type="checkbox" /> {rtiCopy.checks.asksForRecords}</label>
@@ -697,6 +700,7 @@ function ChecksStep() {
       <div className="rti-check-list">
         {results.map((result) => (
           <article className={`rti-check rti-check--${result.status}`} key={result.id}>
+              <span className="rti-icon-tile rti-icon-tile--sm"><Icon name={checkIcon(result.id)} /></span>
             <header>
               <h2>{result.label}</h2>
               <span>{result.status === "pass" ? rtiCopy.checks.pass : result.status === "warn" ? rtiCopy.checks.warn : rtiCopy.checks.block}</span>
@@ -740,7 +744,7 @@ function SubmitStep() {
 
   if (!ready) return null;
   if (!draft || draft.bodyLevel !== "central" || draft.draftOnly) {
-    return <Shell eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}><Link href="/file/jurisdiction">{rtiCopy.common.back}</Link></Shell>;
+    return <Shell step="submit" eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}><Link href="/file/jurisdiction">{rtiCopy.common.back}</Link></Shell>;
   }
 
   async function createCase() {
@@ -765,7 +769,7 @@ function SubmitStep() {
   }
 
   return (
-    <Shell eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}>
+    <Shell step="submit" eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}>
       <p className="rti-simulation-label">{rtiCopy.submit.label}</p>
       <div className="rti-submit-grid">
         <section className={step === 1 ? "rti-submit-step is-active" : "rti-submit-step"}>

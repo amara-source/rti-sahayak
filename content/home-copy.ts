@@ -111,14 +111,17 @@ export const homeCopy = {
     heading: "Why this exists",
     cards: [
       {
+        icon: "two-websites",
         title: "The government runs two separate websites",
         body: "rti.gov.in explains the Act and holds the directory of Public Information Officers. rtionline.gov.in is where you file, pay and start the legal clock. Neither site tells you that you need the other one.",
       },
       {
+        icon: "paid-industry",
         title: "A ten rupee right became a paid service",
         body: "The application fee set by the RTI Rules 2012 is ten rupees, and nothing for a household below the poverty line. An industry has grown up charging citizens hundreds of rupees to fill in that form for them.",
       },
       {
+        icon: "filing-is-easy",
         title: "Filing is the easy part",
         body: "The reply period, the deemed refusal on silence, the First Appeal and the Second Appeal are where most applications are lost. None of that is visible on the portal after you pay.",
       },

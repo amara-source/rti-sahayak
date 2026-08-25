@@ -7,8 +7,9 @@ import { trackerCopy } from "@/content/tracker-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
+import { Icon } from "@/components/rti/Icon";
+import { nodeIcon } from "@/lib/rti/icon-map";
 import { ProcessFlowchart } from "@/components/rti/ProcessFlowchart";
-import { FilledIcon } from "@/components/rti/FilledIcon";
 
 interface CaseResponse {
   case: Plan;
@@ -287,7 +288,7 @@ export function CaseTracker({ code }: { code: string }) {
           <Clock lapsed={hasLapsed} nodes={data.nodes} plan={data.case} />
           {hasLapsed ? (
             <section className={appealFiled ? "rti-escalation is-filed" : "rti-escalation"} role="status">
-              <FilledIcon seed="case:deemed-refusal" />
+              <span className="rti-icon-tile"><Icon name={nodeIcon("deemed_refusal")} /></span>
               <div className="rti-escalation__copy">
                 <p className="rti-escalation__eyebrow">{rtiCopy.tracker.lapsed.eyebrow}</p>
                 <h2>{appealFiled ? rtiCopy.tracker.lapsed.filedHeading : rtiCopy.tracker.lapsed.heading}</h2>
@@ -351,7 +352,7 @@ export function CaseTracker({ code }: { code: string }) {
                         : "is-available";
                   return (
                     <article className={`rti-node ${stateClass}`} key={node.id}>
-                      <FilledIcon seed={`case-list:${node.id}`} />
+                      <span className="rti-icon-tile rti-icon-tile--sm"><Icon name={nodeIcon(node.id)} /></span>
                       <div className="rti-node__top">
                         <JobTag job={node.job} />
                         <span>{rtiCopy.tracker.status}: {statusLabel}</span>
@@ -446,7 +447,7 @@ export function CaseNodeDetail({
       />
       <div className="rti-detail-content rti-overlap-card">
         <Link className="rti-back-link" href={`/case/${code}`}>{rtiCopy.detail.back}</Link>
-        <FilledIcon seed={`case-detail:${node.id}`} />
+        <span className="rti-icon-tile"><Icon name={nodeIcon(node.id)} /></span>
         <div className="rti-node__top"><JobTag job={node.job} /></div>
         <dl>
           <div><dt>{rtiCopy.detail.authority}</dt><dd>{node.authority}</dd></div>

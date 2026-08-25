@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import type { Plan, RenderedNode } from "@/lib/engine/types";
-import { FilledIcon } from "./FilledIcon";
 import { rtiCopy } from "@/content/rti-copy";
+import { Icon } from "./Icon";
 
 type FlowId =
   | "request"
@@ -282,7 +282,7 @@ export function ProcessFlowchart({
   return (
     <section className="rti-process-card" aria-labelledby="rti-process-heading">
       <div className="rti-process-card__heading">
-        <FilledIcon seed="case:process-flowchart" />
+        <span className="rti-icon-tile"><Icon name="route" /></span>
         <p>{rtiCopy.tracker.flow.eyebrow}</p>
         <h2 id="rti-process-heading">{rtiCopy.tracker.flow.heading}</h2>
       </div>

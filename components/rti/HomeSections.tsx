@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { homeCopy } from "@/content/home-copy";
-import { FilledIcon } from "./FilledIcon";
+import { Icon } from "./Icon";
+import { checkIcon, conceptIcons } from "@/lib/rti/icon-map";
 
 /**
  * The five traps.
@@ -25,7 +26,7 @@ function TrapCard({ trap }: { trap: (typeof homeCopy.traps.items)[number] }) {
         type="button"
       >
         <span className="trap-card__face trap-card__front">
-          <FilledIcon seed={`trap:${trap.checkId}`} />
+          <span className="rti-icon-tile"><Icon name={checkIcon(trap.checkId)} /></span>
           <strong>{trap.title}</strong>
           <span className="trap-card__line">{trap.front}</span>
           <span className="trap-card__hint">{homeCopy.traps.flipHint}</span>
@@ -69,7 +70,7 @@ export function WhyThisExists() {
       <div className="utility-card-grid">
         {homeCopy.why.cards.map((card) => (
           <article className="utility-card" key={card.title}>
-            <FilledIcon seed={`why:${card.title}`} />
+            <span className="rti-icon-tile"><Icon name={conceptIcons[card.icon]} /></span>
             <h3>{card.title}</h3>
             <p>{card.body}</p>
           </article>

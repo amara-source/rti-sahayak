@@ -7786,3 +7786,70 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   .journey-strip { grid-template-columns: minmax(0, 1fr); }
   .journey-stage::after { display: none !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   ICONS
+   Line icons at one weight and one optical size. The duotone fill carries the
+   meaning; the stroke keeps every glyph on the same visual footing.
+   --------------------------------------------------------------------------- */
+
+.rti-icon {
+  display: block;
+  flex: 0 0 auto;
+  stroke: var(--accent-deep);
+}
+
+.rti-icon .icon-fill {
+  fill: color-mix(in srgb, var(--accent) 20%, transparent);
+  stroke: var(--accent-deep);
+}
+
+/* The tile the icon sits in, replacing the old generated glyph block. */
+.rti-icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: var(--accent-soft);
+}
+
+.rti-icon-tile .rti-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.rti-icon-tile--sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+}
+
+.rti-icon-tile--sm .rti-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* On the inverted surfaces the icon has to read against a dark ground. */
+.rti-escalation .rti-icon-tile {
+  background: color-mix(in srgb, #a63f44 14%, var(--surface));
+}
+
+.rti-escalation .rti-icon,
+.rti-escalation .rti-icon .icon-fill {
+  stroke: #a63f44;
+}
+
+.rti-escalation .rti-icon .icon-fill {
+  fill: color-mix(in srgb, #a63f44 18%, transparent);
+}
+
+html[data-theme="dark"] .rti-icon-tile {
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
+}
+
+html[data-theme="dark"] .rti-icon,
+html[data-theme="dark"] .rti-icon .icon-fill {
+  stroke: color-mix(in srgb, var(--accent) 45%, #ffffff);
+}

@@ -22,7 +22,7 @@ interface Turn {
 
 /**
  * A distinct mark for the assistant, so a reply is never mistaken for the
- * citizen's own words. Deliberately not the FilledIcon used elsewhere.
+ * citizen's own words. Deliberately not one of the concept icons used elsewhere.
  */
 function AssistantAvatar() {
   return (

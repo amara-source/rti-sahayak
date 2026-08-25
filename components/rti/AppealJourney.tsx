@@ -5,7 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { PageHero } from "./PageHero";
-import { FilledIcon } from "./FilledIcon";
+import { Icon } from "./Icon";
+import { nodeIcon } from "@/lib/rti/icon-map";
 
 type AppealKind = "first" | "second" | "complaint";
 
@@ -118,15 +119,15 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
         <Link className="rti-back-link" href={`/case/${data.case.code}`}>{rtiCopy.appeals.back}</Link>
         {node.locked ? (
           <section className="rti-appeal-lock" role="status">
-            <FilledIcon seed={`appeal:${kind}:locked`} />
+            <span className="rti-icon-tile"><Icon name={nodeIcon(nodeId)} /></span>
             <div><h2>{rtiCopy.appeals.locked}</h2><p>{rtiCopy.appeals.lockedUntil} <strong>{dependency}</strong></p></div>
           </section>
         ) : (
           <>
             <div className="rti-appeal-facts">
-              <section><FilledIcon seed={`appeal:${kind}:facts`} /><h2>{rtiCopy.appeals.statutoryFacts}</h2><p>{node.body}</p></section>
-              <section><FilledIcon seed={`appeal:${kind}:registration`} /><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
-              {kind === "complaint" ? <section className="rti-appeal-no-limit"><FilledIcon seed="appeal:complaint:no-limit" /><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
+              <section><span className="rti-icon-tile"><Icon name="book" /></span><h2>{rtiCopy.appeals.statutoryFacts}</h2><p>{node.body}</p></section>
+              <section><span className="rti-icon-tile"><Icon name="receipt" /></span><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
+              {kind === "complaint" ? <section className="rti-appeal-no-limit"><span className="rti-icon-tile"><Icon name="megaphone" /></span><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
             </div>
             {node.warnings.map((warning) => <div className={`rti-warning rti-warning--${warning.severity}`} key={warning.text}>{warning.text}</div>)}
             {kind !== "complaint" ? (

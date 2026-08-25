@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { FilledIcon } from "./FilledIcon";
+import { Icon } from "./Icon";
+import { authorityIcon } from "@/lib/rti/icon-map";
 
 export interface DirectoryAuthority {
   id: string;
@@ -44,7 +45,7 @@ export function AuthorityDirectory({ authorities }: { authorities: DirectoryAuth
         <div className="authority-grid">
           {visible.map((authority) => (
             <article className="authority-card" key={authority.id}>
-              <FilledIcon seed={`authority:${authority.id}`} />
+              <span className="rti-icon-tile"><Icon name={authorityIcon(authority.id)} /></span>
               <span className="authority-card__level">Central</span>
               <h2>{authority.name}</h2>
               <dl>
@@ -57,7 +58,7 @@ export function AuthorityDirectory({ authorities }: { authorities: DirectoryAuth
         </div>
       ) : (
         <div className="authority-directory__empty" role="status">
-          <FilledIcon seed="authority:no-match" />
+          <span className="rti-icon-tile"><Icon name="question" /></span>
           <h2>No authority matched that search</h2>
           <p>We could not work out which authority this belongs to. The government&apos;s own directory of Public Information Officers is at rti.gov.in. Search there, then come back and enter it.</p>
           <a href="https://rti.gov.in/" rel="noreferrer" target="_blank">Open the government officer directory</a>
