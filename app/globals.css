@@ -7951,3 +7951,101 @@ html[data-theme="dark"] .rti-icon .icon-fill {
   font-weight: 800;
   font-size: .9rem;
 }
+
+/* ---------------------------------------------------------------------------
+   OPTICAL CENTRING, PROPERLY
+   The padding correction above is a fallback. Where the browser supports
+   text-box trimming, the line box is trimmed to cap height and baseline, so
+   flex centring becomes optically correct at every size with no magic numbers,
+   and a digit in a circle sits where the eye expects it.
+   --------------------------------------------------------------------------- */
+
+@supports (text-box: trim-both cap alphabetic) {
+  :root {
+    --btn-pad-top: 12px;
+    --btn-pad-bottom: 12px;
+  }
+
+  .rti-primary,
+  .rti-secondary,
+  .utility-card > a,
+  .demo-profile-link,
+  .authority-directory__empty > a,
+  .ask-thread__reset,
+  .journey-stage__step,
+  .journey-stage__day,
+  .rti-job,
+  .authority-card__level,
+  .rti-authority-terms li,
+  .rti-process-step__meta span,
+  .rti-case-facts span,
+  .rti-escalation__eyebrow,
+  .ask-message__sender,
+  .rti-template-chips button strong,
+  .trap-card__hint {
+    text-box: trim-both cap alphabetic;
+  }
+
+  .ask-chips__row .rti-secondary {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  /* Pills need to centre the trimmed box themselves, so they become flex
+     containers with symmetric padding rather than relying on line height. */
+  .journey-stage__day,
+  .rti-job,
+  .authority-card__level,
+  .rti-authority-terms li,
+  .rti-process-step__meta span {
+    display: inline-flex;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .trap-card__hint {
+    padding-top: 12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   VERTICAL RHYTHM INSIDE CARDS
+   One scale for the space between a heading and the text under it, instead of
+   8px in one card, 12px in another and none in a third.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --stack-label: 6px;   /* eyebrow or label to the thing it labels */
+  --stack-title: 14px;  /* card heading to its body copy */
+  --stack-body: 12px;   /* paragraph to paragraph */
+}
+
+.utility-card h3 {
+  margin-bottom: var(--stack-title);
+}
+
+.utility-card p {
+  margin-top: 0;
+}
+
+.trap-card__face strong + .trap-card__line,
+.journey-stage__title + .journey-stage__line {
+  margin-top: calc(var(--stack-title) - 8px); /* the flex gap already gives 8px */
+}
+
+.rti-authority-detail h4 {
+  margin-bottom: var(--stack-label);
+}
+
+.authority-card h2 {
+  margin-bottom: var(--stack-title);
+}
+
+.rti-node h3 {
+  margin-bottom: var(--stack-label);
+}
+
+.utility-section__heading h2 + p {
+  margin-top: var(--stack-label);
+}
