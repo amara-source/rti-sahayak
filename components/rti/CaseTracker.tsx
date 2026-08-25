@@ -20,7 +20,15 @@ function JobTag({ job }: { job: RenderedNode["job"] }) {
   return <span className={`rti-job rti-job--${job.toLowerCase()}`}>{rtiCopy.tracker.jobs[job]}</span>;
 }
 
-function Clock({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
+function Clock({
+  plan,
+  nodes,
+  lapsed,
+}: {
+  plan: Plan;
+  nodes: RenderedNode[];
+  lapsed: boolean;
+}) {
   const reply = nodes.find((node) => node.id === "await_reply");
   const lifeLiberty = plan.answers.lifeLiberty === "yes";
   const elapsed = plan.elapsedHours ?? 0;
@@ -29,23 +37,33 @@ function Clock({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
   const remainingValue = lifeLiberty
     ? Math.max(0, limit - elapsed)
     : Math.max(0, 30 - Math.floor(elapsed / 24));
-  const unit = lifeLiberty ? rtiCopy.tracker.hours : rtiCopy.tracker.days;
+  const overdueValue = lifeLiberty
+    ? Math.max(0, elapsed - limit)
+    : Math.max(0, Math.floor((elapsed - limit) / 24));
+  const consequence = reply?.clock?.consequence;
+  const secondValue = lapsed ? overdueValue : remainingValue;
 
   return (
-    <section className="rti-clock">
+    <section className={lapsed ? "rti-clock is-lapsed" : "rti-clock"}>
       <div>
         <span>{rtiCopy.tracker.elapsed}</span>
         <strong>{elapsedValue}</strong>
-        <small>{unit}</small>
+        <small>{rtiCopy.tracker.unit(elapsedValue, lifeLiberty)}</small>
       </div>
       <div>
-        <span>{rtiCopy.tracker.remaining}</span>
-        <strong>{remainingValue}</strong>
-        <small>{unit}</small>
+        <span>{lapsed ? rtiCopy.tracker.overdue : rtiCopy.tracker.remaining}</span>
+        <strong>{secondValue}</strong>
+        <small>{rtiCopy.tracker.unit(secondValue, lifeLiberty)}</small>
       </div>
       <div className="rti-clock__reason">
-        <strong>{reply?.clock?.label}</strong>
-        <p>{lifeLiberty ? rtiCopy.tracker.libertyReason : rtiCopy.tracker.ordinaryReason}</p>
+        <strong>{lapsed ? rtiCopy.tracker.lapsedClockLabel : reply?.clock?.label}</strong>
+        <p>
+          {lapsed && consequence
+            ? rtiCopy.tracker.lapsedConsequence(consequence)
+            : lifeLiberty
+              ? rtiCopy.tracker.libertyReason
+              : rtiCopy.tracker.ordinaryReason}
+        </p>
       </div>
     </section>
   );
@@ -150,6 +168,16 @@ export function CaseTracker({ code }: { code: string }) {
   if (error) return <p className="rti-error">{error}</p>;
   if (!data) return <p className="rti-loading">{rtiCopy.common.loading}</p>;
 
+  // The engine decides all of this. Nothing here is asserted by the component.
+  const deemed = data.nodes.find((node) => node.id === "deemed_refusal");
+  const firstAppeal = data.nodes.find((node) => node.id === "first_appeal");
+  const hasLapsed = Boolean(deemed?.fired);
+  const appealStatus = data.case.statuses.first_appeal ?? "none";
+  const appealFiled = appealStatus !== "none";
+  // Once silence is a refusal, the next real event depends on the citizen
+  // filing the appeal, so advancing time further would change nothing.
+  const advanceBlocked = hasLapsed && !appealFiled;
+
   return (
     <section className="rti-case-page">
       <PageHero
@@ -162,12 +190,31 @@ export function CaseTracker({ code }: { code: string }) {
       <div className="rti-case-content">
         <section className="rti-case-overlap rti-overlap-card">
           <p className="rti-case-code">{rtiCopy.tracker.planCode}: {code}</p>
-          <Clock plan={data.case} nodes={data.nodes} />
+          <Clock lapsed={hasLapsed} nodes={data.nodes} plan={data.case} />
+          {hasLapsed ? (
+            <section className={appealFiled ? "rti-escalation is-filed" : "rti-escalation"} role="status">
+              <FilledIcon seed="case:deemed-refusal" />
+              <div className="rti-escalation__copy">
+                <p className="rti-escalation__eyebrow">{rtiCopy.tracker.lapsed.eyebrow}</p>
+                <h2>{appealFiled ? rtiCopy.tracker.lapsed.filedHeading : rtiCopy.tracker.lapsed.heading}</h2>
+                <p>{appealFiled ? rtiCopy.tracker.lapsed.filedBody : deemed?.summary}</p>
+                {!appealFiled && firstAppeal?.clock ? (
+                  <p className="rti-escalation__deadline">
+                    {rtiCopy.tracker.lapsed.deadline(firstAppeal.clock.label, firstAppeal.clock.days ?? 0)}
+                  </p>
+                ) : null}
+                <Link className="rti-primary" href="/appeal/first">
+                  {appealFiled ? rtiCopy.tracker.lapsed.filedAction : rtiCopy.tracker.lapsed.action}
+                </Link>
+                <small>{deemed?.sourceLabel}</small>
+              </div>
+            </section>
+          ) : null}
           <div className="rti-time-control">
-            <button className="rti-primary" disabled={pending} onClick={advance} type="button">
+            <button className="rti-primary" disabled={pending || advanceBlocked} onClick={advance} type="button">
               {pending ? rtiCopy.common.loading : rtiCopy.tracker.next}
             </button>
-            <p>{rtiCopy.tracker.nextNote}</p>
+            <p>{advanceBlocked ? rtiCopy.tracker.advanceBlocked : rtiCopy.tracker.nextNote}</p>
           </div>
           {notice ? <p className="rti-fired-notice" role="status">{notice}</p> : null}
         </section>
@@ -189,12 +236,26 @@ export function CaseTracker({ code }: { code: string }) {
                     .map((id) => data.nodes.find((item) => item.id === id)?.title)
                     .filter(Boolean)
                     .join(", ");
+                  const nodeStatus = data.case.statuses[node.id] ?? "none";
+                  // A node that has fired has happened in law even though the
+                  // citizen never set a status on it, so it must not read as
+                  // "Not started".
+                  const statusLabel = node.fired && nodeStatus === "none"
+                    ? rtiCopy.tracker.occurred
+                    : rtiCopy.tracker.statuses[nodeStatus];
+                  const stateClass = node.locked
+                    ? "is-locked"
+                    : nodeStatus === "done"
+                      ? "is-done"
+                      : node.fired || nodeStatus === "applied"
+                        ? "is-current"
+                        : "is-available";
                   return (
-                    <article className={node.locked ? "rti-node is-locked" : "rti-node"} key={node.id}>
+                    <article className={`rti-node ${stateClass}`} key={node.id}>
                       <FilledIcon seed={`case-list:${node.id}`} />
                       <div className="rti-node__top">
                         <JobTag job={node.job} />
-                        <span>{rtiCopy.tracker.status}: {rtiCopy.tracker.statuses[data.case.statuses[node.id] ?? "none"]}</span>
+                        <span>{rtiCopy.tracker.status}: {statusLabel}</span>
                       </div>
                       <h3>{node.title}</h3>
                       <p>{node.summary}</p>

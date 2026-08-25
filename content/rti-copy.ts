@@ -114,11 +114,33 @@ export const rtiCopy = {
     remaining: "Remaining",
     days: "days",
     hours: "hours",
+    unit: (value: number, lifeLiberty: boolean) =>
+      lifeLiberty
+        ? (value === 1 ? "hour" : "hours")
+        : (value === 1 ? "day" : "days"),
     ordinaryReason: "The standard 30-day reply period applies.",
     libertyReason: "Life or liberty was marked yes, so the 48-hour reply period applies.",
     next: "See what happens next",
     nextNote: "This advances simulated time. No department is contacted.",
     fired: "Silence has become a deemed refusal. First Appeal is now unlocked.",
+    overdue: "Overdue by",
+    lapsedClockLabel: "Reply overdue",
+    lapsedConsequence: (consequence: string) =>
+      `The reply period has run out, so ${consequence}.`,
+    occurred: "Occurred",
+    current: "Happening now",
+    lapsed: {
+      eyebrow: "Deemed refusal",
+      heading: "They did not reply. File your First Appeal.",
+      action: "File the First Appeal",
+      filedHeading: "Your First Appeal is with the Appellate Authority.",
+      filedBody:
+        "The Authority has its own deadline now. Second Appeal opens once that deadline is decided or runs out.",
+      filedAction: "Open your First Appeal",
+      deadline: (label: string, days: number) => `${label}: ${days} days`,
+    },
+    advanceBlocked:
+      "Time moves again once the First Appeal is filed. The next deadline belongs to the Appellate Authority, not to the officer who stayed silent.",
     planCode: "Case code",
     locked: "Locked until",
     source: "Source",

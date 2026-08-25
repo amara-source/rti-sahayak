@@ -6783,3 +6783,102 @@ html[data-theme="dark"] .rti-node-groups > section {
     box-shadow: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Deemed refusal: the clock lapses and the First Appeal becomes the next step.
+   Uses the existing critical palette rather than a new colour.
+   --------------------------------------------------------------------------- */
+
+.rti-clock.is-lapsed {
+  border-color: #a63f44;
+  background: #4a1a1d;
+  box-shadow: 0 20px 50px rgb(74 26 29 / 26%);
+}
+
+.rti-escalation {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 20px;
+  border: 1px solid #a63f44;
+  border-radius: 22px;
+  padding: 24px;
+  background: color-mix(in srgb, #a63f44 10%, var(--surface));
+}
+
+.rti-escalation.is-filed {
+  border-color: #3f8178;
+  background: color-mix(in srgb, #27685f 12%, var(--surface));
+}
+
+.rti-escalation__copy {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.rti-escalation__eyebrow {
+  margin: 0;
+  color: #a63f44;
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.rti-escalation.is-filed .rti-escalation__eyebrow {
+  color: #27685f;
+}
+
+.rti-escalation h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.2;
+}
+
+.rti-escalation p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.rti-escalation__deadline {
+  font-weight: 900;
+  color: var(--ink) !important;
+}
+
+.rti-escalation small {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.rti-escalation .rti-primary {
+  margin-top: 4px;
+}
+
+html[data-theme="dark"] .rti-escalation__eyebrow {
+  color: #f0a6aa;
+}
+
+html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
+  color: #6fbfb5;
+}
+
+/* Case list: completed, current, available and locked must look different. */
+
+.rti-node.is-done {
+  border-left: 4px solid #27685f;
+}
+
+.rti-node.is-current {
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 14px 38px rgb(20 56 52 / 12%);
+}
+
+.rti-node.is-available {
+  border-left: 4px solid var(--line);
+}
+
+.rti-time-control button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
