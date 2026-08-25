@@ -1,4 +1,5 @@
 import type { ModelGateway } from "./model";
+import { normaliseTypography, sanitiseForPortal } from "./portal-text";
 import type { RewriteChange } from "../rti/draft";
 
 export interface ExtractedRtiRequest {
@@ -48,7 +49,10 @@ export async function extractRtiRequest(
     throw new Error("Invalid extraction");
   }
 
-  return { subject: result.subject, summary: result.summary };
+  return {
+    subject: sanitiseForPortal(result.subject),
+    summary: normaliseTypography(result.summary),
+  };
 }
 
 export async function reframeRtiRequest(
@@ -109,9 +113,16 @@ export async function reframeRtiRequest(
     isObject(item) &&
     typeof item.title === "string" &&
     typeof item.reason === "string"
-      ? [{ title: item.title, reason: item.reason }]
+      ? [
+          {
+            title: normaliseTypography(item.title),
+            reason: normaliseTypography(item.reason),
+          },
+        ]
       : [],
   );
 
-  return { rewritten: result.rewritten, changes };
+  // The filing text has to survive the portal charset check, which the model
+  // knows nothing about.
+  return { rewritten: sanitiseForPortal(result.rewritten), changes };
 }
