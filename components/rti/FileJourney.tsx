@@ -7,6 +7,7 @@ import { rtiCopy } from "@/content/rti-copy";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { FilledIcon } from "@/components/rti/FilledIcon";
 import { listAuthorities, matchAuthority } from "@/lib/engine/authority";
+import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import {
   evaluatePreflightChecks,
   type PreflightInput,
@@ -166,13 +167,24 @@ function DescribeStep() {
           value={text}
         />
       </label>
-      <div className="rti-template-chips">
-        {rtiCopy.describe.templates.map((template) => (
-          <button key={template} onClick={() => setText(template)} type="button">
-            {template}
-          </button>
-        ))}
-      </div>
+      <section className="rti-template-picker">
+        <h2>{rtiCopy.describe.templatesHeading}</h2>
+        <p>{rtiCopy.describe.templatesNote}</p>
+        <div className="rti-template-chips">
+          {rtiCopy.describe.templates.map((template) => (
+            <button
+              aria-pressed={text === template.text}
+              className={text === template.text ? "is-selected" : undefined}
+              key={template.label}
+              onClick={() => setText(template.text)}
+              type="button"
+            >
+              <strong>{template.label}</strong>
+              <span>{template.text}</span>
+            </button>
+          ))}
+        </div>
+      </section>
       <button
         className="rti-primary"
         disabled={!text.trim() || pending}
@@ -248,6 +260,7 @@ function JurisdictionStep() {
   const [bodyLevel, setBodyLevel] =
     useState<"central" | "state" | "unknown">("unknown");
   const [state, setState] = useState("");
+  const jurisdictions = useMemo(() => listJurisdictions(), []);
 
   useEffect(() => {
     if (!draft) return;
@@ -292,7 +305,19 @@ function JurisdictionStep() {
       {needsState ? (
         <label className="rti-field">
           <span>{rtiCopy.jurisdiction.stateLabel}</span>
-          <input onChange={(event) => setState(event.target.value)} value={state} />
+          <select onChange={(event) => setState(event.target.value)} value={state}>
+            <option value="">{rtiCopy.jurisdiction.statePlaceholder}</option>
+            <optgroup label={rtiCopy.jurisdiction.statesGroup}>
+              {jurisdictions.states.map((name) => (
+                <option key={name} value={name}>{name}</option>
+              ))}
+            </optgroup>
+            <optgroup label={rtiCopy.jurisdiction.unionTerritoriesGroup}>
+              {jurisdictions.unionTerritories.map((name) => (
+                <option key={name} value={name}>{name}</option>
+              ))}
+            </optgroup>
+          </select>
         </label>
       ) : null}
       {warning ? (

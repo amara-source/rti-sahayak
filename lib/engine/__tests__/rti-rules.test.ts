@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { matchAuthority } from "../authority";
 import { evaluatePreflightChecks } from "../checks";
 import { computeJourney } from "../journey";
+import { listJurisdictions } from "../jurisdictions";
 
 describe("RTI authority rules", () => {
   it("matches an authored central authority and falls back honestly", () => {
@@ -112,5 +113,25 @@ describe("RTI clock state", () => {
     expect(reply?.fired).toBe(false);
     expect(deemed?.fired).toBe(true);
     expect(deemed?.lapsed).toBe(false);
+  });
+});
+
+describe("RTI jurisdiction reference data", () => {
+  it("lists all 28 states and 8 union territories, alphabetically", () => {
+    const { states, unionTerritories } = listJurisdictions();
+
+    expect(states).toHaveLength(28);
+    expect(unionTerritories).toHaveLength(8);
+    expect([...states].sort()).toEqual(states);
+    expect([...unionTerritories].sort()).toEqual(unionTerritories);
+  });
+
+  it("keeps states and union territories separate", () => {
+    const { states, unionTerritories } = listJurisdictions();
+
+    expect(states).toContain("Karnataka");
+    expect(states).not.toContain("Delhi, National Capital Territory");
+    expect(unionTerritories).toContain("Delhi, National Capital Territory");
+    expect(unionTerritories).toContain("Ladakh");
   });
 });

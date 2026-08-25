@@ -7097,3 +7097,68 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   .rti-process-step.is-current .rti-process-step__marker { animation: none; }
   .rti-process-edge__draw { transition: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   Starting points on the describe step. Cards rather than bare chips, so the
+   label and the wording the citizen would actually send are both visible.
+   --------------------------------------------------------------------------- */
+
+.rti-template-picker {
+  margin: 26px 0;
+}
+
+.rti-template-picker h2 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.rti-template-picker > p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.rti-template-picker .rti-template-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+/* Override the pill treatment for the card layout. */
+.rti-template-picker .rti-template-chips button {
+  display: grid;
+  align-items: start;
+  justify-content: stretch;
+  gap: 6px;
+  min-height: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--ink);
+  background: var(--surface);
+  text-align: left;
+  font-weight: 500;
+}
+
+.rti-template-picker .rti-template-chips button strong {
+  color: var(--accent-deep);
+  font-size: .95rem;
+  font-weight: 900;
+}
+
+.rti-template-picker .rti-template-chips button span {
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.45;
+}
+
+.rti-template-picker .rti-template-chips button:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+}
+
+.rti-template-picker .rti-template-chips button.is-selected {
+  border-color: var(--accent);
+  border-width: 2px;
+  background: color-mix(in srgb, var(--accent-soft) 65%, var(--surface));
+}
