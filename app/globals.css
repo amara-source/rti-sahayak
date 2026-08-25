@@ -7265,18 +7265,13 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
 }
 
 
-/* Optical centring.
-   The UI font has asymmetric vertical metrics (ascent 12, descent 8), so the
-   baseline sits at 60% of the em box. Centring the line box geometrically
-   therefore leaves the glyph ink 2 to 3px above the true centre and the label
-   reads as sitting high. These two variables push the text back down without
-   changing the 48px button height: they always sum to 24. */
 :root {
-  /* Cap height is 10.4px against a 15.8px line box, so a geometrically centred
-     label leaves 13.6px above the capitals and 20px below the baseline. These
-     shift the text down by 3px, most of the way to true cap centring, stopping
-     short of it so descenders do not hang low. They always sum to 24, so the
-     48px button height is unchanged. */
+  /* Optical centring. The UI font has asymmetric metrics (ascent 12, descent
+     8), so the baseline sits at 60% of the em box and a geometrically centred
+     label leaves 13.6px above the capitals against 20px below the baseline.
+     These shift the text down 5px, giving 16.6px above and 17px below, which
+     reads as centred. They always sum to 24, so the button height is
+     unchanged. */
   --btn-pad-top: 17px;
   --btn-pad-bottom: 7px;
 }
