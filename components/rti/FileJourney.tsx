@@ -8,6 +8,7 @@ import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { FilledIcon } from "@/components/rti/FilledIcon";
 import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
+import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
 import {
   evaluatePreflightChecks,
   type PreflightInput,
@@ -727,8 +728,11 @@ function ChecksStep() {
 function SubmitStep() {
   const router = useRouter();
   const { draft, ready } = useStoredDraft();
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [aadhaar, setAadhaar] = useState("");
+  const [aadhaarState, setAadhaarState] = useState<"none" | "ok" | "refused">("none");
   const [otpShown, setOtpShown] = useState(false);
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState(false);
@@ -780,18 +784,80 @@ function SubmitStep() {
         )}
         </section>
         <section className={step === 2 ? "rti-submit-step is-active" : "rti-submit-step"}>
-        <h2>{rtiCopy.submit.feeStep}</h2>
+        <h2>{rtiCopy.submit.identityStep}</h2>
         {step >= 2 ? (
           <>
-            <p>{draft.isBPL === "yes" ? rtiCopy.submit.feeBpl : rtiCopy.submit.feePaid}</p>
-            <p className="rti-note">{rtiCopy.submit.paymentNote}</p>
-            <button className="rti-primary" onClick={() => setStep(3)} type="button">{rtiCopy.submit.pay}</button>
+            <p className="rti-simulation-label">{rtiCopy.submit.identityLabel}</p>
+            <label className="rti-field">
+              <span>{rtiCopy.submit.mobile}</span>
+              <input
+                inputMode="numeric"
+                maxLength={10}
+                onChange={(event) => setMobile(digitsOnly(event.target.value))}
+                placeholder={rtiCopy.submit.mobilePlaceholder}
+                value={mobile}
+              />
+              <small>{rtiCopy.submit.mobileNote}</small>
+            </label>
+            <button className="rti-secondary" onClick={() => setMobile("9000000000")} type="button">
+              {rtiCopy.submit.useSynthetic}
+            </button>
+            <div className="rti-warning rti-warning--critical">{rtiCopy.submit.aadhaarWarning}</div>
+            <label className="rti-field">
+              <span>{rtiCopy.submit.aadhaar}</span>
+              <input
+                inputMode="numeric"
+                maxLength={14}
+                onChange={(event) => {
+                  const digits = digitsOnly(event.target.value);
+                  // A number that satisfies the checksum could be a real
+                  // Aadhaar, so it is refused and never stored.
+                  if (digits.length === 12 && passesVerhoeff(digits)) {
+                    setAadhaar("");
+                    setAadhaarState("refused");
+                    return;
+                  }
+                  setAadhaar(digits);
+                  setAadhaarState(digits.length === 12 ? "ok" : "none");
+                }}
+                value={aadhaar}
+              />
+              <small>{rtiCopy.submit.aadhaarNote}</small>
+            </label>
+            <button
+              className="rti-secondary"
+              onClick={() => { setAadhaar(synthesiseInvalidAadhaar(7)); setAadhaarState("ok"); }}
+              type="button"
+            >
+              {rtiCopy.submit.useSynthetic}
+            </button>
+            {aadhaarState === "refused" ? <p className="rti-error" role="alert">{rtiCopy.submit.aadhaarRejected}</p> : null}
+            {aadhaarState === "ok" ? <p role="status">{rtiCopy.submit.aadhaarAccepted}</p> : null}
+            <button
+              className="rti-primary"
+              disabled={mobile.length !== 10}
+              onClick={() => setStep(3)}
+              type="button"
+            >
+              {rtiCopy.submit.identityContinue}
+            </button>
+            {mobile.length > 0 && mobile.length !== 10 ? <p className="rti-error">{rtiCopy.submit.mobileInvalid}</p> : null}
           </>
         ) : null}
         </section>
         <section className={step === 3 ? "rti-submit-step is-active" : "rti-submit-step"}>
+        <h2>{rtiCopy.submit.feeStep}</h2>
+        {step >= 3 ? (
+          <>
+            <p>{draft.isBPL === "yes" ? rtiCopy.submit.feeBpl : rtiCopy.submit.feePaid}</p>
+            <p className="rti-note">{rtiCopy.submit.paymentNote}</p>
+            <button className="rti-primary" onClick={() => setStep(4)} type="button">{rtiCopy.submit.pay}</button>
+          </>
+        ) : null}
+        </section>
+        <section className={step === 4 ? "rti-submit-step is-active" : "rti-submit-step"}>
         <h2>{rtiCopy.submit.registrationStep}</h2>
-        {step === 3 ? (
+        {step === 4 ? (
           <>
             <p className="rti-registration-label">{rtiCopy.submit.registrationLabel}</p>
             <strong className="rti-registration">{rtiCopy.submit.registration}</strong>
