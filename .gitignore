@@ -38,3 +38,6 @@ next-env.d.ts
 # Codex workspace artifacts
 /work/
 /outputs/
+# Added when linking Vercel. The template stays tracked.
+.env*
+!.env.example
