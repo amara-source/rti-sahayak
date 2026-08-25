@@ -7214,3 +7214,44 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   font-size: .82rem;
   font-weight: 700;
 }
+
+/* Case progress and stage grouping. The list is grouped by where the case
+   actually stands, so each heading needs a line saying what it means. */
+
+.rti-case-progress {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.rti-case-progress__track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.rti-case-progress__track span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width .6s ease-in-out;
+}
+
+.rti-case-progress p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 800;
+}
+
+.rti-stage-note {
+  margin: -6px 0 12px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rti-case-progress__track span { transition: none; }
+}

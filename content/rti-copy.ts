@@ -206,6 +206,21 @@ export const rtiCopy = {
       next: "Next",
       later: "Later",
     },
+    // Grouped by where the case actually stands, not by the pack's authoring
+    // buckets, which describe when a step was written rather than its state.
+    stages: {
+      done: "Done",
+      now: "Happening now",
+      open: "Open to you",
+      locked: "Not open yet",
+    },
+    stageNotes: {
+      done: "Completed, or a statutory window that has closed.",
+      now: "Where the case stands today.",
+      open: "Available to you right now.",
+      locked: "Each one shows what has to happen first.",
+    },
+    progress: (done: number, total: number) => `${done} of ${total} steps behind you`,
     flow: {
       eyebrow: "Live case map",
       heading: "Where your request is now",

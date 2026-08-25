@@ -16,6 +16,8 @@ interface CaseResponse {
   fired?: string[];
 }
 
+type Stage = "done" | "now" | "open" | "locked";
+
 function JobTag({ job }: { job: RenderedNode["job"] }) {
   return <span className={`rti-job rti-job--${job.toLowerCase()}`}>{rtiCopy.tracker.jobs[job]}</span>;
 }
@@ -65,6 +67,26 @@ function Clock({
               : rtiCopy.tracker.ordinaryReason}
         </p>
       </div>
+    </section>
+  );
+}
+
+function CaseProgress({
+  groups,
+}: {
+  groups: Array<{ stage: Stage; nodes: RenderedNode[] }>;
+}) {
+  const total = groups.reduce((sum, group) => sum + group.nodes.length, 0);
+  const done = groups.find((group) => group.stage === "done")?.nodes.length ?? 0;
+  if (!total) return null;
+  const percent = Math.round((done / total) * 100);
+
+  return (
+    <section aria-label={rtiCopy.tracker.progress(done, total)} className="rti-case-progress">
+      <div className="rti-case-progress__track">
+        <span style={{ width: `${percent}%` }} />
+      </div>
+      <p>{rtiCopy.tracker.progress(done, total)}</p>
     </section>
   );
 }
@@ -154,10 +176,19 @@ export function CaseTracker({ code }: { code: string }) {
 
   const groups = useMemo(() => {
     if (!data) return [];
-    return (["before", "now", "next", "later"] as const)
-      .map((bucket) => ({
-        bucket,
-        nodes: data.nodes.filter((node) => node.bucket === bucket),
+    const stageOf = (node: RenderedNode): Stage => {
+      const status = data.case.statuses[node.id] ?? "none";
+      if (node.locked) return "locked";
+      if (status === "done") return "done";
+      // A statutory window that has run out is behind the citizen, not ahead.
+      if (node.lapsed) return "done";
+      if (node.fired || status === "applied" || status === "stuck") return "now";
+      return "open";
+    };
+    return (["done", "now", "open", "locked"] as const)
+      .map((stage) => ({
+        stage,
+        nodes: data.nodes.filter((node) => stageOf(node) === stage),
       }))
       .filter((group) => group.nodes.length > 0);
   }, [data]);
@@ -252,6 +283,7 @@ export function CaseTracker({ code }: { code: string }) {
       <div className="rti-case-content">
         <section className="rti-case-overlap rti-overlap-card">
           <CaseFacts code={code} plan={data.case} />
+          <CaseProgress groups={groups} />
           <Clock lapsed={hasLapsed} nodes={data.nodes} plan={data.case} />
           {hasLapsed ? (
             <section className={appealFiled ? "rti-escalation is-filed" : "rti-escalation"} role="status">
@@ -283,8 +315,9 @@ export function CaseTracker({ code }: { code: string }) {
         <ProcessFlowchart nodes={data.nodes} plan={data.case} />
         <div className="rti-node-groups">
           {groups.map((group) => (
-            <section key={group.bucket}>
-              <h2>{rtiCopy.tracker.buckets[group.bucket]}</h2>
+            <section key={group.stage}>
+              <h2>{rtiCopy.tracker.stages[group.stage]}</h2>
+              <p className="rti-stage-note">{rtiCopy.tracker.stageNotes[group.stage]}</p>
               <div className="rti-node-list">
                 {group.nodes.map((node) => {
                   const nodeHref = node.id === "first_appeal"
