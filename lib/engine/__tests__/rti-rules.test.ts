@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { matchAuthority } from "../authority";
 import { evaluatePreflightChecks } from "../checks";
+import { computeJourney } from "../journey";
 
 describe("RTI authority rules", () => {
   it("matches an authored central authority and falls back honestly", () => {
@@ -77,5 +78,39 @@ describe("RTI preflight rules", () => {
     expect(results.find((item) => item.id === "attachment")?.status).toBe(
       "warn",
     );
+  });
+});
+
+describe("RTI clock state", () => {
+  const answers = {
+    bodyLevel: "central",
+    lifeLiberty: "no",
+    isBPL: "no",
+    wantsAction: "records",
+  };
+  const submitted = {
+    jurisdiction_check: "done",
+    identify_authority: "done",
+    draft_request: "done",
+    preflight: "done",
+    submit: "done",
+  } as const;
+
+  it("reports the reply window as lapsed once the statutory period runs out", () => {
+    const inTime = computeJourney("rti", answers, { ...submitted }, 20 * 24);
+    const overdue = computeJourney("rti", answers, { ...submitted }, 31 * 24);
+
+    expect(inTime.find((node) => node.id === "await_reply")?.lapsed).toBe(false);
+    expect(overdue.find((node) => node.id === "await_reply")?.lapsed).toBe(true);
+  });
+
+  it("keeps lapsed separate from fired so only the authored event fires", () => {
+    const overdue = computeJourney("rti", answers, { ...submitted }, 31 * 24);
+    const reply = overdue.find((node) => node.id === "await_reply");
+    const deemed = overdue.find((node) => node.id === "deemed_refusal");
+
+    expect(reply?.fired).toBe(false);
+    expect(deemed?.fired).toBe(true);
+    expect(deemed?.lapsed).toBe(false);
   });
 });

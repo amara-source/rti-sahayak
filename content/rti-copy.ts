@@ -128,6 +128,16 @@ export const rtiCopy = {
     lapsedConsequence: (consequence: string) =>
       `The reply period has run out, so ${consequence}.`,
     occurred: "Occurred",
+    windowClosed: "Window closed",
+    facts: {
+      heading: "Your filed request",
+      registration: "Registration number",
+      authority: "Public authority",
+      officer: "Officer addressed",
+      requestHeading: "The request as filed",
+      requestNote: "Rewritten to ask for records rather than reasons, so it cannot be refused for asking a question.",
+      original: "What you first wrote",
+    },
     current: "Happening now",
     lapsed: {
       eyebrow: "Deemed refusal",

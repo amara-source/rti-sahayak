@@ -138,4 +138,6 @@ export interface RenderedNode extends Omit<RuleNode, "clock"> {
   clock: ResolvedClock | null;
   locked: boolean;
   fired: boolean;
+  /** This node's own clock has run past its statutory period. */
+  lapsed: boolean;
 }

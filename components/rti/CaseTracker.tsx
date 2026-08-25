@@ -69,6 +69,62 @@ function Clock({
   );
 }
 
+function CaseFacts({ code, plan }: { code: string; plan: Plan }) {
+  const answers = plan.answers;
+  const text = (key: string) => {
+    const value = answers[key];
+    return typeof value === "string" && value.trim() ? value.trim() : null;
+  };
+  const registration = text("registrationNumber");
+  const authority = text("authorityName");
+  const officer = text("officer");
+  const rewritten = text("rewritten");
+  const subject = text("subject");
+  const copy = rtiCopy.tracker.facts;
+
+  return (
+    <>
+      <div className="rti-case-facts">
+        <div>
+          <span>{rtiCopy.tracker.planCode}</span>
+          <strong>{code}</strong>
+        </div>
+        {registration ? (
+          <div>
+            <span>{copy.registration}</span>
+            <strong className="rti-case-facts__registration">{registration}</strong>
+          </div>
+        ) : null}
+        {authority ? (
+          <div>
+            <span>{copy.authority}</span>
+            <strong>{authority}</strong>
+          </div>
+        ) : null}
+        {officer ? (
+          <div>
+            <span>{copy.officer}</span>
+            <strong>{officer}</strong>
+          </div>
+        ) : null}
+      </div>
+      {rewritten ? (
+        <section className="rti-case-request">
+          <h2>{copy.requestHeading}</h2>
+          <blockquote>{rewritten}</blockquote>
+          <p>{copy.requestNote}</p>
+          {subject ? (
+            <details>
+              <summary>{copy.original}</summary>
+              <p>{subject}</p>
+            </details>
+          ) : null}
+        </section>
+      ) : null}
+    </>
+  );
+}
+
 export function CaseTracker({ code }: { code: string }) {
   const [data, setData] = useState<CaseResponse | null>(null);
   const [error, setError] = useState("");
@@ -183,13 +239,19 @@ export function CaseTracker({ code }: { code: string }) {
       <PageHero
         eyebrow={rtiCopy.tracker.eyebrow}
         illustration="/illustrations/tracker.png"
-        supporting={data.case.answers.lifeLiberty === "yes" ? rtiCopy.tracker.libertyReason : rtiCopy.tracker.ordinaryReason}
+        supporting={
+          hasLapsed && deemed?.summary
+            ? deemed.summary
+            : data.case.answers.lifeLiberty === "yes"
+              ? rtiCopy.tracker.libertyReason
+              : rtiCopy.tracker.ordinaryReason
+        }
         title={rtiCopy.tracker.heading}
         tone="violet"
       />
       <div className="rti-case-content">
         <section className="rti-case-overlap rti-overlap-card">
-          <p className="rti-case-code">{rtiCopy.tracker.planCode}: {code}</p>
+          <CaseFacts code={code} plan={data.case} />
           <Clock lapsed={hasLapsed} nodes={data.nodes} plan={data.case} />
           {hasLapsed ? (
             <section className={appealFiled ? "rti-escalation is-filed" : "rti-escalation"} role="status">
@@ -240,12 +302,16 @@ export function CaseTracker({ code }: { code: string }) {
                   // A node that has fired has happened in law even though the
                   // citizen never set a status on it, so it must not read as
                   // "Not started".
-                  const statusLabel = node.fired && nodeStatus === "none"
-                    ? rtiCopy.tracker.occurred
-                    : rtiCopy.tracker.statuses[nodeStatus];
+                  const statusLabel = nodeStatus !== "none"
+                    ? rtiCopy.tracker.statuses[nodeStatus]
+                    : node.fired
+                      ? rtiCopy.tracker.occurred
+                      : node.lapsed
+                        ? rtiCopy.tracker.windowClosed
+                        : rtiCopy.tracker.statuses[nodeStatus];
                   const stateClass = node.locked
                     ? "is-locked"
-                    : nodeStatus === "done"
+                    : nodeStatus === "done" || node.lapsed
                       ? "is-done"
                       : node.fired || nodeStatus === "applied"
                         ? "is-current"

@@ -145,6 +145,7 @@ export function computeJourneyFromPack(
         clock: resolvedClocks.get(node.id) ?? null,
         locked,
         fired,
+        lapsed: lapsedNodes.has(node.id),
         warnings: visibleWarnings(node.warnings, answers),
       };
     })
