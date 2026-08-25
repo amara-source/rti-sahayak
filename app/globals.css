@@ -5242,7 +5242,6 @@ html[data-theme="dark"] {
 .rti-primary {
   min-height: 50px;
   border-radius: 10px;
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 .rti-confirmation,
@@ -6258,7 +6257,6 @@ html[data-theme="dark"] .rti-node-groups > section {
   padding: 12px 22px;
   color: white;
   background: #27685f;
-  box-shadow: 0 10px 24px rgb(39 104 95 / 22%);
   font: inherit;
   font-weight: 900;
   cursor: pointer;
@@ -7289,7 +7287,9 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
   border-radius: 999px;
   color: var(--accent-contrast);
   background: var(--accent-deep);
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent-deep) 22%, transparent);
+  /* Flat. A downward-offset shadow put the button's visual mass below its own
+     box, which read as raised and made the centred label look high. */
+  box-shadow: none;
   font: inherit;
   font-weight: 800;
   line-height: 1.1;
