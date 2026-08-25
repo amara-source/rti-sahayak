@@ -5359,14 +5359,8 @@ html[data-theme="dark"] {
 }
 
 .utility-card > a {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
   align-self: flex-start;
   margin-top: auto;
-  padding-top: 16px;
-  color: var(--accent-deep);
-  font-weight: 900;
 }
 
 .manual-step {
@@ -7254,4 +7248,88 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
 
 @media (prefers-reduced-motion: reduce) {
   .rti-case-progress__track span { transition: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   ONE BUTTON SYSTEM
+   Primary, secondary, disabled. Defined last so it settles the cascade, which
+   previously had six competing declarations and produced a blue pill with
+   dark navy text sitting below its own centre line.
+   --------------------------------------------------------------------------- */
+
+.rti-primary,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  box-sizing: border-box;
+  padding: 12px 22px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 22%, transparent);
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.rti-primary:hover,
+.utility-card > a:hover,
+.demo-profile-link:hover,
+.authority-directory__empty > a:hover {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
+.rti-secondary {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  box-sizing: border-box;
+  padding: 12px 22px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent-deep);
+  background: var(--surface);
+  box-shadow: none;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.rti-secondary:hover {
+  background: var(--accent-soft);
+}
+
+.rti-primary:disabled,
+.rti-secondary:disabled,
+.rti-primary[aria-disabled="true"],
+.rti-secondary[aria-disabled="true"] {
+  border-color: var(--line);
+  color: var(--muted);
+  background: var(--surface-soft);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: .7;
+}
+
+.rti-primary:focus-visible,
+.rti-secondary:focus-visible,
+.utility-card > a:focus-visible,
+.demo-profile-link:focus-visible,
+.authority-directory__empty > a:focus-visible {
+  outline: 3px solid var(--accent-deep);
+  outline-offset: 2px;
 }
