@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/rti/PageHero";
 import { ScriptedAssistant } from "@/components/rti/ScriptedAssistant";
 import { loadRtiRulePack } from "@/lib/engine/journey";
+import { rtiCopy } from "@/content/rti-copy";
 
 const questions = [
   { id: "draft_request", question: "What counts as information under RTI?" },
@@ -22,10 +23,10 @@ export default function AskPage() {
   return (
     <article className="ask-page">
       <PageHero
-        eyebrow="Answers with a fixed source"
+        eyebrow={rtiCopy.ask.eyebrow}
         illustration="/illustrations/checks.png"
-        supporting="Choose one of the questions below. Each answer is read directly from the authored RTI rule pack."
-        title="Ask RTI Sahayak"
+        supporting={rtiCopy.ask.supporting}
+        title={rtiCopy.ask.heading}
         tone="violet"
       />
       <section className="ask-page__content rti-overlap-card">
