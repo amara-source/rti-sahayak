@@ -22,6 +22,14 @@ Confirmation heading: What we understood
 
 Confirmation action: Yes, this is right
 
+Disabled action: Write a few words or choose a starting point to continue.
+
+## Journey progress
+
+Label: Request progress
+
+Steps: Describe, Jurisdiction, Authority, Draft, Checks, Submit, Track
+
 ## Jurisdiction
 
 Heading: Which government holds the records?
@@ -45,6 +53,8 @@ Unknown authority: We could not work out which authority this belongs to. The
 government's own directory of Public Information Officers is at rti.gov.in.
 Search there, then come back and enter it.
 
+Disabled action: Choose an authority or enter one below to continue.
+
 ## Rewrite
 
 Heading: Make the request harder to refuse
@@ -59,6 +69,8 @@ Count: {count} of 3,000 characters
 
 Fallback: The rewriting service is unavailable, so nothing was changed. You
 can edit the filing text yourself.
+
+Disabled action: Wait for the filing draft, then review it before continuing.
 
 ## Pre-flight
 
@@ -163,6 +175,8 @@ Introduction: RTI Sahayak turns one government form into a guided case, from
 choosing the right authority to appealing when silence becomes a refusal.
 
 Cards: File an RTI, Track your case, Understand the law
+
+Example case: See a finished case in thirty seconds. No typing.
 
 ## About
 

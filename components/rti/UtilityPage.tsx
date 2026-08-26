@@ -23,7 +23,7 @@ export function UtilityPage({
             </div>
             <div className="utility-card-grid">
               {section.cards.map((card) => (
-                <article className="utility-card" key={card.title}>
+                <article className={card.featured ? "utility-card utility-card--featured" : "utility-card"} key={card.title}>
                   {card.icon ? (
                     <span className="rti-icon-tile">
                       <Icon name={card.icon as IconName} />

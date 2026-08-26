@@ -34,8 +34,8 @@
   --quick-green: #cdebd9;
   --quick-lavender: #e1e0fa;
   --shadow: rgb(14 37 64 / 18%);
-  --section-space: clamp(3.5rem, 7vw, 6rem);
-  --content-width: 1200px;
+  --section-space: clamp(2rem, 3vw, 3rem);
+  --content-width: 1100px;
   --card-radius: 20px;
   --type-hero: clamp(2.5rem, 5vw, 4.75rem);
   --type-section: clamp(1.75rem, 3vw, 2.5rem);
@@ -7272,8 +7272,8 @@ html[data-theme="dark"] .rti-escalation.is-filed .rti-escalation__eyebrow {
      These shift the text down 5px, giving 16.6px above and 17px below, which
      reads as centred. They always sum to 24, so the button height is
      unchanged. */
-  --btn-pad-top: 17px;
-  --btn-pad-bottom: 7px;
+  --btn-pad-top: 14px;
+  --btn-pad-bottom: 10px;
 }
 
 /* ---------------------------------------------------------------------------
@@ -8048,4 +8048,224 @@ html[data-theme="dark"] .rti-icon .icon-fill {
 
 .utility-section__heading h2 + p {
   margin-top: var(--stack-label);
+}
+
+/* ---------------------------------------------------------------------------
+   FINAL JOURNEY LAYOUT
+   A single centred measure is shared by the filing journey, case tracker and
+   supporting pages. The process card no longer adds a second large margin on
+   top of the container gap.
+   --------------------------------------------------------------------------- */
+
+.rti-page-hero__inner {
+  width: min(var(--content-width), calc(100% - 48px));
+  max-width: var(--content-width);
+}
+
+.rti-flow-shell,
+.rti-case-content,
+.rti-detail-content,
+.utility-page__content,
+.directory-page__content,
+.ask-page__content,
+.honesty-page__content,
+.manual-steps {
+  width: min(var(--content-width), calc(100% - 48px));
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.rti-flow-shell,
+.rti-case-overlap,
+.rti-detail-content {
+  padding: clamp(24px, 3.5vw, 44px);
+}
+
+.rti-case-content {
+  gap: var(--section-space);
+}
+
+.rti-process-card {
+  width: 100%;
+  margin-top: 0;
+}
+
+.rti-process-map {
+  padding: 18px 18px 8px;
+}
+
+.rti-process-map svg {
+  min-width: 980px;
+}
+
+.rti-process-node text {
+  font-size: 17px;
+}
+
+.rti-process-labels text {
+  font-size: 15px;
+}
+
+/* The seven stages stay visible at the top of every journey screen. */
+.rti-journey-progress {
+  margin: 0 0 30px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+}
+
+.rti-journey-progress ol {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(108px, 1fr));
+  min-width: 760px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rti-journey-progress li {
+  position: relative;
+}
+
+.rti-journey-progress li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 16px;
+  left: calc(50% + 20px);
+  width: calc(100% - 40px);
+  height: 3px;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.rti-journey-progress li.is-complete::after {
+  background: var(--accent);
+}
+
+.rti-journey-progress li > a,
+.rti-journey-progress li > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: var(--type-caption);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.rti-journey-progress li.is-complete > a,
+.rti-journey-progress li.is-current > span {
+  color: var(--accent-deep);
+}
+
+.rti-journey-progress__marker {
+  position: relative;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+  background: var(--surface);
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.rti-journey-progress .is-current .rti-journey-progress__marker {
+  border-color: var(--accent-deep);
+  color: var(--accent-contrast);
+  background: var(--accent-deep);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.rti-journey-progress .is-complete .rti-journey-progress__marker {
+  border-color: var(--accent);
+  color: transparent;
+  background: var(--accent);
+}
+
+.rti-journey-progress .is-complete .rti-journey-progress__marker::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-bottom: 2px solid var(--accent-contrast);
+  border-left: 2px solid var(--accent-contrast);
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+.rti-disabled-reason {
+  max-width: 42rem;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: var(--type-caption);
+}
+
+/* The example is the clear entry point; the remaining three choices form the
+   secondary row underneath it. */
+.utility-card-grid:has(> .utility-card--featured) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
+  grid-column: 1 / -1;
+  min-height: 280px;
+  padding: clamp(30px, 4vw, 48px);
+  background: color-mix(in srgb, var(--accent-soft) 78%, var(--surface));
+}
+
+.utility-card--featured h3 {
+  max-width: 780px;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+}
+
+.utility-card--featured p {
+  max-width: 780px;
+  font-size: 1.12rem;
+}
+
+.rti-check-list {
+  align-items: start;
+}
+
+.rti-check {
+  align-self: start;
+}
+
+/* Button fallback for browsers without text-box trimming. A small asymmetric
+   correction matches the font metrics without pushing the label visibly low.
+   The text-box rule above remains the preferred path. */
+.rti-primary,
+.rti-secondary,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
+  .rti-page-hero__inner,
+  .rti-flow-shell,
+  .rti-case-content,
+  .rti-detail-content,
+  .utility-page__content,
+  .directory-page__content,
+  .ask-page__content,
+  .honesty-page__content,
+  .manual-steps {
+    width: min(var(--content-width), calc(100% - 28px));
+  }
+
+  .utility-card-grid:has(> .utility-card--featured) {
+    grid-template-columns: 1fr;
+  }
+
+  .utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
+    grid-column: auto;
+  }
 }

@@ -105,11 +105,11 @@ function NodeBox({
       className={`rti-process-node is-${state}`}
       transform={`translate(${node.x} ${node.y})`}
     >
-      <rect height="76" rx="18" width="200" x="-100" y="-38" />
+      <rect height="92" rx="20" width="230" x="-115" y="-46" />
       <text textAnchor="middle">
         {node.label.map((line, index) => (
           <tspan
-            dy={index === 0 ? (node.label.length === 1 ? 6 : -3) : 20}
+            dy={index === 0 ? (node.label.length === 1 ? 7 : -4) : 23}
             key={line}
             x="0"
           >
@@ -152,29 +152,29 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
   const wait = plan.answers.lifeLiberty === "yes" ? "48 hours" : "30 days";
 
   const items: FlowNode[] = [
-    { id: "request", label: [copy.request], x: 190, y: 92 },
-    { id: "transfer", label: [copy.transfer], x: 190, y: 254 },
-    { id: "reply", label: [copy.reply], x: 495, y: 254 },
-    { id: "no_reply", label: [copy.noReply], x: 785, y: 254 },
-    { id: "first", label: [copy.first], x: 645, y: 426, href: "/appeal/first" },
-    { id: "decision", label: [copy.decision], x: 495, y: 586 },
-    { id: "no_decision", label: [copy.noDecision], x: 785, y: 586 },
-    { id: "second", label: [copy.second], x: 645, y: 746, href: "/appeal/second" },
-    { id: "complaint", label: [...copy.complaint], x: 1010, y: 92, href: "/complaint" },
+    { id: "request", label: [copy.request], x: 190, y: 100 },
+    { id: "transfer", label: [copy.transfer], x: 190, y: 300 },
+    { id: "reply", label: [copy.reply], x: 495, y: 300 },
+    { id: "no_reply", label: [copy.noReply], x: 785, y: 300 },
+    { id: "first", label: [copy.first], x: 645, y: 520, href: "/appeal/first" },
+    { id: "decision", label: [copy.decision], x: 495, y: 730 },
+    { id: "no_decision", label: [copy.noDecision], x: 785, y: 730 },
+    { id: "second", label: [copy.second], x: 645, y: 940, href: "/appeal/second" },
+    { id: "complaint", label: [...copy.complaint], x: 1010, y: 100, href: "/complaint" },
   ];
 
   const edges = [
-    { d: "M290 92H495V216", active: reached(states.reply) },
-    { d: "M290 92H785V216", active: reached(states.no_reply) },
-    { d: "M190 130V216", active: reached(states.transfer) },
-    { d: "M290 254H395", active: reached(states.transfer) && reached(states.reply) },
-    { d: "M495 292V360H645V388", active: reached(states.first) && reached(states.reply) },
-    { d: "M785 292V360H645V388", active: reached(states.no_reply) && reached(states.first) },
-    { d: "M645 464V510H495V548", active: reached(states.decision) },
-    { d: "M645 464V510H785V548", active: reached(states.no_decision) },
-    { d: "M495 624V680H645V708", active: reached(states.second) },
-    { d: "M785 624V680H645V708", active: reached(states.second) },
-    { d: "M290 72H910", active: reached(states.complaint) },
+    { d: "M305 100H495V254", active: reached(states.reply) },
+    { d: "M305 100H785V254", active: reached(states.no_reply) },
+    { d: "M190 146V254", active: reached(states.transfer) },
+    { d: "M305 300H380", active: reached(states.transfer) && reached(states.reply) },
+    { d: "M495 346V420H645V474", active: reached(states.first) && reached(states.reply) },
+    { d: "M785 346V420H645V474", active: reached(states.no_reply) && reached(states.first) },
+    { d: "M645 566V630H495V684", active: reached(states.decision) },
+    { d: "M645 566V630H785V684", active: reached(states.no_decision) },
+    { d: "M495 776V850H645V894", active: reached(states.second) },
+    { d: "M785 776V850H645V894", active: reached(states.second) },
+    { d: "M305 75H895", active: reached(states.complaint) },
   ];
 
   return (
@@ -182,7 +182,7 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
       aria-labelledby={`flow-title-${code} flow-desc-${code}`}
       className="rti-process-map__desktop"
       role="img"
-      viewBox="0 0 1180 820"
+      viewBox="0 0 1180 1010"
     >
       <title id={`flow-title-${code}`}>{copy.title}</title>
       <desc id={`flow-desc-${code}`}>{copy.description}</desc>
@@ -197,16 +197,16 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
         ))}
       </g>
       <g className="rti-process-labels">
-        <text x="470" y="78">{wait}</text>
-        <text x="700" y="115">{wait}</text>
-        <text x="200" y="180">{copy.withinFive}</text>
-        <text x="326" y="242">{copy.again(wait)}</text>
-        <text x="505" y="344">{copy.unsatisfactory}</text>
-        <text x="737" y="344">{copy.fileFirst}</text>
-        <text x="500" y="500">{copy.withinFortyFive}</text>
-        <text x="722" y="500">{copy.afterFortyFive}</text>
-        <text x="515" y="668">{copy.withinNinety}</text>
-        <text x="806" y="668">{copy.withinNinety}</text>
+        <text x="470" y="86">{wait}</text>
+        <text x="700" y="126">{wait}</text>
+        <text x="205" y="208">{copy.withinFive}</text>
+        <text x="310" y="287">{copy.again(wait)}</text>
+        <text x="500" y="405">{copy.unsatisfactory}</text>
+        <text x="735" y="405">{copy.fileFirst}</text>
+        <text x="490" y="615">{copy.withinFortyFive}</text>
+        <text x="720" y="615">{copy.afterFortyFive}</text>
+        <text x="500" y="835">{copy.withinNinety}</text>
+        <text x="800" y="835">{copy.withinNinety}</text>
         <text x="660" y="60">{copy.noLimit}</text>
       </g>
       {items.map((node) => (

@@ -18,8 +18,8 @@
         "PPO",
         "family pension"
       ],
-      "siteUrl": "https://pensionersportal.gov.in/",
-      "siteLabel": "Pensioners' Portal"
+      "siteUrl": "https://doppw.gov.in/en/rti",
+      "siteLabel": "Department of Pension and Pensioners' Welfare RTI"
     },
     {
       "id": "epfo",
@@ -50,8 +50,8 @@
         "ESIC",
         "insured person"
       ],
-      "siteUrl": "https://rti.gov.in/",
-      "siteLabel": "RTI Portal Gateway"
+      "siteUrl": "https://esic.gov.in/rti",
+      "siteLabel": "ESIC RTI"
     },
     {
       "id": "income_tax",

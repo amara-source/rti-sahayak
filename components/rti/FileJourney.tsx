@@ -10,6 +10,7 @@ import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
 import { Icon } from "./Icon";
 import { authorityIcon, checkIcon, stepIcons } from "@/lib/rti/icon-map";
+import { JourneyProgress, type JourneyProgressStep } from "./JourneyProgress";
 import {
   evaluatePreflightChecks,
   type PreflightInput,
@@ -84,7 +85,7 @@ function Shell({
   step,
   children,
 }: {
-  step?: keyof typeof stepIcons;
+  step?: Exclude<JourneyProgressStep, "track">;
   eyebrow: string;
   heading: string;
   children: React.ReactNode;
@@ -100,6 +101,7 @@ function Shell({
         tone={hero.tone}
       />
       <div className="rti-flow-shell rti-overlap-card">
+        {step ? <JourneyProgress current={step} /> : null}
         {step ? <span className="rti-icon-tile"><Icon name={stepIcons[step]} /></span> : null}
         {children}
       </div>
@@ -189,14 +191,19 @@ function DescribeStep() {
           ))}
         </div>
       </section>
-      <button
-        className="rti-primary"
-        disabled={!text.trim() || pending}
-        onClick={extract}
-        type="button"
-      >
-        {pending ? rtiCopy.common.loading : rtiCopy.describe.submitAction}
-      </button>
+      {!confirming ? (
+        <>
+          <button
+            className="rti-primary"
+            disabled={!text.trim() || pending}
+            onClick={extract}
+            type="button"
+          >
+            {pending ? rtiCopy.common.loading : rtiCopy.describe.submitAction}
+          </button>
+          {!text.trim() ? <p className="rti-disabled-reason">{rtiCopy.describe.disabledReason}</p> : null}
+        </>
+      ) : null}
 
       {confirming ? (
         <section className="rti-confirmation" aria-live="polite">
@@ -282,7 +289,27 @@ function JurisdictionStep() {
   const needsState = bodyLevel !== "central";
 
   function proceed(draftOnly: boolean) {
-    update({ ...draft!, bodyLevel, state, draftOnly });
+    const changed = draft!.bodyLevel !== bodyLevel || draft!.state !== state;
+    update({
+      ...draft!,
+      bodyLevel,
+      state,
+      draftOnly,
+      ...(changed
+        ? {
+            authorityId: undefined,
+            authorityName: undefined,
+            officer: undefined,
+            rewritten: undefined,
+            changes: undefined,
+            singleSubject: undefined,
+            asksForRecords: undefined,
+            hasIdentityDocuments: undefined,
+            attachment: undefined,
+            hasBplCertificate: undefined,
+          }
+        : {}),
+    });
     router.push("/file/authority");
   }
 
@@ -419,7 +446,17 @@ function AuthorityStep() {
   }
 
   function proceed() {
-    update({ ...draft!, authorityId, authorityName: authorityName.trim(), officer });
+    const nextAuthority = authorityName.trim();
+    const changed =
+      draft!.authorityName !== nextAuthority || draft!.officer !== officer;
+    update({
+      ...draft!,
+      authorityId,
+      authorityName: nextAuthority,
+      officer,
+      rewritten: changed ? undefined : draft!.rewritten,
+      changes: changed ? undefined : draft!.changes,
+    });
     router.push("/file/draft");
   }
 
@@ -529,6 +566,9 @@ function AuthorityStep() {
       >
         {rtiCopy.common.continue}
       </button>
+      {!authorityName.trim() || !officer.trim() ? (
+        <p className="rti-disabled-reason">{rtiCopy.authority.disabledReason}</p>
+      ) : null}
     </Shell>
   );
 }
@@ -632,6 +672,9 @@ function DraftStep() {
       >
         {rtiCopy.draft.action}
       </button>
+      {pending || !rewritten.trim() ? (
+        <p className="rti-disabled-reason">{rtiCopy.draft.disabledReason}</p>
+      ) : null}
     </Shell>
   );
 }
@@ -684,9 +727,12 @@ function ChecksStep() {
     const bytes = await buildApplicationPdf({
       authorityName: current.authorityName || rtiCopy.checks.unknownAuthority,
       officer: current.officer || "Public Information Officer",
-      ministry: authority?.ministry || undefined,
+      ministry:
+        authority && authority.name === current.authorityName
+          ? authority.ministry || undefined
+          : undefined,
       body: current.rewritten || current.rawText,
-      registrationNumber: current.registrationNumber,
+      registrationNumber: current.registrationNumber || rtiCopy.submit.registration,
       date: new Date().toLocaleDateString("en-IN", {
         day: "numeric",
         month: "long",
@@ -699,8 +745,10 @@ function ChecksStep() {
     const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = "rti-application.pdf";
+    document.body.append(anchor);
     anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
   }
 
   function proceed() {
@@ -882,7 +930,7 @@ function SubmitStep() {
             >
               {rtiCopy.submit.identityContinue}
             </button>
-            {mobile.length > 0 && mobile.length !== 10 ? <p className="rti-error">{rtiCopy.submit.mobileInvalid}</p> : null}
+            {mobile.length !== 10 ? <p className={mobile.length > 0 ? "rti-error" : "rti-disabled-reason"}>{mobile.length > 0 ? rtiCopy.submit.mobileInvalid : rtiCopy.submit.mobileRequired}</p> : null}
           </>
         ) : null}
         </section>

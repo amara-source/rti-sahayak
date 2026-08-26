@@ -10,6 +10,7 @@ import { PageHero } from "@/components/rti/PageHero";
 import { Icon } from "@/components/rti/Icon";
 import { nodeIcon } from "@/lib/rti/icon-map";
 import { ProcessFlowchart } from "@/components/rti/ProcessFlowchart";
+import { JourneyProgress } from "@/components/rti/JourneyProgress";
 
 interface CaseResponse {
   case: Plan;
@@ -301,6 +302,7 @@ export function CaseTracker({ code }: { code: string }) {
       />
       <div className="rti-case-content">
         <section className="rti-case-overlap rti-overlap-card">
+          <JourneyProgress current="track" />
           <CaseFacts code={code} plan={data.case} />
           <CaseProgress groups={groups} />
           <Clock lapsed={hasLapsed} nodes={data.nodes} plan={data.case} />
@@ -349,7 +351,7 @@ export function CaseTracker({ code }: { code: string }) {
             </section>
           ) : null}
           <div className="rti-time-control">
-            <button className="rti-primary" disabled={pending || advanceBlocked} onClick={advance} type="button">
+            <button className={advanceBlocked ? "rti-secondary" : "rti-primary"} disabled={pending || advanceBlocked} onClick={advance} type="button">
               {pending ? rtiCopy.common.loading : rtiCopy.tracker.next}
             </button>
             <p>{advanceBlocked ? rtiCopy.tracker.advanceBlocked : rtiCopy.tracker.nextNote}</p>
