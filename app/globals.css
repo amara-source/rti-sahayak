@@ -14,8 +14,7 @@
   --wash: #f7f9fc;
   --green: #1e7b4d;
   --red: #c0392b;
-  --font-sans: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Kannada",
-    sans-serif;
+  --font-sans: Helvetica, Arial, sans-serif;
   --radius-sm: 6px;
   --radius-md: 8px;
   --card-border: 1px solid var(--line);
@@ -6280,6 +6279,28 @@ small,
     padding-inline: 16px;
     font-size: 14px;
   }
+}
+
+/* One typeface across the interface and the generated PDF. The PDF uses
+   pdf-lib's embedded Helvetica, so the browser surface uses Helvetica too. */
+.rti-page-hero__copy h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-stretch: normal;
+  letter-spacing: -0.025em;
+}
+
+.utility-card > .rti-icon-tile {
+  position: static;
+  display: flex;
+  flex: 0 0 64px;
+  margin: 0 0 18px;
+}
+
+.utility-card > h3 {
+  position: static;
+  clear: both;
+  width: 100%;
 }
 
 @media screen {

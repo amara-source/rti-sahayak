@@ -55,6 +55,8 @@ export async function buildApplicationPdf(
   doc.setSubject(`RTI application to ${input.authorityName}`);
   doc.setProducer("RTI Sahayak, a concept prototype");
 
+  // The site uses the Helvetica family too, so downloaded applications retain
+  // the same typography rather than switching to a document-only face.
   const body = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
   const maxWidth = PAGE.width - MARGIN * 2;
