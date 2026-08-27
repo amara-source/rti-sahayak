@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { DisclaimerStrip } from "@/components/layout/DisclaimerStrip";
 import { AppChrome } from "@/components/layout/AppChrome";
 import { layoutCopy } from "@/content/layout-copy";
 import "./globals.css";
@@ -37,7 +36,6 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body>
-        <DisclaimerStrip />
         <AppChrome>{children}</AppChrome>
       </body>
     </html>

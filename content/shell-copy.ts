@@ -2,6 +2,7 @@ export const shellCopy = {
   loggedOut: {
     utility: {
       accessibility: "Accessibility tools",
+      accessibilityLabel: "Accessibility",
       isl: "English",
       islNote: "Additional languages are not built in this prototype",
     },

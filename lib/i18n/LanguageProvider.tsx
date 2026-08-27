@@ -4,17 +4,25 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ReactNode } from "react";
 import { rtiCopy as englishRti } from "@/content/rti-copy";
 import { shellCopy as englishShell } from "@/content/shell-copy";
+import { homeCopy as englishHome } from "@/content/home-copy";
+import { utilityPages as englishPages } from "@/content/utility-copy";
+import { layoutCopy as englishLayout } from "@/content/layout-copy";
 import { hi } from "@/content/i18n/hi";
 import { overlay } from "./merge";
 import { STORAGE_KEY, languages, type Language } from "./languages";
 
-const dictionaries: Partial<Record<Language, { rti?: unknown; shell?: unknown }>> = { hi };
+const dictionaries: Partial<
+  Record<Language, { rti?: unknown; shell?: unknown; home?: unknown; pages?: unknown; layout?: unknown }>
+> = { hi };
 
 interface LanguageValue {
   language: Language;
   setLanguage: (next: Language) => void;
   rti: typeof englishRti;
   shell: typeof englishShell;
+  home: typeof englishHome;
+  pages: typeof englishPages;
+  layout: typeof englishLayout;
 }
 
 const LanguageContext = createContext<LanguageValue>({
@@ -22,6 +30,9 @@ const LanguageContext = createContext<LanguageValue>({
   setLanguage: () => {},
   rti: englishRti,
   shell: englishShell,
+  home: englishHome,
+  pages: englishPages,
+  layout: englishLayout,
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -53,6 +64,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       // Anything the dictionary does not name falls through to English.
       rti: dictionary?.rti ? overlay(englishRti, dictionary.rti) : englishRti,
       shell: dictionary?.shell ? overlay(englishShell, dictionary.shell) : englishShell,
+      home: dictionary?.home ? overlay(englishHome, dictionary.home) : englishHome,
+      pages: dictionary?.pages ? overlay(englishPages, dictionary.pages) : englishPages,
+      layout: dictionary?.layout ? overlay(englishLayout, dictionary.layout) : englishLayout,
     };
   }, [language, setLanguage]);
 

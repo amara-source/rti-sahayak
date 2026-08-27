@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import type { TrapCopy } from "@/content/home-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { useState } from "react";
-import { homeCopy } from "@/content/home-copy";
 import { Icon } from "./Icon";
 import { checkIcon, nodeIcon } from "@/lib/rti/icon-map";
 
@@ -14,7 +15,9 @@ import { checkIcon, nodeIcon } from "@/lib/rti/icon-map";
  * pointers get the same content as an expansion, because a hover-only reveal
  * is unusable on a phone.
  */
-function TrapCard({ trap }: { trap: (typeof homeCopy.traps.items)[number] }) {
+function TrapCard({ trap }: { trap: TrapCopy }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy } = useCopy();
   const [open, setOpen] = useState(false);
 
   return (
@@ -43,6 +46,8 @@ function TrapCard({ trap }: { trap: (typeof homeCopy.traps.items)[number] }) {
 }
 
 export function TrapCards() {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy } = useCopy();
   return (
     <section className="utility-section home-traps" aria-labelledby="home-traps-heading">
       <div className="utility-section__heading">
@@ -62,6 +67,8 @@ export function TrapCards() {
 }
 
 export function HelpdeskCard() {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy } = useCopy();
   const copy = homeCopy.helpdesk;
 
   return (
@@ -94,6 +101,8 @@ export function HelpdeskCard() {
 }
 
 export function ExampleCase() {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy } = useCopy();
   const copy = homeCopy.example;
 
   return (

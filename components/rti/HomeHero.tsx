@@ -1,6 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { homeCopy } from "@/content/home-copy";
-import { utilityPages } from "@/content/utility-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { Icon } from "./Icon";
 
 /**
@@ -11,6 +12,8 @@ import { Icon } from "./Icon";
  * its contrast. The primary action sits in a card overlapping the bottom edge.
  */
 export function HomeHero() {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy, pages: utilityPages } = useCopy();
   const copy = utilityPages.home;
 
   return (

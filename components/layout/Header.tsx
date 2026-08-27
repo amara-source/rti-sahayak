@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
-import { layoutCopy } from "@/content/layout-copy";
 
 export function Header() {
   // Interface copy in the selected language, English where untranslated.
-  const { shell: shellCopy } = useCopy();
+  const { layout: layoutCopy, shell: shellCopy } = useCopy();
   return (
     <header className="site-header marketing-header">
       <div className="site-shell site-header__inner">

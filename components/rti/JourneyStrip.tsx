@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { homeCopy } from "@/content/home-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { rtiCopy } from "@/content/rti-copy";
 import { loadRtiRulePack } from "@/lib/engine/journey";
 
@@ -99,6 +101,8 @@ function StageIcon({ id }: { id: string }) {
 }
 
 export function JourneyStrip() {
+  // Interface copy in the selected language, English where untranslated.
+  const { home: homeCopy } = useCopy();
   const pack = loadRtiRulePack();
   const clockDays = (nodeId: string) =>
     pack.nodes.find((node) => node.id === nodeId)?.clock?.days ?? null;

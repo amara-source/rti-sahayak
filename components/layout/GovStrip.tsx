@@ -1,6 +1,5 @@
 "use client";
 
-import { layoutCopy } from "@/content/layout-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { FontSizeControls } from "@/components/layout/FontSizeControls";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -9,7 +8,7 @@ import { LanguagePicker } from "@/components/layout/LanguagePicker";
 
 export function GovStrip() {
   // Interface copy in the selected language, English where untranslated.
-  const { shell: shellCopy } = useCopy();
+  const { layout: layoutCopy, shell: shellCopy } = useCopy();
   return (
     <div className="utility-strip utility-strip--marketing">
       <div className="site-shell utility-strip__inner">
@@ -17,7 +16,7 @@ export function GovStrip() {
           aria-label={shellCopy.loggedOut.utility.accessibility}
           className="utility-access"
         >
-          Accessibility
+          {shellCopy.loggedOut.utility.accessibilityLabel}
         </span>
         <div className="utility-strip__tools">
           <a className="skip-link" href="#main-content">
