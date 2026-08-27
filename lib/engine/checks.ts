@@ -8,11 +8,11 @@ export interface PreflightInput {
   singleSubject: boolean;
   asksForRecords: boolean;
   hasIdentityDocuments: boolean;
-  attachment?: {
+  attachments?: Array<{
     name: string;
     type: string;
     size: number;
-  };
+  }>;
   isBPL: "yes" | "no" | "na";
   hasBplCertificate: boolean;
 }
@@ -43,10 +43,12 @@ function passes(id: string, input: PreflightInput): boolean {
       return !input.hasIdentityDocuments;
     case "attachment":
       return (
-        input.attachment === undefined ||
-        (input.attachment.type === "application/pdf" &&
-          input.attachment.size <= 1_048_576 &&
-          !input.attachment.name.includes(" "))
+        input.attachments === undefined ||
+        (input.attachments.reduce((total, item) => total + item.size, 0) <= 1_048_576 &&
+          input.attachments.every(
+            (item) =>
+              item.type === "application/pdf" && !item.name.includes(" "),
+          ))
       );
     case "bpl_certificate":
       return input.isBPL !== "yes" || input.hasBplCertificate;

@@ -30,11 +30,11 @@ export interface RtiDraft {
   singleSubject?: boolean;
   asksForRecords?: boolean;
   hasIdentityDocuments?: boolean;
-  attachment?: {
+  attachments?: Array<{
     name: string;
     type: string;
     size: number;
-  };
+  }>;
   hasBplCertificate?: boolean;
   registrationNumber?: string;
 }

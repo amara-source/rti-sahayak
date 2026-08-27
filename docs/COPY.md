@@ -107,6 +107,10 @@ States: Pass, Warning, Blocks submission
 
 Labels: What can happen, How to fix it
 
+Attachment label: Optional PDF attachments, combined limit 1 MB
+
+Attachment action: Remove
+
 Submission action: Continue to simulated submission
 
 Offline action: Download the application

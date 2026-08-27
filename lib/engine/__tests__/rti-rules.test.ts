@@ -80,11 +80,10 @@ describe("RTI preflight rules", () => {
       singleSubject: true,
       asksForRecords: true,
       hasIdentityDocuments: false,
-      attachment: {
-        name: "my attachment.pdf",
-        type: "application/pdf",
-        size: 1_048_577,
-      },
+      attachments: [
+        { name: "first.pdf", type: "application/pdf", size: 600_000 },
+        { name: "my attachment.pdf", type: "application/pdf", size: 400_000 },
+      ],
       isBPL: "no",
       hasBplCertificate: false,
     });
@@ -93,6 +92,23 @@ describe("RTI preflight rules", () => {
     expect(results.find((item) => item.id === "attachment")?.status).toBe(
       "warn",
     );
+
+    const combinedTooLarge = evaluatePreflightChecks({
+      bodyLevel: "central",
+      text: "Provide the file notings.",
+      singleSubject: true,
+      asksForRecords: true,
+      hasIdentityDocuments: false,
+      attachments: [
+        { name: "first.pdf", type: "application/pdf", size: 600_000 },
+        { name: "second.pdf", type: "application/pdf", size: 600_000 },
+      ],
+      isBPL: "no",
+      hasBplCertificate: false,
+    });
+    expect(
+      combinedTooLarge.find((item) => item.id === "attachment")?.status,
+    ).toBe("warn");
   });
 });
 

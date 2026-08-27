@@ -6166,6 +6166,37 @@ small,
   font-size: 16px;
 }
 
+.rti-attachment-list {
+  display: grid;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+  list-style: none;
+}
+
+.rti-attachment-list li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--surface-soft);
+}
+
+.rti-attachment-list li > span {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.rti-attachment-list strong {
+  overflow-wrap: anywhere;
+}
+
 .rti-icon-tile {
   width: 64px;
   height: 64px;

@@ -51,15 +51,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: rtiCopy.api.invalid }, { status: 400 });
   }
 
-  const attachment = isRecord(extracted.attachment) &&
-    typeof extracted.attachment.name === "string" &&
-    typeof extracted.attachment.type === "string" &&
-    typeof extracted.attachment.size === "number"
-    ? {
-        name: extracted.attachment.name,
-        type: extracted.attachment.type,
-        size: extracted.attachment.size,
-      }
+  const attachments = Array.isArray(extracted.attachments)
+    ? extracted.attachments
+        .filter(
+          (item): item is Record<string, unknown> =>
+            isRecord(item) &&
+            typeof item.name === "string" &&
+            typeof item.type === "string" &&
+            typeof item.size === "number",
+        )
+        .map((item) => ({
+          name: item.name as string,
+          type: item.type as string,
+          size: item.size as number,
+        }))
     : undefined;
   const checks = evaluatePreflightChecks({
     bodyLevel: extracted.bodyLevel as "central" | "state",
@@ -67,7 +72,7 @@ export async function POST(request: Request) {
     singleSubject: extracted.singleSubject,
     asksForRecords: extracted.asksForRecords,
     hasIdentityDocuments: extracted.hasIdentityDocuments,
-    attachment,
+    attachments,
     isBPL: extracted.isBPL as "yes" | "no" | "na",
     hasBplCertificate: extracted.hasBplCertificate,
   });

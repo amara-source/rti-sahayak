@@ -344,7 +344,7 @@ function JurisdictionStep() {
             singleSubject: undefined,
             asksForRecords: undefined,
             hasIdentityDocuments: undefined,
-            attachment: undefined,
+            attachments: undefined,
             hasBplCertificate: undefined,
           }
         : {}),
@@ -730,7 +730,7 @@ function ChecksStep() {
   const [asksForRecords, setAsksForRecords] = useState(true);
   const [hasIdentityDocuments, setHasIdentityDocuments] = useState(false);
   const [hasBplCertificate, setHasBplCertificate] = useState(false);
-  const [attachment, setAttachment] = useState<PreflightInput["attachment"]>();
+  const [attachments, setAttachments] = useState<NonNullable<PreflightInput["attachments"]>>([]);
   const [downloaded, setDownloaded] = useState(false);
   const [trackingPending, setTrackingPending] = useState(false);
   const [trackingError, setTrackingError] = useState("");
@@ -744,7 +744,7 @@ function ChecksStep() {
     );
     setHasIdentityDocuments(draft.hasIdentityDocuments ?? false);
     setHasBplCertificate(draft.hasBplCertificate ?? false);
-    setAttachment(draft.attachment);
+    setAttachments(draft.attachments ?? []);
   }, [draft]);
 
   if (!ready) return null;
@@ -756,7 +756,7 @@ function ChecksStep() {
     singleSubject,
     asksForRecords,
     hasIdentityDocuments,
-    attachment,
+    attachments,
     isBPL: draft.isBPL ?? "no",
     hasBplCertificate,
   };
@@ -817,7 +817,7 @@ function ChecksStep() {
             singleSubject,
             asksForRecords,
             hasIdentityDocuments,
-            attachment,
+            attachments,
             hasBplCertificate,
           },
           manualFiling: true,
@@ -838,7 +838,7 @@ function ChecksStep() {
       singleSubject,
       asksForRecords,
       hasIdentityDocuments,
-      attachment,
+      attachments,
       hasBplCertificate,
     });
     router.push("/file/submit");
@@ -856,12 +856,38 @@ function ChecksStep() {
           <input
             accept="application/pdf"
             onChange={(event) => {
-              const file = event.target.files?.[0];
-              setAttachment(file ? { name: file.name, type: file.type, size: file.size } : undefined);
+              const files = Array.from(event.target.files ?? []).map((file) => ({
+                name: file.name,
+                type: file.type,
+                size: file.size,
+              }));
+              setAttachments((current) => [...current, ...files]);
+              event.target.value = "";
             }}
+            multiple
             type="file"
           />
         </label>
+        {attachments.length ? (
+          <ul className="rti-attachment-list">
+            {attachments.map((attachment, index) => (
+              <li key={`${attachment.name}-${attachment.size}-${index}`}>
+                <span>
+                  <strong>{attachment.name}</strong>
+                  <small>{Math.ceil(attachment.size / 1024).toLocaleString("en-IN")} KB</small>
+                </span>
+                <button
+                  aria-label={`${rtiCopy.checks.removeAttachment} ${attachment.name}`}
+                  className="rti-secondary"
+                  onClick={() => setAttachments((current) => current.filter((_, itemIndex) => itemIndex !== index))}
+                  type="button"
+                >
+                  {rtiCopy.checks.remove}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
       <div className="rti-check-list">
         {results.map((result) => result.status === "pass" ? (
