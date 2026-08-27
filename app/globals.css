@@ -9689,3 +9689,35 @@ small,
 }
 
 .rti-node-list { align-items: stretch; }
+
+/* ---------------------------------------------------------------------------
+   THE ASSISTANT BUTTON AND SLIDE-IN PANEL
+   --------------------------------------------------------------------------- */
+
+.chat-toggle__mark {
+  display: block;
+  width: 34px;
+  height: 34px;
+}
+
+.chat-toggle__mark svg { width: 100%; height: 100%; }
+.chat-toggle__face { fill: #ffffff; }
+.chat-toggle__eye { fill: var(--accent-deep); }
+.chat-toggle__smile { fill: none; stroke: var(--accent-deep); stroke-width: 2.2; stroke-linecap: round; }
+.chat-toggle__antenna { stroke: #ffffff; stroke-width: 2.6; stroke-linecap: round; }
+.chat-toggle__spark { fill: #ffb020; }
+
+/* Slides in from the right rather than appearing. */
+.floating-chat__panel {
+  transform-origin: bottom right;
+  animation: rti-chat-in .28s cubic-bezier(.2, .8, .3, 1) both;
+}
+
+@keyframes rti-chat-in {
+  from { opacity: 0; transform: translateX(18px) translateY(10px) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-chat__panel { animation: none; }
+}

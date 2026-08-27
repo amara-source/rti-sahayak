@@ -49,7 +49,18 @@ export function FloatingTools() {
           onClick={() => setChatOpen((open) => !open)}
           type="button"
         >
-          <span aria-hidden="true">?</span>
+          {/* The same character mark as inside the panel, so the button says
+              what it opens rather than showing a bare question mark. */}
+          <span aria-hidden="true" className="chat-toggle__mark">
+            <svg viewBox="0 0 48 48" role="presentation">
+              <circle className="chat-toggle__face" cx="24" cy="25" r="13" />
+              <circle className="chat-toggle__eye" cx="19" cy="23" r="2.1" />
+              <circle className="chat-toggle__eye" cx="29" cy="23" r="2.1" />
+              <path className="chat-toggle__smile" d="M18.5 29.5a6.5 6.5 0 0 0 11 0" />
+              <path className="chat-toggle__antenna" d="M24 12V7.5" />
+              <circle className="chat-toggle__spark" cx="24" cy="6" r="3.1" />
+            </svg>
+          </span>
         </button>
       </div>
     </div>
