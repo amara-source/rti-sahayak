@@ -10004,3 +10004,62 @@ small,
   color: var(--muted);
   font-size: var(--caption);
 }
+
+/* Pre-flight check cards: one spacing scale, applied to every state.
+   16px from the heading row to the body, 12px between the two body
+   paragraphs, 24px from the body to the button. The status pill sits on the
+   heading's baseline rather than floating against its centre. */
+.rti-check header {
+  align-items: baseline;
+}
+
+.rti-check header > span {
+  /* The pill's own text baseline is what lines up with the heading. */
+  align-self: baseline;
+}
+
+.rti-check p {
+  margin: 0;
+}
+
+.rti-check header + p {
+  margin-top: 16px;
+}
+
+.rti-check p + p {
+  margin-top: 12px;
+}
+
+.rti-check .rti-fix-link {
+  margin-top: 24px;
+}
+
+/* The pass state gets the same baseline treatment. A card that passed is one
+   line: tick, name, "Pass". The shared card rule turns every check card into
+   a flex column, which stacked those three on top of each other, so the row
+   is restored here. The tick is a round mark rather than text, so that alone
+   stays optically centred. */
+.rti-check--collapsed {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 12px;
+  height: auto;
+}
+
+.rti-check--collapsed > h2 {
+  flex: 1 1 auto;
+}
+
+.rti-check--collapsed .rti-check__pass-mark {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.rti-check--collapsed > strong {
+  flex: 0 0 auto;
+}
+
+/* The attachment box and the checks below it were touching. */
+.rti-check-list {
+  margin-top: 24px;
+}
