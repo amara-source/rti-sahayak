@@ -6303,6 +6303,33 @@ small,
   width: 100%;
 }
 
+/* Action labels use symmetric fixed-height pills. Card-sized choice controls
+   are intentionally excluded because their descriptive copy may wrap. */
+.rti-primary,
+.sync-trigger,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  display: inline-flex;
+  height: 48px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rti-secondary,
+.rti-fix-link {
+  display: inline-flex;
+  height: 40px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 @media screen {
   .directory-page,
   .ask-page { width: 100%; max-width: none; margin: 0; padding: 0 0 var(--section-space); background: var(--surface-soft); }
