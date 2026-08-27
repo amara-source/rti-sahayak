@@ -9,6 +9,7 @@ import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authorit
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
 import { Icon } from "./Icon";
+import { EmptyStep } from "./EmptyStep";
 import { checkIcon, stepIcons } from "@/lib/rti/icon-map";
 import { JourneyProgress, type JourneyProgressStep } from "./JourneyProgress";
 import {
@@ -337,7 +338,7 @@ function JurisdictionStep() {
   }, [draft, jurisdictions]);
 
   if (!ready) return null;
-  if (!draft) return <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}><EmptyStep icon="compass" what="Confirms whether the records are held by a central or a state public authority, because that decides where the request goes." /></Shell>;
 
   const warning = computeJourney("rti", { bodyLevel }).find(
     (node) => node.id === "jurisdiction_check",
@@ -497,7 +498,7 @@ function AuthorityStep() {
   }, [authorities, draft]);
 
   if (!ready) return null;
-  if (!draft) return <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><EmptyStep icon="building" what="Chooses the public authority and the officer the request is addressed to." /></Shell>;
 
   const selected = authorities.find((item) => item.id === authorityId);
   const customAuthority = authorityId === "custom";
@@ -691,7 +692,7 @@ function DraftStep() {
   }, [draft]);
 
   if (!ready) return null;
-  if (!draft) return <Shell step="draft" eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft) return <Shell step="draft" eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}><EmptyStep icon="folder" what="Rewrites what you wrote into a request for records, which is much harder to refuse than a question." /></Shell>;
 
   function proceed() {
     update({ ...draft!, rewritten, changes });
@@ -772,7 +773,7 @@ function ChecksStep() {
   }, [draft]);
 
   if (!ready) return null;
-  if (!draft?.bodyLevel) return <Shell step="checks" eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
+  if (!draft?.bodyLevel) return <Shell step="checks" eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}><EmptyStep icon="clipboard-check" what="Runs every pre-flight rule against the request before it is filed." /></Shell>;
 
   const input: PreflightInput = {
     bodyLevel: draft.bodyLevel,
@@ -995,7 +996,7 @@ function SubmitStep() {
 
   if (!ready) return null;
   if (!draft || draft.bodyLevel !== "central" || draft.draftOnly) {
-    return <Shell step="submit" eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}><Link href="/file/jurisdiction">{rtiCopy.common.back}</Link></Shell>;
+    return <Shell step="submit" eyebrow={rtiCopy.submit.eyebrow} heading={rtiCopy.submit.heading}><EmptyStep icon="send" what="Practises the four steps the real portal puts in front of you, from the OTP to the registration number." /></Shell>;
   }
 
   async function createCase() {

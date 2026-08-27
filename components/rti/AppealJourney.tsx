@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { PageHero } from "./PageHero";
+import { EmptyStep } from "./EmptyStep";
 import { Icon } from "./Icon";
 import { nodeIcon } from "@/lib/rti/icon-map";
 
@@ -105,7 +106,17 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
     }
   }
 
-  if (error && !data) return <p className="rti-error">{error}</p>;
+  // No case in this browser. Explain the step rather than showing a bare error.
+  if (error && !data) {
+    return (
+      <article className="rti-detail-page">
+        <PageHero eyebrow={copy.eyebrow} illustration="/illustrations/tracker.png" supporting={copy.intro} title={copy.heading} tone={kind === "complaint" ? "orange" : "violet"} />
+        <div className="rti-detail-content rti-overlap-card">
+          <EmptyStep body={rtiCopy.empty.appealBody} icon={nodeIcon(nodeId)} what={copy.intro} />
+        </div>
+      </article>
+    );
+  }
   if (!data || !node) return <p className="rti-loading">{rtiCopy.common.loading}</p>;
 
   const status = data.case.statuses[nodeId] ?? "none";

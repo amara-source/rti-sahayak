@@ -7,6 +7,7 @@ import { trackerCopy } from "@/content/tracker-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
+import { EmptyStep } from "@/components/rti/EmptyStep";
 import { Icon } from "@/components/rti/Icon";
 import { nodeIcon } from "@/lib/rti/icon-map";
 import { ProcessFlowchart } from "@/components/rti/ProcessFlowchart";
@@ -281,7 +282,18 @@ export function CaseTracker({ code }: { code: string }) {
     }
   }
 
-  if (error) return <p className="rti-error">{error}</p>;
+  if (error) {
+    return (
+      <section className="rti-case-page">
+        <PageHero eyebrow={rtiCopy.tracker.eyebrow} illustration="/illustrations/tracker.png" supporting={rtiCopy.tracker.ordinaryReason} title={rtiCopy.tracker.heading} tone="violet" />
+        <div className="rti-case-content">
+          <div className="rti-overlap-card">
+            <EmptyStep body={rtiCopy.empty.caseBody} icon="timeline" what="Tracks the statutory clock on a filed request and opens each route as it becomes available." />
+          </div>
+        </div>
+      </section>
+    );
+  }
   if (!data) return <p className="rti-loading">{rtiCopy.common.loading}</p>;
 
   // The engine decides all of this. Nothing here is asserted by the component.

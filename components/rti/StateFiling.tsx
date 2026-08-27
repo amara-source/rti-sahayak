@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import { loadDraft, type RtiDraft } from "@/lib/rti/draft";
-import { statePortal } from "@/lib/engine/jurisdictions";
+import { listJurisdictions, statePortal } from "@/lib/engine/jurisdictions";
 import { listAuthorities } from "@/lib/engine/authority";
 import { Icon } from "./Icon";
 import { PageHero } from "./PageHero";
@@ -29,6 +29,8 @@ export function StateFiling() {
   const [filedOn, setFiledOn] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  // Used only when the page is opened directly with no request in session.
+  const [browseState, setBrowseState] = useState("");
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
@@ -37,20 +39,15 @@ export function StateFiling() {
   }, []);
 
   if (!ready) return null;
-  if (!draft) {
-    return (
-      <article className="rti-detail-page">
-        <PageHero eyebrow={copy.eyebrow} illustration="/illustrations/submit.png" supporting={copy.lead} title={copy.heading} tone="teal" />
-        <div className="rti-detail-content rti-overlap-card">
-          <Link href="/file">{rtiCopy.common.back}</Link>
-        </div>
-      </article>
-    );
-  }
 
-  const state = String(draft.state ?? "");
+  // Opened directly with no request in session. The three routes are general
+  // guidance, so they are still worth showing, with a selector so a visitor
+  // can look up any state.
+  const browsing = !draft;
+  const state = browsing ? browseState : String(draft?.state ?? "");
   const portal = statePortal(state);
-  const authority = listAuthorities().find((item) => item.id === draft.authorityId);
+  const jurisdictions = listJurisdictions();
+  const authority = listAuthorities().find((item) => item.id === draft?.authorityId);
 
   async function download() {
     const current = draft!;
@@ -104,6 +101,29 @@ export function StateFiling() {
       <div className="rti-detail-content rti-overlap-card">
         <p className="rti-state-lead">{copy.lead}</p>
 
+        {browsing ? (
+          <section className="rti-state-browse">
+            <h2>{copy.browseHeading}</h2>
+            <p>{copy.browseNote}</p>
+            <label className="rti-field">
+              <span>{copy.browseLabel}</span>
+              <select onChange={(event) => setBrowseState(event.target.value)} value={browseState}>
+                <option value="">{copy.browsePlaceholder}</option>
+                <optgroup label={rtiCopy.jurisdiction.statesGroup}>
+                  {jurisdictions.states.map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label={rtiCopy.jurisdiction.unionTerritoriesGroup}>
+                  {jurisdictions.unionTerritories.map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                </optgroup>
+              </select>
+            </label>
+          </section>
+        ) : null}
+
         <h2 className="rti-state-routes__heading">{copy.routesHeading}</h2>
         <ol className="rti-state-routes">
           <li className="rti-state-route">
@@ -130,9 +150,11 @@ export function StateFiling() {
               <h3>{copy.post.title}</h3>
               <p>{copy.post.body}</p>
               <p className="rti-state-route__why">{copy.post.why}</p>
-              <button className="rti-secondary" onClick={download} type="button">
-                {copy.post.action}
-              </button>
+              {browsing ? null : (
+                <button className="rti-secondary" onClick={download} type="button">
+                  {copy.post.action}
+                </button>
+              )}
             </div>
           </li>
 
@@ -146,6 +168,12 @@ export function StateFiling() {
           </li>
         </ol>
 
+        {browsing ? (
+          <section className="rti-state-date">
+            <h2>{copy.startYours}</h2>
+            <Link className="rti-primary" href="/file">{copy.startYoursAction}</Link>
+          </section>
+        ) : (
         <section className="rti-state-date">
           <h2>{copy.dateHeading}</h2>
           <label className="rti-field">
@@ -163,6 +191,7 @@ export function StateFiling() {
           </button>
           {error ? <p className="rti-error" role="alert">{error}</p> : null}
         </section>
+        )}
 
         <p className="rti-note">{copy.appealNote}</p>
       </div>

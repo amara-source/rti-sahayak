@@ -9584,3 +9584,45 @@ small,
 .rti-detail-page .rti-appeal-clock strong,
 .rti-detail-page .rti-appeal-clock p { color: #ffffff; }
 .rti-detail-page .rti-appeal-clock span { color: rgb(255 255 255 / 78%); }
+
+/* ---------------------------------------------------------------------------
+   EMPTY STATES
+   A step opened directly used to render a card containing only a Back link.
+   Every one now says what it is for and where to go.
+   --------------------------------------------------------------------------- */
+
+.rti-empty-step {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px;
+  background: var(--surface-soft);
+}
+
+.rti-empty-step h2 { margin: 0; font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
+.rti-empty-step p { margin: 0; color: var(--muted); font-size: var(--card-body); line-height: var(--card-body-lh); max-width: 62ch; }
+.rti-empty-step__what strong { color: var(--ink); }
+
+.rti-empty-step__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.rti-state-browse {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-bottom: 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--surface-soft);
+}
+
+.rti-state-browse h2 { margin: 0; font-size: 18px; }
+.rti-state-browse p { margin: 0; color: var(--muted); font-size: var(--card-body); line-height: var(--card-body-lh); }
+.rti-state-browse .rti-field { max-width: 340px; width: 100%; }
