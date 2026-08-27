@@ -27,18 +27,26 @@ interface Turn {
 function AssistantAvatar() {
   return (
     <span aria-hidden="true" className="ask-avatar">
-      <svg viewBox="0 0 32 32" role="presentation">
-        <rect className="ask-avatar__body" height="18" rx="6" width="24" x="4" y="9" />
-        <circle className="ask-avatar__eye" cx="12" cy="17" r="2.1" />
-        <circle className="ask-avatar__eye" cx="20" cy="17" r="2.1" />
-        <path className="ask-avatar__antenna" d="M16 9V4" />
-        <circle className="ask-avatar__dot" cx="16" cy="3.2" r="2.2" />
+      <svg viewBox="0 0 48 48" role="presentation">
+        <rect className="ask-avatar__plate" width="48" height="48" rx="14" />
+        <circle className="ask-avatar__face" cx="24" cy="25" r="12.5" />
+        <circle className="ask-avatar__eye" cx="19.5" cy="23" r="2" />
+        <circle className="ask-avatar__eye" cx="28.5" cy="23" r="2" />
+        <path className="ask-avatar__smile" d="M19 29.5a6 6 0 0 0 10 0" />
+        <path className="ask-avatar__antenna" d="M24 12.5V8" />
+        <circle className="ask-avatar__spark" cx="24" cy="6.5" r="3" />
       </svg>
     </span>
   );
 }
 
-export function ScriptedAssistant({ answers }: { answers: ScriptedAnswer[] }) {
+export function ScriptedAssistant({
+  answers,
+  compact = false,
+}: {
+  answers: ScriptedAnswer[];
+  compact?: boolean;
+}) {
   const copy = rtiCopy.ask;
   const [turns, setTurns] = useState<Turn[]>([]);
 
@@ -69,7 +77,7 @@ export function ScriptedAssistant({ answers }: { answers: ScriptedAnswer[] }) {
   }
 
   return (
-    <div className="scripted-assistant">
+    <div className={compact ? "scripted-assistant is-compact" : "scripted-assistant"}>
       <p className="scripted-assistant__label">{copy.label}</p>
 
       <section className="ask-thread" aria-label={copy.assistant}>

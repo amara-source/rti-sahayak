@@ -9193,3 +9193,83 @@ small,
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ---------------------------------------------------------------------------
+   THE SCRIPTED ASSISTANT
+   It lives in the floating button now. The conversation lost its heavy frame:
+   the messages carry the structure on their own.
+   --------------------------------------------------------------------------- */
+
+.ask-avatar { width: 40px; height: 40px; border-radius: 0; background: none; }
+.ask-avatar svg { width: 100%; height: 100%; }
+.ask-avatar__plate { fill: var(--accent-deep); }
+.ask-avatar__face { fill: #ffffff; }
+.ask-avatar__eye { fill: var(--accent-deep); }
+.ask-avatar__smile { fill: none; stroke: var(--accent-deep); stroke-width: 2; stroke-linecap: round; }
+.ask-avatar__antenna { stroke: var(--accent-deep); stroke-width: 2.4; stroke-linecap: round; }
+.ask-avatar__spark { fill: #ffb020; }
+
+/* No frame around the thread. */
+.ask-thread {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  overflow: visible;
+}
+
+.ask-thread__header {
+  border-bottom: 0;
+  padding: 0 0 14px;
+  background: none;
+}
+
+.ask-thread__messages { padding: 0; }
+
+/* The floating panel. */
+.floating-chat__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(430px, calc(100vw - 32px));
+  max-height: min(620px, calc(100vh - 140px));
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 0 26px 60px rgb(31 61 97 / 26%);
+}
+
+.floating-chat__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 18px;
+  background: var(--surface-soft);
+}
+
+.floating-chat__bar strong { font-size: 1rem; }
+
+.floating-chat__bar button {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.floating-chat__body { overflow-y: auto; padding: 18px; }
+
+.scripted-assistant.is-compact .ask-thread__header { display: none; }
+.scripted-assistant.is-compact .ask-chips h2 { font-size: .95rem; }
+.scripted-assistant.is-compact .ask-chips__row .rti-secondary {
+  min-height: 38px;
+  padding: 11px 14px 7px;
+  font-size: .82rem;
+}
+.scripted-assistant.is-compact .ask-message { max-width: 100%; }
+.scripted-assistant.is-compact .scripted-assistant__label { font-size: .78rem; }
