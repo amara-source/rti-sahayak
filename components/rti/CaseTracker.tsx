@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { rtiCopy as englishCopy } from "@/content/rti-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
+import { nodeTitle } from "@/lib/rti/node-text";
 import { trackerCopy } from "@/content/tracker-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
@@ -161,7 +162,7 @@ function CaseFacts({ code, plan }: { code: string; plan: Plan }) {
 
 export function CaseTracker({ code }: { code: string }) {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy } = useCopy();
+  const { rti: rtiCopy, language } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
@@ -424,7 +425,10 @@ export function CaseTracker({ code }: { code: string }) {
                         ? "/complaint"
                         : `/case/${code}/${node.id}`;
                   const dependencies = node.dependsOn
-                    .map((id) => data.nodes.find((item) => item.id === id)?.title)
+                    .map((id) => {
+                      const found = data.nodes.find((item) => item.id === id);
+                      return found ? nodeTitle(found, language) : undefined;
+                    })
                     .filter(Boolean)
                     .join(", ");
                   const nodeStatus = data.case.statuses[node.id] ?? "none";
@@ -452,7 +456,7 @@ export function CaseTracker({ code }: { code: string }) {
                         <JobTag job={node.job} />
                         <span>{rtiCopy.tracker.status}: {statusLabel}</span>
                       </div>
-                      <h3>{node.title}</h3>
+                      <h3>{nodeTitle(node, language)}</h3>
                       <p>{node.summary}</p>
                       {node.locked ? (
                         <small>{rtiCopy.tracker.locked} {dependencies}</small>
@@ -486,7 +490,7 @@ export function CaseNodeDetail({
   nodeId: string;
 }) {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy } = useCopy();
+  const { rti: rtiCopy, language } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [status, setStatus] = useState<Status>("none");
   const [error, setError] = useState("");
@@ -539,7 +543,7 @@ export function CaseNodeDetail({
         eyebrow={rtiCopy.tracker.jobs[node.job]}
         illustration="/illustrations/tracker.png"
         supporting={node.summary}
-        title={node.title}
+        title={nodeTitle(node, language)}
         tone="violet"
       />
       <div className="rti-detail-content rti-overlap-card">

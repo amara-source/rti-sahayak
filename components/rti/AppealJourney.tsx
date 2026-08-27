@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { rtiCopy as englishCopy } from "@/content/rti-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
+import { nodeTitle } from "@/lib/rti/node-text";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { PageHero } from "./PageHero";
 import { EmptyStep } from "./EmptyStep";
@@ -35,7 +36,7 @@ function initialDraft(kind: AppealKind, registration: string): string {
 
 export function AppealJourney({ kind }: { kind: AppealKind }) {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy } = useCopy();
+  const { rti: rtiCopy, language } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
@@ -65,7 +66,10 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
   const dependency = useMemo(() => {
     if (!data || !node) return "";
     return node.dependsOn
-      .map((id) => data.nodes.find((item) => item.id === id)?.title)
+      .map((id) => {
+        const found = data.nodes.find((item) => item.id === id);
+        return found ? nodeTitle(found, language) : undefined;
+      })
       .filter(Boolean)
       .join(", ");
   }, [data, node]);

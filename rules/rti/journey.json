@@ -137,7 +137,10 @@
       "sourceLabel": "RTI Online portal notice, homepage",
       "sourceUrl": "https://rtionline.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "rtionline.gov.in accepts applications only for ministries, departments and other public authorities of the Central Government. Its own homepage carries a warning in red that applications filed there for state government bodies, including the Government of NCT of Delhi, will be returned and the amount will not be refunded. Most everyday problems, such as municipal work, state police, state schools, land records and state pensions, are state matters."
+      "lead": "rtionline.gov.in accepts applications only for ministries, departments and other public authorities of the Central Government. Its own homepage carries a warning in red that applications filed there for state government bodies, including the Government of NCT of Delhi, will be returned and the amount will not be refunded. Most everyday problems, such as municipal work, state police, state schools, land records and state pensions, are state matters.",
+      "hi": {
+        "title": "जाँचिए कि यह किस सरकार का मामला है"
+      }
     },
     {
       "id": "not_an_rti",
@@ -161,7 +164,10 @@
       "sourceLabel": "RTI Act 2005, sections 2(f) and 2(j)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "The Right to Information Act gives you access to information held by a public authority. It does not give you the power to make an official do something, and a request phrased as a demand for action is likely to be refused. If you want something fixed, a grievance to CPGRAMS is the right route."
+      "lead": "The Right to Information Act gives you access to information held by a public authority. It does not give you the power to make an official do something, and a request phrased as a demand for action is likely to be refused. If you want something fixed, a grievance to CPGRAMS is the right route.",
+      "hi": {
+        "title": "यह आरटीआई का मामला नहीं है"
+      }
     },
     {
       "id": "identify_authority",
@@ -186,7 +192,10 @@
       "sourceLabel": "RTI Act 2005, sections 5 and 6(3); RTI Portal Gateway",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "Every public authority appoints a Central Public Information Officer, or a State PIO for state bodies. Your application goes to that officer. On the central portal, applications reach the Nodal Officer of the ministry or department, who transmits them to the CPIO."
+      "lead": "Every public authority appoints a Central Public Information Officer, or a State PIO for state bodies. Your application goes to that officer. On the central portal, applications reach the Nodal Officer of the ministry or department, who transmits them to the CPIO.",
+      "hi": {
+        "title": "सही लोक प्राधिकरण पहचानिए"
+      }
     },
     {
       "id": "draft_request",
@@ -218,7 +227,10 @@
       "sourceLabel": "RTI Act 2005, sections 2(f), 2(i), 2(j) and 6(2); RTI Online guidelines",
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25",
-      "lead": "The Act covers information held in material form: records, documents, memos, file notings, orders, logbooks, contracts and reports. It does not cover opinions, explanations or answers to questions. This is why 'why has my pension not been released' is refusable and 'provide a copy of the file notings on application number X, the current stage of processing, and the name and designation of the officer holding the file' is not."
+      "lead": "The Act covers information held in material form: records, documents, memos, file notings, orders, logbooks, contracts and reports. It does not cover opinions, explanations or answers to questions. This is why 'why has my pension not been released' is refusable and 'provide a copy of the file notings on application number X, the current stage of processing, and the name and designation of the officer holding the file' is not.",
+      "hi": {
+        "title": "आवेदन का मसौदा बनाइए"
+      }
     },
     {
       "id": "preflight",
@@ -251,7 +263,10 @@
       "sourceLabel": "RTI Online guidelines; RTI Act 2005, section 6(2); RTI Rules 2012",
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25",
-      "lead": "Every one of these has caused applications to be returned or refused."
+      "lead": "Every one of these has caused applications to be returned or refused.",
+      "hi": {
+        "title": "भेजने से पहले जाँच"
+      }
     },
     {
       "id": "submit",
@@ -287,7 +302,10 @@
       "sourceLabel": "RTI Rules 2012; RTI Online guidelines",
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25",
-      "lead": "The application fee is ten rupees, prescribed under the RTI Rules 2012, and there is no fee at all for applicants below the poverty line, though you must attach the certificate issued by the appropriate government. Payment on the portal goes through a payment gateway that opens in a separate tab."
+      "lead": "The application fee is ten rupees, prescribed under the RTI Rules 2012, and there is no fee at all for applicants below the poverty line, though you must attach the certificate issued by the appropriate government. Payment on the portal goes through a payment gateway that opens in a separate tab.",
+      "hi": {
+        "title": "आवेदन भेजिए"
+      }
     },
     {
       "id": "state_filing",
@@ -330,7 +348,10 @@
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-26",
       "replaces": "submit",
-      "lead": "The Right to Information Act applies to state public authorities in exactly the same way. Only the destination changes. Most states run their own online RTI portal."
+      "lead": "The Right to Information Act applies to state public authorities in exactly the same way. Only the destination changes. Most states run their own online RTI portal.",
+      "hi": {
+        "title": "अपने राज्य में दाखिल कीजिए"
+      }
     },
     {
       "id": "transfer_window",
@@ -356,7 +377,10 @@
       "sourceLabel": "RTI Act 2005, section 6(3)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "If the public authority that receives your application does not hold the information, Section 6(3) requires it to transfer the application to the authority that does, and to inform you, within five days."
+      "lead": "If the public authority that receives your application does not hold the information, Section 6(3) requires it to transfer the application to the authority that does, and to inform you, within five days.",
+      "hi": {
+        "title": "दूसरे कार्यालय को भेजने की अवधि"
+      }
     },
     {
       "id": "await_reply",
@@ -412,7 +436,10 @@
       "sourceLabel": "RTI Act 2005, sections 7(1), 7(3) and 11",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "The Public Information Officer must provide the information, or reject the request with reasons, within thirty days of receiving it. Where the request concerns the life or liberty of a person, the period is forty eight hours. If the application was filed through an Assistant PIO, five days are added."
+      "lead": "The Public Information Officer must provide the information, or reject the request with reasons, within thirty days of receiving it. Where the request concerns the life or liberty of a person, the period is forty eight hours. If the application was filed through an Assistant PIO, five days are added.",
+      "hi": {
+        "title": "जवाब का इंतज़ार कीजिए"
+      }
     },
     {
       "id": "deemed_refusal",
@@ -439,7 +466,10 @@
       "sourceLabel": "RTI Act 2005, section 7(2)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "Where the Public Information Officer fails to give a decision within the time specified, the officer is deemed to have refused the request under Section 7(2). This is the single most useful thing most applicants never learn. Silence is not the end of the matter."
+      "lead": "Where the Public Information Officer fails to give a decision within the time specified, the officer is deemed to have refused the request under Section 7(2). This is the single most useful thing most applicants never learn. Silence is not the end of the matter.",
+      "hi": {
+        "title": "जवाब नहीं आया, यानी कानून की नज़र में मना कर दिया"
+      }
     },
     {
       "id": "first_appeal",
@@ -476,7 +506,10 @@
       "sourceLabel": "RTI Act 2005, section 19(1) and 19(6)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "A First Appeal goes to an officer senior in rank to the Public Information Officer, called the First Appellate Authority, within the same public authority. You may appeal if you received no reply, if the reply was incomplete or misleading, or if the information was refused. No fee is payable for a first appeal."
+      "lead": "A First Appeal goes to an officer senior in rank to the Public Information Officer, called the First Appellate Authority, within the same public authority. You may appeal if you received no reply, if the reply was incomplete or misleading, or if the information was refused. No fee is payable for a first appeal.",
+      "hi": {
+        "title": "पहली अपील दाखिल कीजिए"
+      }
     },
     {
       "id": "second_appeal",
@@ -509,7 +542,10 @@
       "sourceLabel": "RTI Act 2005, section 19(3); RTI Online portal notice on CIC integration",
       "sourceUrl": "https://rtionline.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "If the First Appellate Authority refuses, or does not decide, you may appeal to the Central Information Commission, or the State Information Commission for state bodies. A second appeal must be filed within ninety days from the date the decision should have been made or was actually received, and the Commission may admit a later appeal for sufficient cause. A second appeal filed without a first appeal is liable to be returned."
+      "lead": "If the First Appellate Authority refuses, or does not decide, you may appeal to the Central Information Commission, or the State Information Commission for state bodies. A second appeal must be filed within ninety days from the date the decision should have been made or was actually received, and the Commission may admit a later appeal for sufficient cause. A second appeal filed without a first appeal is liable to be returned.",
+      "hi": {
+        "title": "दूसरी अपील दाखिल कीजिए"
+      }
     },
     {
       "id": "section_18_complaint",
@@ -535,7 +571,10 @@
       "sourceLabel": "RTI Act 2005, section 18; RTI Online process flowchart",
       "sourceUrl": "https://rtionline.gov.in/",
       "verifiedOn": "2026-08-25",
-      "lead": "An appeal challenges the decision. A complaint under Section 18 challenges the conduct of the officer: refusing to accept your application, demanding a reason for wanting the information, giving deliberately misleading information, or charging an unreasonable fee. It goes directly to the Information Commission and, unlike an appeal, it carries no time limit."
+      "lead": "An appeal challenges the decision. A complaint under Section 18 challenges the conduct of the officer: refusing to accept your application, demanding a reason for wanting the information, giving deliberately misleading information, or charging an unreasonable fee. It goes directly to the Information Commission and, unlike an appeal, it carries no time limit.",
+      "hi": {
+        "title": "धारा 18 की शिकायत"
+      }
     }
   ],
   "checks": [

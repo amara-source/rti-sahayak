@@ -64,6 +64,8 @@ export interface RuleNode {
    * rest of the same provision behind a disclosure.
    */
   lead?: string;
+  /** Translations that live in the rule pack beside the English. */
+  hi?: { title?: string };
   appliesIf: Condition[];
   dependsOn: string[];
   authority: string;
