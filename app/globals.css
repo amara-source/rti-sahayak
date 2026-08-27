@@ -9898,3 +9898,20 @@ small,
   opacity: .45;
   cursor: not-allowed;
 }
+
+/* On a phone the utility strip ran past the right edge, so the language
+   buttons were partly unreachable. Let it wrap. */
+@media (max-width: 720px) {
+  .utility-strip__inner {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .utility-strip__tools {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: 8px;
+  }
+
+  .language-picker { flex-wrap: wrap; }
+}
