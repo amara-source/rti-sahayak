@@ -18,7 +18,9 @@ export interface RtiDraft {
     | "recorded_reasons"
     | "inspection"
     | "spending"
-    | "action";
+    | "action"
+    | "other";
+  wantsActionOther?: string;
   draftOnly?: boolean;
   authorityId?: string;
   authorityName?: string;

@@ -29,7 +29,11 @@ Question: What are you hoping for?
 Options: Copies of documents, files or records; To find out what stage
 something is at; A copy of a decision or order; The reasons recorded for a
 decision; Inspection of files; Details of money spent; For someone to actually
-do something.
+do something; Something else, let me type it.
+
+Custom outcome label: Tell us what you are hoping for
+
+Custom outcome guard: Describe what you are hoping for to continue.
 
 ## Journey progress
 
@@ -47,11 +51,19 @@ state police, state schools, land records, state transport, state pensions.
 
 Draft action: Draft it anyway
 
+Custom state label: Enter the state or union territory
+
 Submission guard: Choose central or state before simulated submission.
 
 ## Authority
 
 Heading: Send it to the right public authority
+
+Authority placeholder: Choose a public authority
+
+Final select option: Something else, let me type it
+
+Custom authority label: Enter the public authority
 
 Directory note: The officer directory is on rti.gov.in. Filing happens on
 rtionline.gov.in. They are different sites.

@@ -9,7 +9,7 @@ import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authorit
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
 import { digitsOnly, passesVerhoeff, synthesiseInvalidAadhaar } from "@/lib/rti/verhoeff";
 import { Icon } from "./Icon";
-import { authorityIcon, checkIcon, stepIcons } from "@/lib/rti/icon-map";
+import { checkIcon, stepIcons } from "@/lib/rti/icon-map";
 import { JourneyProgress, type JourneyProgressStep } from "./JourneyProgress";
 import {
   evaluatePreflightChecks,
@@ -127,6 +127,7 @@ function DescribeStep() {
   const [summary, setSummary] = useState("");
   const [wantsAction, setWantsAction] =
     useState<NonNullable<RtiDraft["wantsAction"]>>("records");
+  const [wantsActionOther, setWantsActionOther] = useState("");
   const [lifeLiberty, setLifeLiberty] = useState<"yes" | "no">("no");
   const [isBPL, setIsBPL] = useState<"yes" | "no" | "na">("no");
   const [confirming, setConfirming] = useState(false);
@@ -165,6 +166,7 @@ function DescribeStep() {
       subject: subject.trim() || text.trim(),
       confirmed: true,
       wantsAction,
+      wantsActionOther: wantsAction === "other" ? wantsActionOther.trim() : undefined,
       lifeLiberty,
       isBPL,
     };
@@ -244,8 +246,15 @@ function DescribeStep() {
               <option value="inspection">{rtiCopy.describe.inspection}</option>
               <option value="spending">{rtiCopy.describe.spending}</option>
               <option value="action">{rtiCopy.describe.actionOption}</option>
+              <option value="other">{rtiCopy.common.somethingElse}</option>
             </select>
           </label>
+          {wantsAction === "other" ? (
+            <label className="rti-field">
+              <span>{rtiCopy.describe.actionOther}</span>
+              <input onChange={(event) => setWantsActionOther(event.target.value)} value={wantsActionOther} />
+            </label>
+          ) : null}
           <div className="rti-inline-fields">
             <label className="rti-field">
               <span>{rtiCopy.describe.lifeLiberty}</span>
@@ -271,9 +280,17 @@ function DescribeStep() {
               </select>
             </label>
           </div>
-          <button className="rti-primary" onClick={confirm} type="button">
+          <button
+            className="rti-primary"
+            disabled={wantsAction === "other" && !wantsActionOther.trim()}
+            onClick={confirm}
+            type="button"
+          >
             {rtiCopy.describe.confirm}
           </button>
+          {wantsAction === "other" && !wantsActionOther.trim() ? (
+            <p className="rti-disabled-reason">{rtiCopy.describe.actionOtherRequired}</p>
+          ) : null}
         </section>
       ) : null}
     </Shell>
@@ -286,14 +303,20 @@ function JurisdictionStep() {
   const [bodyLevel, setBodyLevel] =
     useState<"central" | "state" | "unknown">("unknown");
   const [state, setState] = useState("");
+  const [customState, setCustomState] = useState(false);
+  const [stateOther, setStateOther] = useState("");
   const jurisdictions = useMemo(() => listJurisdictions(), []);
 
   useEffect(() => {
     if (!draft) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
     setBodyLevel(draft.bodyLevel ?? "unknown");
-    setState(draft.state ?? "");
-  }, [draft]);
+    const knownState = [...jurisdictions.states, ...jurisdictions.unionTerritories]
+      .includes(draft.state ?? "");
+    setCustomState(Boolean(draft.state) && !knownState);
+    setState(knownState ? draft.state ?? "" : "");
+    setStateOther(knownState ? "" : draft.state ?? "");
+  }, [draft, jurisdictions]);
 
   if (!ready) return null;
   if (!draft) return <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
@@ -304,11 +327,12 @@ function JurisdictionStep() {
   const needsState = bodyLevel !== "central";
 
   function proceed(draftOnly: boolean) {
-    const changed = draft!.bodyLevel !== bodyLevel || draft!.state !== state;
+    const selectedState = customState ? stateOther.trim() : state;
+    const changed = draft!.bodyLevel !== bodyLevel || draft!.state !== selectedState;
     update({
       ...draft!,
       bodyLevel,
-      state,
+      state: selectedState,
       draftOnly,
       ...(changed
         ? {
@@ -351,7 +375,14 @@ function JurisdictionStep() {
       {needsState ? (
         <label className="rti-field rti-state-field">
           <span>{rtiCopy.jurisdiction.stateLabel}</span>
-          <select onChange={(event) => setState(event.target.value)} value={state}>
+          <select
+            onChange={(event) => {
+              const value = event.target.value;
+              setCustomState(value === "__other__");
+              setState(value === "__other__" ? "" : value);
+            }}
+            value={customState ? "__other__" : state}
+          >
             <option value="">{rtiCopy.jurisdiction.statePlaceholder}</option>
             <optgroup label={rtiCopy.jurisdiction.statesGroup}>
               {jurisdictions.states.map((name) => (
@@ -363,7 +394,14 @@ function JurisdictionStep() {
                 <option key={name} value={name}>{name}</option>
               ))}
             </optgroup>
+            <option value="__other__">{rtiCopy.common.somethingElse}</option>
           </select>
+        </label>
+      ) : null}
+      {needsState && customState ? (
+        <label className="rti-field">
+          <span>{rtiCopy.jurisdiction.stateOther}</span>
+          <input onChange={(event) => setStateOther(event.target.value)} value={stateOther} />
         </label>
       ) : null}
       {warning ? (
@@ -381,7 +419,7 @@ function JurisdictionStep() {
           <>
             <button
               className="rti-primary"
-              disabled={!state.trim()}
+              disabled={!(customState ? stateOther.trim() : state.trim())}
               onClick={() => proceed(true)}
               type="button"
             >
@@ -401,7 +439,6 @@ function AuthorityStep() {
   const [authorityId, setAuthorityId] = useState("");
   const [authorityName, setAuthorityName] = useState("");
   const [officer, setOfficer] = useState("Central Public Information Officer");
-  const [filter, setFilter] = useState("");
   const [matchedTerm, setMatchedTerm] = useState<string | null>(null);
   const [pickedManually, setPickedManually] = useState(false);
   const authorities = useMemo(() => listAuthorities(), []);
@@ -414,7 +451,18 @@ function AuthorityStep() {
         : { authority: authorities.find((item) => item.id === "unknown_central")!, matchedTerm: null };
     const match = matched.authority;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
-    setAuthorityId(draft.authorityId ?? match.id);
+    const existingIsAuthored = authorities.some(
+      (item) => item.id === draft.authorityId && item.id !== "unknown_central",
+    );
+    setAuthorityId(
+      existingIsAuthored
+        ? draft.authorityId!
+        : draft.authorityName
+          ? "custom"
+          : match.id === "unknown_central"
+            ? ""
+            : match.id,
+    );
     setMatchedTerm(matched.matchedTerm);
     setAuthorityName(
       draft.authorityName ??
@@ -434,25 +482,9 @@ function AuthorityStep() {
   if (!draft) return <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}><Link href="/file">{rtiCopy.common.back}</Link></Shell>;
 
   const selected = authorities.find((item) => item.id === authorityId);
-  const unknown = authorityId === "unknown_central" || !authorityName.trim();
+  const customAuthority = authorityId === "custom";
   const isCentral = draft.bodyLevel === "central";
-  const needle = filter.trim().toLocaleLowerCase("en-IN");
-  const filtered = authorities.filter((item) => {
-    if (item.id === "unknown_central") return false;
-    if (!needle) return true;
-    // Match the name, the ministry or any authored search term, so typing
-    // "provident fund" or "UAN" both find EPFO.
-    return (
-      item.name.toLocaleLowerCase("en-IN").includes(needle) ||
-      item.ministry.toLocaleLowerCase("en-IN").includes(needle) ||
-      item.matches.some((term) =>
-        term.toLocaleLowerCase("en-IN").includes(needle),
-      )
-    );
-  });
-  const browsable = filtered.length > 0
-    ? filtered
-    : authorities.filter((item) => item.id !== "unknown_central");
+  const browsable = authorities.filter((item) => item.id !== "unknown_central");
   const authorityGroups = new Map<
     string,
     Array<(typeof browsable)[number]>
@@ -465,6 +497,17 @@ function AuthorityStep() {
   const groupedAuthorities = [...authorityGroups.entries()];
 
   function choose(id: string) {
+    if (id === "custom") {
+      setPickedManually(true);
+      setAuthorityId("custom");
+      setAuthorityName("");
+      setOfficer(
+        draft!.bodyLevel === "state"
+          ? "State Public Information Officer"
+          : "Central Public Information Officer",
+      );
+      return;
+    }
     const picked = authorities.find((item) => item.id === id);
     if (!picked) return;
     setPickedManually(true);
@@ -490,7 +533,7 @@ function AuthorityStep() {
 
   return (
     <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}>
-      {isCentral && !unknown && selected ? (
+      {isCentral && selected ? (
         <p className="rti-reasoning">
           {pickedManually || !matchedTerm
             ? rtiCopy.authority.reasoningManual(selected.name)
@@ -498,54 +541,22 @@ function AuthorityStep() {
         </p>
       ) : null}
 
-      {isCentral ? (
-        <section className="rti-authority-search">
-          <label className="rti-field">
-            <span>{rtiCopy.authority.searchLabel}</span>
-            <input
-              autoComplete="off"
-              onChange={(event) => setFilter(event.target.value)}
-              placeholder={rtiCopy.authority.searchPlaceholder}
-              type="search"
-              value={filter}
-            />
-            <small>{rtiCopy.authority.searchHint}</small>
-          </label>
-
-          {/* A visible list, not a datalist. A datalist renders nothing until
-              the field is focused and gives no sign it exists at all. */}
-          {filtered.length === 0 ? (
-            <p className="rti-warning rti-warning--caution">{rtiCopy.authority.noMatch}</p>
-          ) : null}
-          <div className="rti-authority-groups">
-            {groupedAuthorities.map(([ministry, entries]) => (
-              <section key={ministry}>
-                <h3>{ministry}</h3>
-                <ul className="rti-authority-options">
+      <label className="rti-field">
+        <span>{rtiCopy.authority.name}</span>
+        <select onChange={(event) => choose(event.target.value)} required value={authorityId}>
+          <option value="">{rtiCopy.authority.selectPlaceholder}</option>
+          {isCentral
+            ? groupedAuthorities.map(([ministry, entries]) => (
+                <optgroup key={ministry} label={ministry}>
                   {entries.map((authority) => (
-                    <li key={authority.id}>
-                      <button
-                        aria-pressed={authorityId === authority.id}
-                        className={authorityId === authority.id ? "is-selected" : undefined}
-                        onClick={() => choose(authority.id)}
-                        type="button"
-                      >
-                        <span className="rti-icon-tile rti-icon-tile--sm">
-                          <Icon name={authorityIcon(authority.id)} />
-                        </span>
-                        <span>
-                          <strong>{authority.name}</strong>
-                          <small>{authority.ministry}</small>
-                        </span>
-                      </button>
-                    </li>
+                    <option key={authority.id} value={authority.id}>{authority.name}</option>
                   ))}
-                </ul>
-              </section>
-            ))}
-          </div>
-        </section>
-      ) : null}
+                </optgroup>
+              ))
+            : null}
+          <option value="custom">{rtiCopy.common.somethingElse}</option>
+        </select>
+      </label>
 
       {selected && selected.id !== "unknown_central" ? (
         <section className="rti-authority-detail">
@@ -578,22 +589,16 @@ function AuthorityStep() {
         </section>
       ) : null}
 
-      {unknown ? (
-        <p className="rti-warning rti-warning--caution">
-          {isCentral ? rtiCopy.authority.unknown : rtiCopy.authority.stateUnknown}
-        </p>
+      {customAuthority ? (
+        <label className="rti-field">
+          <span>{rtiCopy.authority.customName}</span>
+          <input onChange={(event) => setAuthorityName(event.target.value)} value={authorityName} />
+        </label>
       ) : null}
-      <label className="rti-field">
-        <span>{rtiCopy.authority.name}</span>
-        <input
-          onChange={(event) => setAuthorityName(event.target.value)}
-          value={authorityName}
-        />
-      </label>
-      <label className="rti-field">
+      <div className="rti-derived-field">
         <span>{rtiCopy.authority.officer}</span>
-        <input onChange={(event) => setOfficer(event.target.value)} value={officer} />
-      </label>
+        <strong>{officer}</strong>
+      </div>
       <p className="rti-note">{rtiCopy.authority.directory}</p>
       <p className="rti-note">{rtiCopy.authority.transfer}</p>
       <button

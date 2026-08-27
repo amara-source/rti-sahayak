@@ -6144,6 +6144,28 @@ small,
   font-weight: 900;
 }
 
+.rti-derived-field {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: var(--surface-soft);
+}
+
+.rti-derived-field > span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.rti-derived-field > strong {
+  color: var(--ink);
+  font-size: 16px;
+}
+
 .rti-icon-tile {
   width: 64px;
   height: 64px;
