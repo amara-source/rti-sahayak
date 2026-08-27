@@ -6197,6 +6197,24 @@ small,
   overflow-wrap: anywhere;
 }
 
+.rti-suggested-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.rti-suggested-value {
+  color: var(--muted);
+  background: var(--surface-soft);
+  font-weight: 400;
+}
+
+.rti-suggested-value:focus {
+  color: var(--ink);
+  background: var(--surface);
+}
+
 .rti-icon-tile {
   width: 64px;
   height: 64px;

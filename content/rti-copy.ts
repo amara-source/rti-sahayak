@@ -39,6 +39,7 @@ export const rtiCopy = {
     disabledReason: "Write a few words or choose a starting point to continue.",
     confirmation: "What we understood",
     subject: "Subject",
+    suggested: "Suggested, edit if wrong",
     original: "Your original words",
     youSaid: "You said",
     wantsAction: "What are you hoping for?",

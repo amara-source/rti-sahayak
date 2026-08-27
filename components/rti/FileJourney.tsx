@@ -225,7 +225,9 @@ function DescribeStep() {
           {degraded ? <p className="rti-note">{rtiCopy.common.error}</p> : null}
           <label className="rti-field">
             <span>{rtiCopy.describe.subject}</span>
+            <small className="rti-suggested-label">{rtiCopy.describe.suggested}</small>
             <textarea
+              className="rti-suggested-value"
               onChange={(event) => setSubject(event.target.value)}
               rows={4}
               value={subject}

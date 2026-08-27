@@ -20,6 +20,8 @@ Action: Show what you understood
 
 Confirmation heading: What we understood
 
+Extracted value label: Suggested, edit if wrong
+
 Confirmation action: Yes, this is right
 
 Disabled action: Write a few words or choose a starting point to continue.
