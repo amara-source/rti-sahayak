@@ -6580,13 +6580,15 @@ small,
   .rti-process-card,
   .rti-appeal-facts > section,
   .rti-appeal-lock,
-  .rti-appeal-draft,
+  .rti-appeal-draft {
+    border-radius: var(--card-radius);
+    background: var(--surface);
+  }
+
+  /* The clock is a dark panel and must never join the light card group: its
+     text is white, so a light ground makes the whole thing invisible. */
   .rti-appeal-clock {
     border-radius: var(--card-radius);
-    /* This used to set a white background and leave the text white, so the
-       whole appeal clock was invisible and advancing time looked like it did
-       nothing. The clock keeps its dark ground. */
-    background: var(--accent-deep);
   }
 
   .rti-primary,
@@ -9567,3 +9569,18 @@ small,
 
 .rti-template-picker .rti-template-chips button strong { font-size: var(--card-body); }
 .rti-template-picker .rti-template-chips button span { font-size: var(--caption); }
+
+/* `.rti-detail-page section` is more specific than a single class, so it was
+   painting the clock white while its text stayed white. This carries enough
+   specificity to settle it, in both themes. */
+.rti-detail-page .rti-appeal-clock,
+.rti-detail-content .rti-appeal-clock,
+.rti-appeal-clock {
+  color: #ffffff;
+  background: var(--accent-deep);
+  border: 1px solid var(--accent-deep);
+}
+
+.rti-detail-page .rti-appeal-clock strong,
+.rti-detail-page .rti-appeal-clock p { color: #ffffff; }
+.rti-detail-page .rti-appeal-clock span { color: rgb(255 255 255 / 78%); }
