@@ -111,6 +111,10 @@ export const hi = {
       selectPlaceholder: "एक लोक प्राधिकरण चुनिए",
       customName: "लोक प्राधिकरण का नाम लिखिए",
       officer: "अधिकारी का पद",
+      reasoning: (matchedTerm: string, authority: string) =>
+        `आपने "${matchedTerm}" लिखा था, इसलिए यह ${authority} को जा रहा है।`,
+      reasoningManual: (authority: string) =>
+        `आपने ${authority} चुना है। यह हमने नहीं चुना, इसलिए दाखिल करने से पहले इसे सूची में जाँच लीजिए।`,
       disabledReason: "आगे बढ़ने के लिए कोई कार्यालय चुनिए या नीचे खुद लिखिए।",
     },
     draft: {
@@ -119,6 +123,7 @@ export const hi = {
       original: "आपने जो लिखा",
       rewritten: "हम जो भेजेंगे",
       changes: "क्या बदला और क्यों",
+      count: (count: number) => `3,000 में से ${count.toLocaleString("en-IN")} अक्षर`,
       action: "इस आवेदन को जाँचिए",
       disabledReason: "मसौदा तैयार होने दीजिए, फिर उसे पढ़कर आगे बढ़िए।",
       fallbackTitle: "आपके शब्द वैसे ही रखे गए हैं",
@@ -171,7 +176,14 @@ export const hi = {
       routesHeading: "इसे भेजने के तीन तरीके",
       portal: {
         title: "आपके राज्य का अपना पोर्टल",
+        // The state name and the date are values, not sentences, so they
+        // stay as the engine supplies them.
+        verified: (state: string) =>
+          `${state} का अपना आरटीआई पोर्टल है। वह नए टैब में खुलेगा और सरकारी वेबसाइट है, इस नमूने का हिस्सा नहीं।`,
+        unverified: (state: string) =>
+          `${state} के लिए हम किसी ऑनलाइन पोर्टल की पुष्टि नहीं कर सके। इसका मतलब यह नहीं कि कोई है ही नहीं। अपने राज्य सरकार की वेबसाइट देखिए, या नीचे दिए तरीकों में से कोई अपनाइए, जो हमेशा चलते हैं।`,
         action: "राज्य का पोर्टल खोलिए",
+        checked: (date: string) => `यह लिंक ${date} को जाँचा गया था।`,
       },
       post: {
         title: "डाक से या खुद जाकर",
