@@ -9009,3 +9009,95 @@ small,
     font-size: 14px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   BUTTONS MUST NEVER CLIP THEIR LABEL
+   nowrap on a shrinking flex item let the text run past the button and get cut
+   off by the card. A button now never exceeds its container, and if a label is
+   still too long it ends in an ellipsis rather than mid-word.
+   --------------------------------------------------------------------------- */
+
+.rti-primary,
+.rti-secondary,
+.rti-fix-link,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* More breathing room between the label and the pill edge. */
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.rti-secondary,
+.rti-fix-link {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+/* The label is the flex item that actually needs to shrink and ellipsise. */
+.rti-primary > *,
+.rti-secondary > *,
+.utility-card > a > *,
+.demo-profile-link > * {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------------------------------
+   /act
+   Twelve narrow columns made a cramped measure and tall ragged cards. Three
+   columns give the legal text a readable line length, and the cards in a row
+   share a height.
+   --------------------------------------------------------------------------- */
+
+.utility-page .utility-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.utility-page .utility-card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.utility-page .utility-card h3 {
+  font-size: 1.15rem;
+}
+
+.utility-page .utility-card p {
+  flex: 1 1 auto;
+  font-size: .96rem;
+  line-height: 1.65;
+}
+
+/* A grid of exactly four still gets its own row, and the home page keeps its
+   four column journey row. */
+.utility-page .utility-card-grid:has(> :nth-child(4):last-child) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.utility-page .utility-card-grid:has(> :nth-child(3):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .utility-page .utility-card-grid,
+  .utility-page .utility-card-grid:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .utility-page .utility-card-grid,
+  .utility-page .utility-card-grid:has(> :nth-child(4):last-child),
+  .utility-page .utility-card-grid:has(> :nth-child(3):last-child) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

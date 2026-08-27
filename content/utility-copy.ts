@@ -1,4 +1,6 @@
 export interface UtilityCardCopy {
+  /** Used when the visible label is short and needs more context for screen readers. */
+  ariaLabel?: string;
   /** Optional. Cards that identify a thing get an icon; list items do not. */
   icon?: string;
   title: string;
@@ -31,7 +33,9 @@ const actPdf =
   "https://rti.gov.in/Writereaddata/RTI%20Act,%202005%20(Amended)-English%20Version.PDF";
 
 function actLink(section: string) {
-  return { href: actPdf, linkLabel: `Official text, ${section}` };
+  // The card heading already names the section, so the button does not repeat
+  // it. Long labels were being clipped mid-word inside the card.
+  return { href: actPdf, linkLabel: "Read the official text", ariaLabel: `Read the official text of ${section}` };
 }
 
 export const utilityPages = {
@@ -106,7 +110,6 @@ export const utilityPages = {
     sections: [
       {
         heading: "Sections used by RTI Sahayak",
-        intro: "The government publishes the Act as a single PDF with no link to an individual section, so each card below opens the full text and tells you which section to look for. The version linked is the Act as amended, published by the Department of Personnel and Training.",
         cards: [
           { title: "Sections 2(f) and 2(j)", body: "Information means material already held as records, documents, memos, file notings, reports and other recorded forms. We use this when rewriting a question as a request for records.", ...actLink("Sections 2(f) and 2(j)") },
           { title: "Section 5", body: "Every public authority must appoint Public Information Officers. We use this when proposing the officer title and authority for the request.", ...actLink("Section 5") },

@@ -36,8 +36,8 @@ export function UtilityPage({
                   <p>{card.body}</p>
                   {card.href && card.linkLabel ? (
                     card.href.startsWith("http") || card.href.startsWith("tel:")
-                      ? <a href={card.href} rel={card.href.startsWith("http") ? "noreferrer" : undefined} target={card.href.startsWith("http") ? "_blank" : undefined}>{card.linkLabel}</a>
-                      : <Link href={card.href}>{card.linkLabel}</Link>
+                      ? <a aria-label={card.ariaLabel} href={card.href} rel={card.href.startsWith("http") ? "noreferrer" : undefined} target={card.href.startsWith("http") ? "_blank" : undefined}>{card.linkLabel}</a>
+                      : <Link aria-label={card.ariaLabel} href={card.href}>{card.linkLabel}</Link>
                   ) : null}
                 </article>
               ))}
