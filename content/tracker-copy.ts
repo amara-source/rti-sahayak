@@ -27,28 +27,28 @@ export const trackerCopy = {
     rejected: "Rejected",
   } satisfies Record<SyncEvent["status"], string>,
   control: {
-    eyebrow: "Simulated tracker",
+    eyebrow: "Case updates",
     heading: "See a department update arrive",
     description:
-      "Run a labelled simulation against this browser-only plan. It changes task status and unlocks dependent work using the same deterministic plan logic as a saved reference number.",
+      "This runs against the browser-only plan. It changes task status and unlocks dependent work using the same deterministic plan logic as a saved reference number.",
     trigger: "See a status update arrive",
-    pending: "Simulating an update",
+    pending: "Adding an update",
     note: "Explicit demo control. No department is contacted.",
     updateSummary: (count: number) =>
       count === 1
-        ? "1 simulated update added."
-        : `${count} simulated updates added.`,
+        ? "1 update added."
+        : `${count} updates added.`,
     unlockSummary: (titles: readonly string[]) =>
       titles.length === 1
         ? `${titles[0]} is now unlocked.`
         : `${titles.length} tasks are now unlocked: ${list(titles)}.`,
     noTasks:
-      "There are no more unlocked tasks available for this simulation.",
-    failure: "The simulated update could not be added. Try again.",
+      "There are no more unlocked tasks in this case.",
+    failure: "The update could not be added. Try again.",
   },
   feed: {
-    heading: "Simulated event feed",
-    empty: "No department event has been simulated yet.",
+    heading: "Department event feed",
+    empty: "No department event yet.",
   },
   whatsapp: {
     eyebrow: "WhatsApp-style preview",
@@ -57,7 +57,7 @@ export const trackerCopy = {
     senderLine: "Prototype status thread",
     renderedOnly: "Rendered preview only. Nothing is sent.",
     empty:
-      "No status message yet. Use the simulation control to create the first useful update.",
+      "No status message yet. Use the control above to create the first update.",
     platformConstraint:
       "Proactive status updates use approved template messages. Free-form replies are available only inside the 24-hour window opened by the user’s reply.",
     grounding:
@@ -73,12 +73,12 @@ export const trackerCopy = {
         ? `“${task}” was approved. ${countLabel(unlockedTitles.length)} opened up because of it, ${list(unlockedTitles)}. Reply 1 and we’ll send the filled ${unlockedTitles.length === 1 ? "form" : "forms"}.`
         : `“${task}” was approved. Reply 1 and we’ll send the confirmation and next steps.`,
     rejected: (authority: string, task: string) =>
-      `${authority} marked “${task}” as rejected in this simulation. Reply 1 and we’ll send the source and document checklist.`,
+      `${authority} marked “${task}” as rejected. Reply 1 and we’ll send the source and document checklist.`,
   },
   api: {
     invalid: "The request is not valid.",
     planNotFound: "This plan was not found in this browser.",
     noTasks:
-      "There are no more unlocked tasks available for this simulation.",
+      "There are no more unlocked tasks in this case.",
   },
 } as const;
