@@ -9070,20 +9070,14 @@ small,
   align-items: stretch;
 }
 
+/* Padding and type now come from the global card scale. */
 .utility-page .utility-card {
   display: flex;
   flex-direction: column;
-  padding: 30px;
-}
-
-.utility-page .utility-card h3 {
-  font-size: 1.15rem;
 }
 
 .utility-page .utility-card p {
   flex: 1 1 auto;
-  font-size: .96rem;
-  line-height: 1.65;
 }
 
 /* A grid of exactly four still gets its own row, and the home page keeps its
@@ -9379,3 +9373,109 @@ small,
 
 .rti-state-date h2 { margin: 0; font-size: 18px; }
 .rti-state-date .rti-field { max-width: 260px; }
+
+/* ---------------------------------------------------------------------------
+   CARDS: ONE SPACING AND TYPE SCALE, EVERYWHERE
+   Measured complaint: body text ended about 8px above the button, cards in a
+   row were different heights, and bottom padding varied so one button nearly
+   touched the card edge while another sat high. Defined last so it settles.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --card-pad-all: 24px;
+  --card-gap-to-button: 24px;
+  --card-title: 18px;
+  --card-body: 15px;
+  --card-body-lh: 1.55;
+  --btn-label: 15px;
+  --caption: 13px;
+}
+
+.utility-card,
+.authority-card,
+.rti-node,
+.rti-check,
+.trap-card__face,
+.rti-state-route,
+.journey-stage,
+.rti-template-picker .rti-template-chips button {
+  box-sizing: border-box;
+  padding: var(--card-pad-all);
+}
+
+/* Equal height in a row, with the button pinned to the bottom so every button
+   in a row lands on the same baseline. */
+.utility-card-grid,
+.rti-check-list,
+.authority-grid,
+.trap-grid,
+.journey-strip {
+  align-items: stretch;
+}
+
+.utility-card,
+.authority-card,
+.rti-node,
+.rti-check,
+.rti-state-route {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.utility-card > p,
+.authority-card > p,
+.rti-node > p {
+  flex: 1 1 auto;
+}
+
+/* The 24px above every button, and 24px below it to the card edge. */
+.utility-card > a,
+.utility-card > button,
+.rti-node > a,
+.rti-check > a,
+.authority-card > a,
+.authority-card__link {
+  margin-top: var(--card-gap-to-button);
+  margin-bottom: 0;
+}
+
+/* Type scale. Titles must always read larger and heavier than body. */
+.utility-card h3,
+.authority-card h2,
+.rti-node h3,
+.rti-check h2,
+.trap-card__face strong,
+.rti-state-route h3 {
+  font-size: var(--card-title);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.utility-card p,
+.authority-card p,
+.authority-card dd,
+.rti-node p,
+.rti-check p,
+.trap-card__line,
+.rti-state-route p {
+  font-size: var(--card-body);
+  line-height: var(--card-body-lh);
+}
+
+.rti-primary,
+.rti-secondary,
+.rti-fix-link,
+.utility-card > a,
+.demo-profile-link {
+  font-size: var(--btn-label);
+}
+
+.utility-card small,
+.authority-card small,
+.rti-check small,
+.trap-card__face small,
+.rti-state-route small,
+.journey-stage__line {
+  font-size: var(--caption);
+}
