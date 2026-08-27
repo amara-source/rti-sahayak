@@ -163,7 +163,6 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
               {status !== "none" ? <p role="status">{kind === "first" ? rtiCopy.appeals.first.submitted : kind === "second" ? rtiCopy.appeals.second.submitted : rtiCopy.appeals.complaint.submitted}</p> : null}
               <small>{rtiCopy.appeals.simulation}</small>
             </div>
-            <div className="rti-source-line"><a href={node.sourceUrl} rel="noreferrer" target="_blank">{rtiCopy.appeals.source}</a><small>{node.verifiedOn}</small></div>
           </>
         )}
         {error ? <p className="rti-error" role="alert">{error}</p> : null}
