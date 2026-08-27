@@ -9494,3 +9494,76 @@ small,
 
 .home-helpdesk__external a { color: var(--accent-deep); font-weight: 800; }
 .home-helpdesk__external span { color: var(--muted); }
+
+/* ---------------------------------------------------------------------------
+   /file: the citizen's own words lead
+   The templates used to dominate, so people picked a card and the rewrite
+   worked on a generic sentence instead of their real situation.
+   --------------------------------------------------------------------------- */
+
+.rti-describe-field > span {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.rti-describe-field textarea {
+  min-height: 220px;
+  padding: 18px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.rti-describe-hint {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: var(--card-body);
+}
+
+/* Templates: quieter, and collapsed once the citizen has written something. */
+.rti-template-picker {
+  margin: 26px 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  background: var(--surface-soft);
+}
+
+.rti-template-picker > summary {
+  cursor: pointer;
+  color: var(--accent-deep);
+  font-size: var(--card-body);
+  font-weight: 800;
+  list-style: none;
+}
+
+.rti-template-picker > summary::-webkit-details-marker { display: none; }
+
+.rti-template-picker > summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.1em;
+  font-weight: 900;
+}
+
+.rti-template-picker[open] > summary::before { content: "\2212"; }
+
+.rti-template-picker > p {
+  margin: 10px 0 14px;
+  color: var(--muted);
+  font-size: var(--caption);
+}
+
+.rti-template-picker .rti-template-chips {
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.rti-template-picker .rti-template-chips button {
+  min-height: 0;
+  padding: 14px 16px;
+  gap: 5px;
+}
+
+.rti-template-picker .rti-template-chips button strong { font-size: var(--card-body); }
+.rti-template-picker .rti-template-chips button span { font-size: var(--caption); }

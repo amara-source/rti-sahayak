@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
@@ -122,6 +122,7 @@ function Shell({
 
 function DescribeStep() {
   const router = useRouter();
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
   const [subject, setSubject] = useState("");
   const [summary, setSummary] = useState("");
@@ -176,18 +177,24 @@ function DescribeStep() {
 
   return (
     <Shell step="describe" eyebrow={rtiCopy.describe.eyebrow} heading={rtiCopy.describe.heading}>
-      <label className="rti-field">
+      {/* The box leads. The product exists to turn someone's own words into a
+          request that cannot be refused, so the templates sit under it. */}
+      <label className="rti-field rti-describe-field">
         <span>{rtiCopy.describe.original}</span>
         <textarea
           autoFocus
           onChange={(event) => setText(event.target.value)}
           placeholder={rtiCopy.describe.placeholder}
-          rows={8}
+          ref={textareaRef}
+          rows={12}
           value={text}
         />
+        <small className="rti-describe-hint">{rtiCopy.describe.detailHint}</small>
       </label>
-      <section className="rti-template-picker">
-        <h2>{rtiCopy.describe.templatesHeading}</h2>
+      {/* Uncontrolled: binding open to the text state made it snap shut
+          while the citizen was still reading the examples. */}
+      <details className="rti-template-picker">
+        <summary>{rtiCopy.describe.templatesHeading}</summary>
         <p>{rtiCopy.describe.templatesNote}</p>
         <div className="rti-template-chips">
           {rtiCopy.describe.templates.map((template) => (
@@ -195,7 +202,16 @@ function DescribeStep() {
               aria-pressed={text === template.text}
               className={text === template.text ? "is-selected" : undefined}
               key={template.label}
-              onClick={() => setText(template.text)}
+              onClick={() => {
+                setText(template.text);
+                // Put the cursor at the end so the citizen edits rather than
+                // sends the example as written.
+                const node = textareaRef.current;
+                if (node) {
+                  node.focus();
+                  node.setSelectionRange(template.text.length, template.text.length);
+                }
+              }}
               type="button"
             >
               <strong>{template.label}</strong>
@@ -203,7 +219,7 @@ function DescribeStep() {
             </button>
           ))}
         </div>
-      </section>
+      </details>
       {!confirming ? (
         <>
           <button
