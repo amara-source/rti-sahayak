@@ -452,10 +452,10 @@ function AuthorityStep() {
         ? matchAuthorityWithReason(draft.subject)
         : { authority: authorities.find((item) => item.id === "unknown_central")!, matchedTerm: null };
     const match = matched.authority;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
     const existingIsAuthored = authorities.some(
       (item) => item.id === draft.authorityId && item.id !== "unknown_central",
     );
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
     setAuthorityId(
       existingIsAuthored
         ? draft.authorityId!
