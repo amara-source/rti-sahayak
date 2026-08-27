@@ -8,14 +8,17 @@ export function UtilityPage({
   copy,
   children,
   className,
+  hero,
 }: {
   copy: UtilityPageCopy;
   children?: React.ReactNode;
   className?: string;
+  /** Replaces the standard page hero. The home page uses its own. */
+  hero?: React.ReactNode;
 }) {
   return (
     <article className={className ? `utility-page ${className}` : "utility-page"}>
-      <PageHero eyebrow={copy.eyebrow} illustration={copy.illustration} supporting={copy.intro} title={copy.heading} tone={copy.tone} />
+      {hero ?? (<PageHero eyebrow={copy.eyebrow} illustration={copy.illustration} supporting={copy.intro} title={copy.heading} tone={copy.tone} />)}
       <div className="utility-page__content rti-overlap-card">
         {copy.sections.map((section) => (
           <section className="utility-section" key={section.heading}>

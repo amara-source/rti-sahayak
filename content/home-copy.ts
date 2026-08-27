@@ -17,6 +17,19 @@ export interface TrapCopy {
 }
 
 export const homeCopy = {
+  heroAction: {
+    title: "Start with what happened to you",
+    line: "Describe it in your own words. We turn it into a request they have to answer, and then we watch the clock.",
+    action: "Start a request",
+  },
+
+  /** Proof chips under the hero. Each states something that is actually true. */
+  proof: [
+    "Every deadline cites its section",
+    "Nothing is sent to any government system",
+    "Works on a slow connection",
+  ],
+
   traps: {
     heading: "Nine traps that end applications",
     intro: "Each one is a check this prototype runs before you pay. Select a card to read what goes wrong.",
