@@ -357,3 +357,26 @@ describe("branching routes", () => {
     expect(pack.checks.find((c) => c.id === "jurisdiction")?.level).toBe("warn");
   });
 });
+
+const pack = loadRtiRulePack();
+
+describe("statutory leads", () => {
+  it("is always the opening of the node's own body, word for word", () => {
+    for (const node of pack.nodes as Array<{ id: string; body: string; lead?: string }>) {
+      if (!node.lead) continue;
+      expect(node.body.startsWith(node.lead), `${node.id} lead is not a prefix of its body`).toBe(true);
+      expect(node.lead.length, `${node.id} lead is not shorter than its body`).toBeLessThan(node.body.length);
+    }
+  });
+
+  it("gives the appeal routes a lead short enough to read at a glance", () => {
+    const routes = ["first_appeal", "second_appeal", "section_18_complaint"];
+    for (const id of routes) {
+      const node = (pack.nodes as Array<{ id: string; lead?: string }>).find((item) => item.id === id);
+      expect(node?.lead, `${id} has no lead`).toBeDefined();
+      // Three sentences, so the wall of ten lines cannot come back.
+      expect((node!.lead!.match(/\.\s|\.$/g) ?? []).length).toBeLessThanOrEqual(3);
+    }
+  });
+});
+

@@ -370,6 +370,7 @@ export const hi = {
       lockedUntil: "यह तब खुलेगा जब यह चरण पूरा हो जाएगा:",
       originalRegistration: "मूल पंजीकरण संख्या",
       statutoryFacts: "कानून क्या कहता है",
+      fullProvision: "पूरा प्रावधान पढ़िए",
       draftLabel: "मसौदा, जिसे आप बदल सकते हैं",
       simulation: "यह सिर्फ़ एक नमूना है। किसी कार्यालय या आयोग को कुछ नहीं भेजा जाता।",
       decided: "फ़ैसले का समय पूरा हो गया",

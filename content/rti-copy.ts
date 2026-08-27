@@ -410,6 +410,7 @@ export const rtiCopy = {
     lockedUntil: "It opens when this step is complete:",
     originalRegistration: "Original registration number",
     statutoryFacts: "What the law says",
+    fullProvision: "Read the full provision",
     draftLabel: "Editable draft",
     simulation: "Simulation only. Nothing is sent to an authority or commission.",
     decided: "The decision period has ended",

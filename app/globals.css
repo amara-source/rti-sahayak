@@ -10078,3 +10078,32 @@ small,
   font-size: var(--card-body);
   line-height: var(--card-body-lh);
 }
+
+/* "Read the full provision". Closed by default: the lead above it carries
+   what the person needs now. */
+.rti-provision {
+  margin-top: 16px;
+}
+
+.rti-provision > summary {
+  border-radius: 8px;
+  padding: 6px 0;
+  color: var(--blue-dk);
+  font-size: var(--btn-label);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rti-provision > summary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.rti-provision > p {
+  margin: 12px 0 0;
+  border-left: 3px solid var(--line);
+  padding-left: 14px;
+  color: var(--muted);
+  font-size: var(--card-body);
+  line-height: var(--card-body-lh);
+}

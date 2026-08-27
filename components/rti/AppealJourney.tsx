@@ -141,7 +141,20 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
         ) : (
           <>
             <div className="rti-appeal-facts">
-              <section><span className="rti-icon-tile"><Icon name="book" /></span><h2>{rtiCopy.appeals.statutoryFacts}</h2><p>{node.body}</p></section>
+              <section>
+                <span className="rti-icon-tile"><Icon name="book" /></span>
+                <h2>{rtiCopy.appeals.statutoryFacts}</h2>
+                {/* The opening of the provision is what matters now. The rest
+                    of the same rule pack text sits behind the disclosure, so
+                    nothing is lost and nothing is a wall of ten lines. */}
+                <p>{node.lead ?? node.body}</p>
+                {node.lead && node.lead !== node.body ? (
+                  <details className="rti-provision">
+                    <summary>{rtiCopy.appeals.fullProvision}</summary>
+                    <p>{node.body}</p>
+                  </details>
+                ) : null}
+              </section>
               <section><span className="rti-icon-tile"><Icon name="receipt" /></span><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
               {kind === "complaint" ? <section className="rti-appeal-no-limit"><span className="rti-icon-tile"><Icon name="megaphone" /></span><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
             </div>

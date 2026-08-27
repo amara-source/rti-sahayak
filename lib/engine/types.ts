@@ -59,6 +59,11 @@ export interface RuleNode {
   title: string;
   summary: string;
   body: string;
+  /**
+   * The opening of body, word for word. What the person needs now, with the
+   * rest of the same provision behind a disclosure.
+   */
+  lead?: string;
   appliesIf: Condition[];
   dependsOn: string[];
   authority: string;
