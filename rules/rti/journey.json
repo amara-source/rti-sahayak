@@ -387,7 +387,8 @@
       "lead": "If the public authority that receives your application does not hold the information, Section 6(3) requires it to transfer the application to the authority that does, and to inform you, within five days.",
       "hi": {
         "title": "दूसरे कार्यालय को भेजने की अवधि",
-        "summary": "सही कार्यालय तक भेजने के लिए उनके पास पाँच दिन हैं।"
+        "summary": "सही कार्यालय तक भेजने के लिए उनके पास पाँच दिन हैं।",
+        "clockLabel": "सही कार्यालय को भेजने की समय सीमा"
       }
     },
     {
@@ -447,7 +448,8 @@
       "lead": "The Public Information Officer must provide the information, or reject the request with reasons, within thirty days of receiving it. Where the request concerns the life or liberty of a person, the period is forty eight hours. If the application was filed through an Assistant PIO, five days are added.",
       "hi": {
         "title": "जवाब का इंतज़ार कीजिए",
-        "summary": "तीस दिन। जीवन या स्वतंत्रता का मामला हो तो अड़तालीस घंटे।"
+        "summary": "तीस दिन। जीवन या स्वतंत्रता का मामला हो तो अड़तालीस घंटे।",
+        "clockLabel": "जवाब की समय सीमा"
       }
     },
     {
@@ -519,7 +521,8 @@
       "lead": "A First Appeal goes to an officer senior in rank to the Public Information Officer, called the First Appellate Authority, within the same public authority. You may appeal if you received no reply, if the reply was incomplete or misleading, or if the information was refused. No fee is payable for a first appeal.",
       "hi": {
         "title": "पहली अपील दाखिल कीजिए",
-        "summary": "मुफ़्त। दाखिल करने के लिए तीस दिन। फ़ैसले के लिए उनके पास पैंतालीस दिन तक हैं।"
+        "summary": "मुफ़्त। दाखिल करने के लिए तीस दिन। फ़ैसले के लिए उनके पास पैंतालीस दिन तक हैं।",
+        "clockLabel": "पहली अपील दाखिल करने की समय सीमा"
       }
     },
     {
@@ -556,7 +559,8 @@
       "lead": "If the First Appellate Authority refuses, or does not decide, you may appeal to the Central Information Commission, or the State Information Commission for state bodies. A second appeal must be filed within ninety days from the date the decision should have been made or was actually received, and the Commission may admit a later appeal for sufficient cause. A second appeal filed without a first appeal is liable to be returned.",
       "hi": {
         "title": "दूसरी अपील दाखिल कीजिए",
-        "summary": "नब्बे दिन। आयोग अधिकारी पर निजी तौर पर जुर्माना लगा सकता है।"
+        "summary": "नब्बे दिन। आयोग अधिकारी पर निजी तौर पर जुर्माना लगा सकता है।",
+        "clockLabel": "दूसरी अपील दाखिल करने की समय सीमा"
       }
     },
     {

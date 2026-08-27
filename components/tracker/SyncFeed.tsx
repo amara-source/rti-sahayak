@@ -1,5 +1,7 @@
-import { trackerCopy } from "@/content/tracker-copy";
+"use client";
+
 import type { SyncEvent } from "@/lib/engine/types";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 interface SyncFeedProps {
   events: SyncEvent[];
@@ -14,6 +16,8 @@ function eventTime(at: string): string {
 }
 
 export function SyncFeed({ events }: SyncFeedProps) {
+  // Interface copy in the selected language, English where untranslated.
+  const { tracker: trackerCopy } = useCopy();
   return (
     <section className="sync-feed" aria-live="polite">
       <header>

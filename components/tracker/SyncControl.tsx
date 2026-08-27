@@ -1,5 +1,7 @@
+"use client";
+
 import { MockBadge } from "@/components/shared/MockBadge";
-import { trackerCopy } from "@/content/tracker-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 interface SyncControlProps {
   error: string | null;
@@ -14,6 +16,8 @@ export function SyncControl({
   onSimulate,
   summary,
 }: SyncControlProps) {
+  // Interface copy in the selected language, English where untranslated.
+  const { tracker: trackerCopy } = useCopy();
   return (
     <section className="sync-control">
       <header>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
-import { nodeSummary, nodeTitle } from "@/lib/rti/node-text";
+import { nodeClockLabel, nodeSummary, nodeTitle } from "@/lib/rti/node-text";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
@@ -341,7 +341,7 @@ export function CaseTracker({ code }: { code: string }) {
         illustration="/illustrations/tracker.png"
         supporting={
           hasLapsed && deemed?.summary
-            ? deemed.summary
+            ? nodeSummary(deemed, language)
             : data.case.answers.lifeLiberty === "yes"
               ? rtiCopy.tracker.libertyReason
               : rtiCopy.tracker.ordinaryReason
@@ -372,7 +372,7 @@ export function CaseTracker({ code }: { code: string }) {
                     ? rtiCopy.tracker.appealLapsedBody
                     : appealFiled
                       ? rtiCopy.tracker.lapsed.filedBody
-                      : deemed?.summary}
+                      : deemed ? nodeSummary(deemed, language) : undefined}
                 </p>
                 {appealFiled && appealElapsedDays !== null ? (
                   <div className="rti-appeal-progress">
@@ -389,7 +389,7 @@ export function CaseTracker({ code }: { code: string }) {
                 ) : null}
                 {!appealFiled && firstAppeal?.clock ? (
                   <p className="rti-escalation__deadline">
-                    {rtiCopy.tracker.lapsed.deadline(firstAppeal.clock.label, firstAppeal.clock.days ?? 0)}
+                    {rtiCopy.tracker.lapsed.deadline(nodeClockLabel(firstAppeal, language), firstAppeal.clock.days ?? 0)}
                   </p>
                 ) : null}
                 <Link className="rti-primary" href="/appeal/first">

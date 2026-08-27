@@ -24,3 +24,12 @@ export function nodeSummary(
   if (language === "hi" && node.hi?.summary) return node.hi.summary;
   return node.summary;
 }
+
+/** A node's clock label in the selected language. */
+export function nodeClockLabel(
+  node: { clock?: { label: string } | null; hi?: { clockLabel?: string } },
+  language: string,
+): string {
+  if (language === "hi" && node.hi?.clockLabel) return node.hi.clockLabel;
+  return node.clock?.label ?? "";
+}
