@@ -9157,9 +9157,9 @@ small,
 /* The government helpdesk panel, matching the rest of the page. */
 .home-helpdesk__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 200px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   align-items: center;
-  gap: 16px 34px;
+  gap: 16px 40px;
   padding: 34px;
 }
 
