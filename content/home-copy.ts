@@ -130,7 +130,7 @@ export const homeCopy = {
       {
         id: "first",
         title: "First Appeal",
-        line: "Free, to an officer senior to the one who stayed silent.",
+        line: "Free, and decided by an officer senior to the Public Information Officer.",
       },
       {
         id: "decide",
