@@ -748,7 +748,7 @@ function DraftStep() {
 
 function ChecksStep() {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy } = useCopy();
+  const { rti: rtiCopy, language } = useCopy();
   const router = useRouter();
   const { draft, ready, update } = useStoredDraft();
   const [singleSubject, setSingleSubject] = useState(true);
@@ -785,7 +785,7 @@ function ChecksStep() {
     isBPL: draft.isBPL ?? "no",
     hasBplCertificate,
   };
-  const results = evaluatePreflightChecks(input);
+  const results = evaluatePreflightChecks(input, language);
   const blocked = results.some((result) => result.status === "block");
   const manualBlocked = results.some(
     (result) => result.status === "block" && result.id !== "jurisdiction",

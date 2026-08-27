@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
-import { shellCopy } from "@/content/shell-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 export function Footer() {
+  // Interface copy in the selected language, English where untranslated.
+  const { shell: shellCopy } = useCopy();
   return (
     <footer className="site-footer marketing-footer">
       <div className="site-shell">

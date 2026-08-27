@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { rtiCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 export type JourneyProgressStep =
   | "describe"
@@ -30,6 +32,8 @@ const order: JourneyProgressStep[] = [
 ];
 
 export function JourneyProgress({ current }: { current: JourneyProgressStep }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const currentIndex = order.indexOf(current);
 
   return (

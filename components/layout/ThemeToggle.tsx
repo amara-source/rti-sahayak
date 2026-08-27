@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { shellCopy } from "@/content/shell-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 type Theme = "light" | "dark";
 
@@ -11,6 +11,8 @@ function applyTheme(theme: Theme, persist = true) {
 }
 
 export function ThemeToggle() {
+  // Interface copy in the selected language, English where untranslated.
+  const { shell: shellCopy } = useCopy();
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {

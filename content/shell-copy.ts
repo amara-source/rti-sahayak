@@ -93,6 +93,12 @@ export const shellCopy = {
     chatBody: "No live helpdesk or government service is connected.",
     close: "Close",
   },
+  languagePicker: {
+    label: "Language",
+    more: "More languages",
+    moreNote: "Other languages of the Eighth Schedule. None of these is built in this prototype.",
+    notBuilt: "Not built in this prototype",
+  },
   theme: {
     light: "Use light theme",
     dark: "Use dark theme",

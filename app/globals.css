@@ -9942,3 +9942,65 @@ small,
   max-height: 45%;
   overflow-y: auto;
 }
+
+/* The dropdown of languages this prototype has not built. */
+.language-more { position: relative; }
+
+.language-more__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.language-more__toggle span { font-size: .6em; }
+
+.language-more__panel {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(280px, calc(100vw - 32px));
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 18px 40px rgb(14 37 64 / 22%);
+  text-align: left;
+}
+
+.language-more__note {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: var(--caption);
+  line-height: 1.45;
+}
+
+.language-more__panel ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.language-more__panel li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 7px 8px;
+}
+
+.language-more__panel li:nth-child(odd) { background: var(--surface-soft); }
+
+.language-more__panel li span { color: var(--ink); font-size: .95rem; }
+
+.language-more__panel li small {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: var(--caption);
+}

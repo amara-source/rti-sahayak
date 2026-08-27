@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import type { Plan, RenderedNode } from "@/lib/engine/types";
-import { rtiCopy } from "@/content/rti-copy";
 import { Icon } from "./Icon";
 
 type FlowId =
@@ -146,6 +146,8 @@ function Edge({ d, active }: { d: string; active: boolean }) {
 }
 
 function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const copy = rtiCopy.tracker.flow;
   const states = flowStates(plan, nodes);
   const code = plan.code;
@@ -229,6 +231,8 @@ interface Step {
  * because the government's own version is an image nobody can read on a phone.
  */
 function MobileStepper({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const copy = rtiCopy.tracker.flow;
   const states = flowStates(plan, nodes);
   const wait = plan.answers.lifeLiberty === "yes" ? "48 hours" : "30 days";
@@ -279,6 +283,8 @@ export function ProcessFlowchart({
   plan: Plan;
   nodes: RenderedNode[];
 }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   return (
     <section className="rti-process-card" aria-labelledby="rti-process-heading">
       <div className="rti-process-card__heading">

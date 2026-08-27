@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { rtiCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 
 export interface ScriptedAnswer {
   id: string;
@@ -47,6 +47,8 @@ export function ScriptedAssistant({
   answers: ScriptedAnswer[];
   compact?: boolean;
 }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const copy = rtiCopy.ask;
   const [turns, setTurns] = useState<Turn[]>([]);
   const threadRef = useRef<HTMLElement | null>(null);

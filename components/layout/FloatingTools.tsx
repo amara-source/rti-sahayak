@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { shellCopy } from "@/content/shell-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { ScriptedAssistant } from "@/components/rti/ScriptedAssistant";
 import { askAnswers } from "@/lib/rti/ask-answers";
 
 export function FloatingTools() {
+  // Interface copy in the selected language, English where untranslated.
+  const { shell: shellCopy } = useCopy();
   const [chatOpen, setChatOpen] = useState(false);
   // Read straight from the rule pack. No model, no network.
   const answers = askAnswers();

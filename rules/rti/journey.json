@@ -531,49 +531,84 @@
       "level": "warn",
       "label": "Correct government",
       "fail": "This is a state matter, so the central portal will return it. Your state route is set out at the filing step.",
-      "fix": "Nothing to fix if the records are held by a state body. Continue and file with your state."
+      "fix": "Nothing to fix if the records are held by a state body. Continue and file with your state.",
+      "hi": {
+        "label": "सही सरकार",
+        "fail": "यह राज्य सरकार का मामला है, इसलिए केंद्रीय पोर्टल इसे लौटा देगा। आपके राज्य में दाखिल करने का तरीका आगे भेजने वाले चरण में बताया गया है।",
+        "fix": "अगर रिकॉर्ड राज्य के किसी कार्यालय के पास है तो कुछ ठीक करने की ज़रूरत नहीं। आगे बढ़िए और अपने राज्य में दाखिल कीजिए।"
+      }
     },
     {
       "id": "length",
       "level": "block",
       "label": "Under 3,000 characters",
       "fail": "Longer text has to go in as a PDF attachment instead.",
-      "fix": "Shorten the text, or move the detail into a PDF attachment under 1 MB."
+      "fix": "Shorten the text, or move the detail into a PDF attachment under 1 MB.",
+      "hi": {
+        "label": "तीन हज़ार अक्षरों से कम",
+        "fail": "इससे लंबा लिखा हुआ पीडीएफ़ के रूप में ही लगाना पड़ता है।",
+        "fix": "लिखा हुआ छोटा कीजिए, या ब्यौरा एक ऐसी पीडीएफ़ में डाल दीजिए जो एक एमबी से छोटी हो।"
+      }
     },
     {
       "id": "charset",
       "level": "block",
       "label": "Accepted characters only",
       "fail": "The form accepts only A-Z a-z 0-9 and , . - _ ( ) / @ : & ? \\ % — remove anything else.",
-      "fix": "Remove the flagged characters. Rupee signs, curly quotes and em dashes are the usual culprits."
+      "fix": "Remove the flagged characters. Rupee signs, curly quotes and em dashes are the usual culprits.",
+      "hi": {
+        "label": "सिर्फ़ स्वीकार किए जाने वाले अक्षर",
+        "fail": "फ़ॉर्म सिर्फ़ अंग्रेज़ी के अक्षर, अंक और थोड़े से चिह्न लेता है। इनके अलावा कुछ भी हटा दीजिए।",
+        "fix": "जिन चिह्नों पर निशान लगा है उन्हें हटा दीजिए। रुपये का चिह्न, तिरछे उद्धरण चिह्न और लंबी डैश सबसे आम वजह होते हैं।"
+      }
     },
     {
       "id": "single_subject",
       "level": "warn",
       "label": "One subject, one authority",
       "fail": "Unrelated questions in one application get transferred and half answered.",
-      "fix": "Split this into separate applications. We can do that for you."
+      "fix": "Split this into separate applications. We can do that for you.",
+      "hi": {
+        "label": "एक आवेदन, एक विषय, एक कार्यालय",
+        "fail": "एक ही आवेदन में अलग अलग सवाल हों तो उसे इधर उधर भेजा जाता है और आधा अधूरा जवाब मिलता है।",
+        "fix": "इसे अलग अलग आवेदनों में बाँट दीजिए। हम आपके लिए यह कर सकते हैं।"
+      }
     },
     {
       "id": "asks_for_records",
       "level": "warn",
       "label": "Asks for records, not reasons",
       "fail": "The Act covers information held in material form. Questions and requests for explanations can be refused.",
-      "fix": "Ask for the document instead of the reason. For example, 'provide a copy of the file notings' rather than 'why was this delayed'."
+      "fix": "Ask for the document instead of the reason. For example, 'provide a copy of the file notings' rather than 'why was this delayed'.",
+      "hi": {
+        "label": "रिकॉर्ड माँगिए, वजह नहीं",
+        "fail": "अधिनियम वही जानकारी देता है जो लिखित रूप में मौजूद है। सवाल और सफ़ाई माँगने पर मना किया जा सकता है।",
+        "fix": "वजह पूछने के बजाय दस्तावेज़ माँगिए। जैसे, देरी क्यों हुई पूछने के बजाय फ़ाइल की टिप्पणियों की नकल माँगिए।"
+      }
     },
     {
       "id": "no_identity_docs",
       "level": "block",
       "label": "No identity documents attached",
       "fail": "Section 6(2) does not require identity proof. Do not upload Aadhaar or PAN.",
-      "fix": "Remove the attachment. You do not need to prove who you are to make an RTI request."
+      "fix": "Remove the attachment. You do not need to prove who you are to make an RTI request.",
+      "hi": {
+        "label": "पहचान का कोई काग़ज़ नहीं लगा है",
+        "fail": "धारा 6(2) के तहत पहचान का सबूत देने की ज़रूरत नहीं है। आधार या पैन मत लगाइए।",
+        "fix": "लगा हुआ काग़ज़ हटा दीजिए। आरटीआई माँगने के लिए आपको यह साबित करने की ज़रूरत नहीं कि आप कौन हैं।"
+      }
     },
     {
       "id": "attachment",
       "level": "warn",
       "label": "PDF under 1 MB, no spaces in the filename",
       "fail": "The upload will fail silently.",
-      "fix": "Save as a single PDF under 1 MB and rename it without spaces."
+      "fix": "Save as a single PDF under 1 MB and rename it without spaces.",
+      "hi": {
+        "label": "एक एमबी से छोटी पीडीएफ़, नाम में जगह न हो",
+        "fail": "फ़ाइल चढ़ेगी ही नहीं, और आपको पता भी नहीं चलेगा।",
+        "fix": "एक ही पीडीएफ़ बनाइए जो एक एमबी से छोटी हो, और उसका नाम बिना जगह छोड़े रखिए।"
+      }
     },
     {
       "id": "bpl_certificate",
@@ -587,7 +622,12 @@
           "op": "eq",
           "value": "yes"
         }
-      ]
+      ],
+      "hi": {
+        "label": "बीपीएल प्रमाणपत्र लगा है",
+        "fail": "बिना शुल्क दाखिल करने के लिए संबंधित सरकार का जारी किया प्रमाणपत्र देना ज़रूरी है।",
+        "fix": "अपने राज्य सरकार का जारी बीपीएल प्रमाणपत्र लगाइए, या दस रुपये का शुल्क देकर दाखिल कीजिए।"
+      }
     }
   ]
 }

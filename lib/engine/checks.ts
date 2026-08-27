@@ -57,8 +57,31 @@ function passes(id: string, input: PreflightInput): boolean {
   }
 }
 
+/**
+ * The wording a check shows, in the language asked for.
+ *
+ * The translation lives in the rule pack beside the English, so check content
+ * still comes only from /rules. A missing translation falls through to
+ * English rather than rendering half a sentence in each language.
+ */
+type CheckWording = { label: string; fail: string; fix: string };
+
+function wording(
+  check: CheckWording & { hi?: Partial<CheckWording> },
+  language: string,
+): CheckWording {
+  const patch = language === "hi" ? check.hi : undefined;
+  if (!patch) return { label: check.label, fail: check.fail, fix: check.fix };
+  return {
+    label: patch.label ?? check.label,
+    fail: patch.fail ?? check.fail,
+    fix: patch.fix ?? check.fix,
+  };
+}
+
 export function evaluatePreflightChecks(
   input: PreflightInput,
+  language = "en",
 ): CheckResult[] {
   const checks = rtiPack.checks as Array<{
     id: string;
@@ -66,6 +89,7 @@ export function evaluatePreflightChecks(
     label: string;
     fail: string;
     fix: string;
+    hi?: Partial<CheckWording>;
     appliesIf?: Condition[];
   }>;
 
@@ -78,9 +102,7 @@ export function evaluatePreflightChecks(
     )
     .map((check) => ({
       id: check.id,
-      label: check.label,
-      fail: check.fail,
-      fix: check.fix,
+      ...wording(check, language),
       status: (passes(check.id, input) ? "pass" : check.level) as CheckResult["status"],
     }));
 }
