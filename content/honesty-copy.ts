@@ -37,6 +37,14 @@ export const honestyCopy: UtilityPageCopy = {
       ],
     },
     {
+      heading: "What is not translated, and why",
+      cards: [
+        { title: "The law stays in English", body: "Section numbers, quoted wording and every rule body come from the authored rule pack and are shown in English. Translating statutory text would risk changing its meaning, and the citation has to match what the Act actually says." },
+        { title: "The application stays in English", body: "The government portal accepts only A to Z, a to z, 0 to 9 and a short list of punctuation in the request field. An application written in Hindi or Kannada is rejected by the form. That restriction is the government's, and it is part of what makes the Act hard to use." },
+        { title: "Kannada is listed but not built", body: "The switcher shows Kannada and disables it. A half-translated interface would be worse than an honest gap, so it stays off until the copy is written." },
+      ],
+    },
+    {
       heading: "The boundary",
       cards: [
         { title: "Synthetic data only", body: "All people, requests, case codes, OTPs, registration numbers and status events shown in this prototype are synthetic." },

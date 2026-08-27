@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { rtiCopy } from "@/content/rti-copy";
+import { rtiCopy as englishCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { loadDraft, type RtiDraft } from "@/lib/rti/draft";
 import { listJurisdictions, statePortal } from "@/lib/engine/jurisdictions";
 import { listAuthorities } from "@/lib/engine/authority";
@@ -22,6 +23,8 @@ import { PageHero } from "./PageHero";
  * not, this says so rather than guessing an address.
  */
 export function StateFiling() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const copy = rtiCopy.stateFiling;
   const [draft, setDraft] = useState<RtiDraft | null>(null);

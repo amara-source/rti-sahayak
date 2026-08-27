@@ -2,6 +2,7 @@ import { layoutCopy } from "@/content/layout-copy";
 import { FontSizeControls } from "@/components/layout/FontSizeControls";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { AccentPicker } from "@/components/layout/AccentPicker";
+import { LanguagePicker } from "@/components/layout/LanguagePicker";
 import { shellCopy } from "@/content/shell-copy";
 
 export function GovStrip() {
@@ -21,15 +22,7 @@ export function GovStrip() {
           <FontSizeControls />
           <ThemeToggle />
           <AccentPicker />
-          <button
-            aria-label={`${shellCopy.loggedOut.utility.isl}. ${shellCopy.loggedOut.utility.islNote}`}
-            className="isl-unavailable"
-            disabled
-            title={shellCopy.loggedOut.utility.islNote}
-            type="button"
-          >
-            {shellCopy.loggedOut.utility.isl}
-          </button>
+          <LanguagePicker />
         </div>
       </div>
     </div>

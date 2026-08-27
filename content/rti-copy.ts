@@ -105,6 +105,7 @@ export const rtiCopy = {
   draft: {
     eyebrow: "Rewrite",
     heading: "Make the request harder to refuse",
+    englishOnly: "The application itself stays in English. The government portal accepts only A to Z, a to z, 0 to 9 and a short list of punctuation, so anything in Hindi or Kannada is rejected by the form. That restriction is the government's, not ours, and it is part of what makes the Act hard to use.",
     original: "What you wrote",
     rewritten: "What we will file",
     changes: "What changed and why",

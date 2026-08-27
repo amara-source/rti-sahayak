@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { rtiCopy } from "@/content/rti-copy";
+import { rtiCopy as englishCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { trackerCopy } from "@/content/tracker-copy";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
@@ -22,6 +23,8 @@ interface CaseResponse {
 type Stage = "done" | "now" | "open" | "locked";
 
 function JobTag({ job }: { job: RenderedNode["job"] }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   return <span className={`rti-job rti-job--${job.toLowerCase()}`}>{rtiCopy.tracker.jobs[job]}</span>;
 }
 
@@ -34,6 +37,8 @@ function Clock({
   nodes: RenderedNode[];
   lapsed: boolean;
 }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const reply = nodes.find((node) => node.id === "await_reply");
   const lifeLiberty = plan.answers.lifeLiberty === "yes";
   const elapsed = plan.elapsedHours ?? 0;
@@ -79,6 +84,8 @@ function CaseProgress({
 }: {
   groups: Array<{ stage: Stage; nodes: RenderedNode[] }>;
 }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const total = groups.reduce((sum, group) => sum + group.nodes.length, 0);
   const done = groups.find((group) => group.stage === "done")?.nodes.length ?? 0;
   if (!total) return null;
@@ -95,6 +102,8 @@ function CaseProgress({
 }
 
 function CaseFacts({ code, plan }: { code: string; plan: Plan }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const answers = plan.answers;
   const text = (key: string) => {
     const value = answers[key];
@@ -151,6 +160,8 @@ function CaseFacts({ code, plan }: { code: string; plan: Plan }) {
 }
 
 export function CaseTracker({ code }: { code: string }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
@@ -474,6 +485,8 @@ export function CaseNodeDetail({
   code: string;
   nodeId: string;
 }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [status, setStatus] = useState<Status>("none");
   const [error, setError] = useState("");

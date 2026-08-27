@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useRef } from "react";
-import { rtiCopy } from "@/content/rti-copy";
+import { rtiCopy as englishCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
@@ -37,40 +38,17 @@ const checkFixHrefs: Record<string, string> = {
   bpl_certificate: "/file/checks#bpl-certificate",
 };
 
-const heroByEyebrow: Record<
-  string,
-  { illustration: string; supporting: string; tone: HeroTone }
-> = {
-  [rtiCopy.describe.eyebrow]: {
-    illustration: "/illustrations/describe.png",
-    supporting: rtiCopy.describe.intro,
-    tone: "blue",
-  },
-  [rtiCopy.jurisdiction.eyebrow]: {
-    illustration: "/illustrations/jurisdiction.png",
-    supporting: rtiCopy.jurisdiction.bodyLevel,
-    tone: "teal",
-  },
-  [rtiCopy.authority.eyebrow]: {
-    illustration: "/illustrations/authority.png",
-    supporting: rtiCopy.authority.directory,
-    tone: "orange",
-  },
-  [rtiCopy.draft.eyebrow]: {
-    illustration: "/illustrations/draft.png",
-    supporting: rtiCopy.draft.changes,
-    tone: "violet",
-  },
-  [rtiCopy.checks.eyebrow]: {
-    illustration: "/illustrations/checks.png",
-    supporting: rtiCopy.checks.intro,
-    tone: "teal",
-  },
-  [rtiCopy.submit.eyebrow]: {
-    illustration: "/illustrations/submit.png",
-    supporting: rtiCopy.submit.supporting,
-    tone: "blue",
-  },
+/**
+ * Hero art per step, keyed by the step id rather than by its heading, so the
+ * lookup does not break when the interface is translated.
+ */
+const heroByStep: Record<string, { illustration: string; tone: HeroTone }> = {
+  describe: { illustration: "/illustrations/describe.png", tone: "blue" },
+  jurisdiction: { illustration: "/illustrations/jurisdiction.png", tone: "teal" },
+  authority: { illustration: "/illustrations/authority.png", tone: "orange" },
+  draft: { illustration: "/illustrations/draft.png", tone: "violet" },
+  checks: { illustration: "/illustrations/checks.png", tone: "teal" },
+  submit: { illustration: "/illustrations/submit.png", tone: "blue" },
 };
 
 function useStoredDraft() {
@@ -102,13 +80,24 @@ function Shell({
   heading: string;
   children: React.ReactNode;
 }) {
-  const hero = heroByEyebrow[eyebrow] ?? heroByEyebrow[rtiCopy.describe.eyebrow];
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
+  const hero = heroByStep[step ?? "describe"] ?? heroByStep.describe;
+  // The supporting line follows the step, in the selected language.
+  const supportingByStep: Record<string, string> = {
+    describe: rtiCopy.describe.intro,
+    jurisdiction: rtiCopy.jurisdiction.bodyLevel,
+    authority: rtiCopy.authority.directory,
+    draft: rtiCopy.draft.changes,
+    checks: rtiCopy.checks.intro,
+    submit: rtiCopy.submit.supporting,
+  };
   return (
     <section className="rti-flow-page">
       <PageHero
         eyebrow={eyebrow}
         illustration={hero.illustration}
-        supporting={hero.supporting}
+        supporting={supportingByStep[step ?? "describe"] ?? rtiCopy.describe.intro}
         title={heading}
         tone={hero.tone}
       />
@@ -122,6 +111,8 @@ function Shell({
 }
 
 function DescribeStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
@@ -317,6 +308,8 @@ function DescribeStep() {
 }
 
 function JurisdictionStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const { draft, ready, update } = useStoredDraft();
   const [bodyLevel, setBodyLevel] =
@@ -453,6 +446,8 @@ function JurisdictionStep() {
 }
 
 function AuthorityStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const { draft, ready, update } = useStoredDraft();
   const [authorityId, setAuthorityId] = useState("");
@@ -642,6 +637,8 @@ function AuthorityStep() {
 }
 
 function DraftStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const { draft, ready, update } = useStoredDraft();
   const [rewritten, setRewritten] = useState("");
@@ -701,6 +698,7 @@ function DraftStep() {
 
   return (
     <Shell step="draft" eyebrow={rtiCopy.draft.eyebrow} heading={rtiCopy.draft.heading}>
+      <p className="rti-note rti-english-only">{rtiCopy.draft.englishOnly}</p>
       <div className="rti-rewrite-grid">
         <section>
           <h2>{rtiCopy.draft.original}</h2>
@@ -749,6 +747,8 @@ function DraftStep() {
 }
 
 function ChecksStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const { draft, ready, update } = useStoredDraft();
   const [singleSubject, setSingleSubject] = useState(true);
@@ -982,6 +982,8 @@ function ChecksStep() {
 }
 
 function SubmitStep() {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const router = useRouter();
   const { draft, ready } = useStoredDraft();
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -1128,6 +1130,8 @@ function SubmitStep() {
 }
 
 export function FileJourney({ step }: { step: Step }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   switch (step) {
     case "describe":
       return <DescribeStep />;

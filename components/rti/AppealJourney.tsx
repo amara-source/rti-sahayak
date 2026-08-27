@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { rtiCopy } from "@/content/rti-copy";
+import { rtiCopy as englishCopy } from "@/content/rti-copy";
+import { useCopy } from "@/lib/i18n/LanguageProvider";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { PageHero } from "./PageHero";
 import { EmptyStep } from "./EmptyStep";
@@ -33,6 +34,8 @@ function initialDraft(kind: AppealKind, registration: string): string {
 }
 
 export function AppealJourney({ kind }: { kind: AppealKind }) {
+  // Interface copy in the selected language, English where untranslated.
+  const { rti: rtiCopy } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
