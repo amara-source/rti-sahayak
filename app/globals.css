@@ -6107,6 +6107,43 @@ small,
   white-space: nowrap;
 }
 
+.rti-check-list {
+  grid-auto-rows: max-content;
+  align-items: start;
+}
+
+.rti-check {
+  height: auto;
+  min-height: 0;
+  align-self: start;
+  overflow: visible;
+}
+
+.rti-check--collapsed {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding-block: 13px;
+}
+
+.rti-check--collapsed h2,
+.rti-check--collapsed strong {
+  margin: 0;
+}
+
+.rti-check__pass-mark {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #347c4b;
+  font-weight: 900;
+}
+
 .rti-icon-tile {
   width: 64px;
   height: 64px;

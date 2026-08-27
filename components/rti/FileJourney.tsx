@@ -859,20 +859,22 @@ function ChecksStep() {
         </label>
       </div>
       <div className="rti-check-list">
-        {results.map((result) => (
+        {results.map((result) => result.status === "pass" ? (
+          <article className="rti-check rti-check--pass rti-check--collapsed" key={result.id}>
+            <span aria-hidden="true" className="rti-check__pass-mark">✓</span>
+            <h2>{result.label}</h2>
+            <strong>{rtiCopy.checks.pass}</strong>
+          </article>
+        ) : (
           <article className={`rti-check rti-check--${result.status}`} key={result.id}>
               <span className="rti-icon-tile rti-icon-tile--sm"><Icon name={checkIcon(result.id)} /></span>
             <header>
               <h2>{result.label}</h2>
-              <span>{result.status === "pass" ? rtiCopy.checks.pass : result.status === "warn" ? rtiCopy.checks.warn : rtiCopy.checks.block}</span>
+              <span>{result.status === "warn" ? rtiCopy.checks.warn : rtiCopy.checks.block}</span>
             </header>
-            {result.status !== "pass" ? (
-              <>
-                <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
-                <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
-                <Link className="rti-secondary rti-fix-link" href={checkFixHrefs[result.id] ?? "/file"}>{rtiCopy.checks.fixAction}</Link>
-              </>
-            ) : null}
+            <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
+            <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
+            <Link className="rti-secondary rti-fix-link" href={checkFixHrefs[result.id] ?? "/file"}>{rtiCopy.checks.fixAction}</Link>
           </article>
         ))}
       </div>
