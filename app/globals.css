@@ -9806,6 +9806,10 @@ small,
 .home-band__action {
   width: min(var(--page-max), calc(100% - var(--page-gutter)));
   margin: clamp(48px, 6vw, 84px) auto 0;
+  /* The proof chips used to hold this space open below the card. They are
+     gone, so the band keeps the room itself and the content section below
+     does not crowd the card. */
+  padding-bottom: 66px;
 }
 
 .home-band__action-card {
@@ -9830,25 +9834,6 @@ small,
 .home-band__action-card strong { font-size: var(--card-title); font-weight: 650; color: var(--ink); }
 .home-band__action-card span { font-size: var(--card-body); line-height: var(--card-body-lh); color: var(--muted); }
 
-.home-band__proof {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 0;
-  padding: 66px 0 0;
-  list-style: none;
-}
-
-.home-band__proof li {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 8px 16px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: var(--caption);
-  font-weight: 700;
-}
-
 /* The home page's own hero replaces the standard band, so the content card
    must not pull up under it as well. */
 .utility-page:has(.home-band) .utility-page__content { margin-top: 34px; }
@@ -9863,7 +9848,7 @@ small,
     );
   }
   .home-band__action-card { margin-bottom: -30px; }
-  .home-band__proof { padding-top: 50px; }
+  .home-band__action { padding-bottom: 50px; }
 }
 
 /* The language switcher in the utility strip. */

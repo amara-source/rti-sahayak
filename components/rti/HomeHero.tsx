@@ -8,8 +8,7 @@ import { Icon } from "./Icon";
  *
  * The illustration is a background layer for the whole band rather than a
  * separate picture beside the text, with a scrim over it so the headline keeps
- * its contrast. The primary action sits in a card overlapping the bottom edge,
- * and the proof chips underneath say only things that are true.
+ * its contrast. The primary action sits in a card overlapping the bottom edge.
  */
 export function HomeHero() {
   const copy = utilityPages.home;
@@ -36,11 +35,6 @@ export function HomeHero() {
           </div>
           <Link className="rti-primary" href="/file">{homeCopy.heroAction.action}</Link>
         </div>
-        <ul className="home-band__proof">
-          {homeCopy.proof.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
       </div>
     </header>
   );

@@ -138,9 +138,6 @@ export function JourneyStrip() {
       </ol>
 
       <div className="home-journey__footer">
-        <Link className="rti-primary" href={copy.href}>
-          {copy.linkLabel}
-        </Link>
         <p>{copy.footnote}</p>
       </div>
     </section>

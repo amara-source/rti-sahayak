@@ -248,7 +248,6 @@ describe("home journey strip stays tied to the rule pack", () => {
 
   it("tells the same story in the same number of stages", () => {
     expect(homeCopy.journey.stages).toHaveLength(6);
-    expect(homeCopy.journey.href).toBe("/example");
     expect(homeCopy.journey.stages.map((stage) => stage.id)).toEqual([
       "ask",
       "wait",
