@@ -145,6 +145,15 @@ export const homeCopy = {
     ],
   },
 
+  /** Its own section, low on the page, above the helpdesk panel. */
+  example: {
+    eyebrow: "See it working",
+    heading: "A real request, start to finish",
+    body: "Open a pension request that was filed and never answered. The reply period has run out, the refusal has taken effect in law, and the First Appeal is drafted and ready. Nothing to type.",
+    action: "Open the example case",
+    href: "/example",
+  },
+
   helpdesk: {
     heading: "Need help with a service?",
     intro: "These are the government's own RTI Online helpdesk numbers. They are not ours, and nobody at these numbers knows anything about this prototype.",

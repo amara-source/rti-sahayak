@@ -27,6 +27,8 @@ export const rtiCopy = {
     templatesNote: "These are starting points, not fixed options. Pick the closest one and edit it until it describes your situation.",
     templates: [
       { label: "Road left unrepaired", text: "The road outside my house was dug up and never repaired. I want the work order, the contractor's name and what was paid." },
+      { label: "Death certificate not issued", text: "My father's death certificate has still not been issued, and the family pension cannot start without it. I want the file status and the reason for the delay in writing." },
+      { label: "Ration card stopped", text: "My ration card entitlement was stopped without any explanation. I want the order and the reason it was cancelled." },
       { label: "Streetlights not repaired", text: "Streetlights on my street have been out for months and I want the complaint records and repair orders." },
       { label: "Pension pending", text: "My father's pension application has been pending for eight months and I have had no reply." },
       { label: "Answer sheet and evaluation", text: "I want copies of my answer sheet and the evaluation record." },

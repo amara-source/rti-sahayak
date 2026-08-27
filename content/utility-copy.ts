@@ -49,7 +49,6 @@ export const utilityPages = {
       {
         heading: "One continuous journey",
         cards: [
-          { icon: "route", title: "See the day 31 example", body: "See a finished case in thirty seconds. No typing. First Appeal is ready.", href: "/example", linkLabel: "Open example case", featured: true },
           { icon: "form", title: "File an RTI", body: "Describe the records, choose the authority and check the request.", href: "/file", linkLabel: "Start a request" },
           { icon: "timeline", title: "Track your case", body: "Keep the reply deadline visible and see what opens next.", href: "/case", linkLabel: "Open your case" },
           { icon: "book", title: "Understand the law", body: "Read the sections behind each warning, clock and appeal.", href: "/act", linkLabel: "The RTI Act" },

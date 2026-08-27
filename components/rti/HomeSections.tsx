@@ -68,6 +68,15 @@ export function HelpdeskCard() {
     <section className="utility-section" aria-labelledby="home-helpdesk-heading">
       <div className="home-helpdesk">
         <div className="home-helpdesk__body">
+          <img
+            alt=""
+            aria-hidden="true"
+            className="home-helpdesk__art"
+            height={667}
+            loading="lazy"
+            src="/illustrations/authority.png"
+            width={1000}
+          />
           <h2 id="home-helpdesk-heading">{copy.heading}</h2>
           <p>{copy.intro}</p>
           <ul className="home-helpdesk__numbers">
@@ -88,6 +97,32 @@ export function HelpdeskCard() {
             {copy.portalLabel}
           </a>
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function ExampleCase() {
+  const copy = homeCopy.example;
+
+  return (
+    <section className="utility-section" aria-labelledby="home-example-heading">
+      <div className="home-example">
+        <div className="home-example__copy">
+          <p className="home-example__eyebrow">{copy.eyebrow}</p>
+          <h2 id="home-example-heading">{copy.heading}</h2>
+          <p>{copy.body}</p>
+          <Link className="rti-primary" href={copy.href}>{copy.action}</Link>
+        </div>
+        <img
+          alt=""
+          aria-hidden="true"
+          className="home-example__art"
+          height={667}
+          loading="lazy"
+          src="/illustrations/tracker.png"
+          width={1000}
+        />
       </div>
     </section>
   );
