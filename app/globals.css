@@ -9273,3 +9273,16 @@ small,
 }
 .scripted-assistant.is-compact .ask-message { max-width: 100%; }
 .scripted-assistant.is-compact .scripted-assistant__label { font-size: .78rem; }
+
+/* A button that is a direct grid or flex child should size to its label and
+   sit at the start, not be stretched or squeezed by the track it lands in. */
+.home-helpdesk__body > a,
+.home-example__copy > a,
+.home-journey__footer > a,
+.utility-card > a,
+.rti-actions > a {
+  justify-self: start;
+  align-self: start;
+  width: max-content;
+  max-width: 100%;
+}
