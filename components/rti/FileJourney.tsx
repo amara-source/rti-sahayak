@@ -885,21 +885,24 @@ function ChecksStep() {
       </div>
       {draft.draftOnly ? (
         <>
-          <div className="rti-actions">
-            <button className={downloaded ? "rti-secondary" : "rti-primary"} onClick={download} type="button">{rtiCopy.checks.download}</button>
-            {draft.bodyLevel === "unknown" ? <Link href="/file/jurisdiction">{rtiCopy.checks.resolve}</Link> : null}
-          </div>
-          {downloaded && draft.bodyLevel === "state" ? (
-            <section className="rti-post-download" role="status">
-              <h2>{rtiCopy.checks.downloadReady}</h2>
+          {draft.bodyLevel === "state" ? (
+            <section className="rti-post-download">
+              <h2>{rtiCopy.checks.stateNextHeading}</h2>
               <p>{rtiCopy.checks.stateNext}</p>
+            </section>
+          ) : null}
+          <div className="rti-actions">
+            <button className="rti-secondary" onClick={download} type="button">{rtiCopy.checks.download}</button>
+            {draft.bodyLevel === "state" ? (
               <button className="rti-primary" disabled={manualBlocked || trackingPending} onClick={startStateTracker} type="button">
                 {trackingPending ? rtiCopy.checks.tracking : rtiCopy.checks.stateTrack}
               </button>
-              <small>{rtiCopy.checks.stateTrackNote}</small>
-              {trackingError ? <p className="rti-error">{trackingError}</p> : null}
-            </section>
-          ) : null}
+            ) : null}
+            {draft.bodyLevel === "unknown" ? <Link href="/file/jurisdiction">{rtiCopy.checks.resolve}</Link> : null}
+          </div>
+          {downloaded ? <p className="rti-note" role="status">{rtiCopy.checks.downloadReady}</p> : null}
+          {draft.bodyLevel === "state" ? <small>{rtiCopy.checks.stateTrackNote}</small> : null}
+          {trackingError ? <p className="rti-error">{trackingError}</p> : null}
         </>
       ) : (
         <div className="rti-actions">

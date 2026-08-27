@@ -119,7 +119,9 @@ State filing next step: File this with your state portal or send it by post.
 Once you have filed it, start the browser-only tracker to follow the statutory
 clock.
 
-State tracker action: I filed it, start tracking
+State filing heading: File outside this central portal
+
+State tracker action: Track your deadlines anyway
 
 State tracker note: Use this only after you have filed the application with
 the state authority. Nothing is sent from this prototype.
