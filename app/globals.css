@@ -9244,7 +9244,9 @@ small,
   display: flex;
   flex-direction: column;
   width: min(430px, calc(100vw - 32px));
-  max-height: min(620px, calc(100vh - 140px));
+  /* A definite height, not just a cap. The thread and the chips divide this
+     between them; with a content-driven height they both collapse to nothing. */
+  height: min(620px, calc(100vh - 140px));
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -9914,4 +9916,44 @@ small,
   }
 
   .language-picker { flex-wrap: wrap; }
+}
+
+/* The assistant panel: the thread scrolls, the chips stay reachable at the
+   bottom. Before this the whole panel scrolled as one, so a new answer landed
+   below the fold and clicking a chip looked like nothing happened. */
+.floating-chat__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scripted-assistant.is-compact {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  /* The panel bar already names this, and a 32px gap plus the label left the
+     thread barely a line tall. */
+  gap: 0;
+}
+
+.scripted-assistant.is-compact .scripted-assistant__label { display: none; }
+
+.scripted-assistant.is-compact .ask-thread {
+  flex: 1 1 0;
+  /* A floor, so a short viewport cannot squeeze the answer out of existence. */
+  min-height: 120px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.scripted-assistant.is-compact .ask-chips {
+  flex: 0 1 auto;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  max-height: 45%;
+  overflow-y: auto;
 }

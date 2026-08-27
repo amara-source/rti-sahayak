@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { rtiCopy } from "@/content/rti-copy";
 
 export interface ScriptedAnswer {
@@ -49,6 +49,21 @@ export function ScriptedAssistant({
 }) {
   const copy = rtiCopy.ask;
   const [turns, setTurns] = useState<Turn[]>([]);
+  const threadRef = useRef<HTMLElement | null>(null);
+
+  // Bring the new exchange to the top of the thread, question first. Without
+  // this the answer is appended below the fold and clicking a chip looks like
+  // it did nothing. Setting scrollTop directly rather than calling
+  // scrollIntoView keeps this deterministic and inside this one container.
+  useEffect(() => {
+    const thread = threadRef.current;
+    if (!thread || !turns.length) return;
+    const messages = thread.querySelectorAll(".ask-message");
+    // The question of the pair just added, so it reads in order.
+    const target = messages[messages.length - 2] ?? messages[messages.length - 1];
+    if (!target) return;
+    thread.scrollTop += target.getBoundingClientRect().top - thread.getBoundingClientRect().top;
+  }, [turns]);
 
   function ask(item: ScriptedAnswer) {
     setTurns((current) => [
@@ -80,7 +95,7 @@ export function ScriptedAssistant({
     <div className={compact ? "scripted-assistant is-compact" : "scripted-assistant"}>
       <p className="scripted-assistant__label">{copy.label}</p>
 
-      <section className="ask-thread" aria-label={copy.assistant}>
+      <section className="ask-thread" aria-label={copy.assistant} ref={threadRef}>
         <header className="ask-thread__header">
           <AssistantAvatar />
           <div>
