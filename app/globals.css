@@ -10063,3 +10063,18 @@ small,
 .rti-check-list {
   margin-top: 24px;
 }
+
+/* The note explaining why the application stays in English. It was a bare
+   line of muted text wedged between the step heading and the rewrite panels,
+   running into both. It gets its own panel and its own space. */
+.rti-english-only {
+  margin: 24px 0 32px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: var(--card-body);
+  line-height: var(--card-body-lh);
+}
