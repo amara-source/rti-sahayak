@@ -331,6 +331,8 @@ export const hi = {
         decision: "फ़ैसला",
         noDecision: "फ़ैसला नहीं",
         second: "दूसरी अपील",
+        commission: ["आयोग का", "फ़ैसला"],
+        commissionDecides: "आदेश, मुआवज़ा और जुर्माना",
         complaint: ["धारा 18", "शिकायत"],
         withinFive: "पाँच दिन के भीतर",
         again: (wait: string) => `फिर ${wait}`,

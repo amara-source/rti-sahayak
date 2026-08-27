@@ -14,6 +14,7 @@ type FlowId =
   | "decision"
   | "no_decision"
   | "second"
+  | "commission"
   | "complaint";
 
 type FlowState = "complete" | "current" | "available" | "locked";
@@ -86,6 +87,7 @@ function flowStates(plan: Plan, nodes: RenderedNode[]): FlowStates {
     decision: decided && !appealRanOut ? "complete" : "locked",
     no_decision: decided && appealRanOut ? "complete" : "locked",
     second: ladder("second_appeal"),
+    commission: ladder("commission_decision"),
     complaint: ladder("section_18_complaint"),
   };
 }
@@ -162,6 +164,7 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
     { id: "decision", label: [copy.decision], x: 495, y: 730 },
     { id: "no_decision", label: [copy.noDecision], x: 785, y: 730 },
     { id: "second", label: [copy.second], x: 645, y: 940, href: "/appeal/second" },
+    { id: "commission", label: [...copy.commission], x: 645, y: 1150 },
     { id: "complaint", label: [...copy.complaint], x: 1010, y: 100, href: "/complaint" },
   ];
 
@@ -176,6 +179,7 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
     { d: "M645 566V630H785V684", active: reached(states.no_decision) },
     { d: "M495 776V850H645V894", active: reached(states.second) },
     { d: "M785 776V850H645V894", active: reached(states.second) },
+    { d: "M645 986V1104", active: reached(states.commission) },
     { d: "M305 75H895", active: reached(states.complaint) },
   ];
 
@@ -184,7 +188,7 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
       aria-labelledby={`flow-title-${code} flow-desc-${code}`}
       className="rti-process-map__desktop"
       role="img"
-      viewBox="0 0 1180 1010"
+      viewBox="0 0 1180 1220"
     >
       <title id={`flow-title-${code}`}>{copy.title}</title>
       <desc id={`flow-desc-${code}`}>{copy.description}</desc>
@@ -210,6 +214,7 @@ function DesktopMap({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
         <text x="500" y="835">{copy.withinNinety}</text>
         <text x="800" y="835">{copy.withinNinety}</text>
         <text x="660" y="60">{copy.noLimit}</text>
+        <text x="660" y="1050">{copy.commissionDecides}</text>
       </g>
       {items.map((node) => (
         <NodeBox key={node.id} node={node} state={states[node.id]} />
@@ -246,6 +251,7 @@ function MobileStepper({ plan, nodes }: { plan: Plan; nodes: RenderedNode[] }) {
     { id: "decision", label: copy.decision, meta: copy.withinFortyFive, tag: copy.outcome },
     { id: "no_decision", label: copy.noDecision, meta: copy.afterFortyFive, tag: copy.outcome },
     { id: "second", label: copy.second, meta: copy.withinNinety, href: "/appeal/second" },
+    { id: "commission", label: copy.commission.join(" "), meta: copy.commissionDecides },
     { id: "complaint", label: copy.complaint.join(" "), meta: copy.noLimit, href: "/complaint", tag: copy.parallel },
   ];
 

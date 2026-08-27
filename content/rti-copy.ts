@@ -330,6 +330,8 @@ export const rtiCopy = {
       decision: "DECISION",
       noDecision: "NO DECISION",
       second: "SECOND APPEAL",
+      commission: ["COMMISSION", "DECISION"],
+      commissionDecides: "orders, compensation and penalty",
       complaint: ["SECTION 18", "COMPLAINT"],
       withinFive: "within 5 days",
       again: (wait: string) => `${wait} again`,

@@ -25,6 +25,7 @@ export type IconName =
   | "bell-off"
   | "escalate"
   | "scales"
+  | "gavel"
   | "megaphone"
   // Pre-flight checks
   | "map-pin"
@@ -147,6 +148,17 @@ const glyphs: Record<IconName, ReactNode> = {
       <path d="M12 4v16M7 20h10" />
       <path d="M4 8h16M12 4l-8 4M12 4l8 4" />
       <path className="icon-fill" d="M4 8l-2.5 5h5zM20 8l-2.5 5h5z" />
+    </>
+  ),
+  // The Commission's ruling and its penalty power. Distinct from "scales",
+  // which is the act of taking the case to the Commission.
+  gavel: (
+    <>
+      <path d="M14.5 3.5l6 6M17.5 6.5l-4 4M11.5 6.5l-4 4" />
+      <path className="icon-fill" d="M9.5 4.5l4 4-3 3-4-4z" />
+      <path d="M9.5 4.5l4 4-3 3-4-4z" />
+      <path d="M8 12l-4.5 4.5a2.1 2.1 0 003 3L11 15" />
+      <path d="M13 20.5h8" />
     </>
   ),
   megaphone: (

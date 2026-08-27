@@ -123,6 +123,8 @@ export const utilityPages = {
           { title: "Section 18", body: "A complaint challenges the officer's conduct and has no time limit. We keep it as a parallel route directly from the original request.", ...actLink("Section 18") },
           { title: "Sections 19(1) and 19(6)", body: "A First Appeal is normally filed within thirty days. The Appellate Authority must decide within thirty days, extendable to forty five days with recorded reasons. We use both clocks in the First Appeal journey.", ...actLink("Sections 19(1) and 19(6)") },
           { title: "Section 19(3)", body: "A Second Appeal goes to the Information Commission within ninety days. We unlock it only after the First Appeal is complete.", ...actLink("Section 19(3)") },
+          { title: "Section 19(8)", body: "The Commission can order the public authority to provide the information and can require it to compensate the applicant for loss or detriment suffered. We use this in the final step of the case.", ...actLink("Section 19(8)") },
+          { title: "Section 20(1)", body: "Where an officer refused or delayed without reasonable cause, gave incorrect or misleading information, or destroyed the information sought, the Commission may impose a penalty of two hundred and fifty rupees a day up to twenty five thousand rupees, payable by the officer personally. We use this in the final step of the case.", ...actLink("Section 20(1)") },
         ],
       },
     ],

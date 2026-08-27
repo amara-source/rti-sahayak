@@ -23,6 +23,7 @@ export const nodeIcons: Record<string, IconName> = {
   first_appeal: "escalate",
   second_appeal: "scales",
   section_18_complaint: "megaphone",
+  commission_decision: "gavel",
 };
 
 /** Pre-flight checks, and the home page traps that describe them. */

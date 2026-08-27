@@ -600,6 +600,31 @@
         "summary": "एक अलग रास्ता, जिस पर कोई समय सीमा है ही नहीं।",
         "authority": "केंद्रीय या राज्य सूचना आयोग"
       }
+    },
+    {
+      "id": "commission_decision",
+      "job": "WAIT",
+      "bucket": "later",
+      "title": "What the Commission can do",
+      "summary": "The last step, and the one with teeth.",
+      "body": "The Information Commission decides the second appeal. It can order the public authority to provide the information, and it can require the authority to compensate you for any loss or detriment suffered. Where the Commission finds the officer refused without reasonable cause, delayed without reasonable cause, gave incorrect or misleading information, or destroyed the information sought, it may impose a penalty of two hundred and fifty rupees for each day of delay, up to a maximum of twenty five thousand rupees. The penalty falls on the officer personally, not on the department. The Commission may also recommend disciplinary action.",
+      "appliesIf": [],
+      "dependsOn": [
+        "second_appeal"
+      ],
+      "authority": "Central or State Information Commission",
+      "clock": null,
+      "warnings": [],
+      "confidence": "verified",
+      "sourceLabel": "RTI Act 2005, sections 19(8) and 20(1)",
+      "sourceUrl": "https://rti.gov.in/",
+      "verifiedOn": "2026-08-28",
+      "lead": "The Information Commission decides the second appeal. It can order the public authority to provide the information, and it can require the authority to compensate you for any loss or detriment suffered.",
+      "hi": {
+        "title": "आयोग क्या कर सकता है",
+        "summary": "आखिरी चरण, और इसी में असली ताकत है।",
+        "authority": "केंद्रीय या राज्य सूचना आयोग"
+      }
     }
   ],
   "checks": [
