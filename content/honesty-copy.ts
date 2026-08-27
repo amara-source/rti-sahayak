@@ -31,9 +31,8 @@ export const honestyCopy: UtilityPageCopy = {
       ],
     },
     {
-      heading: "Scripted, not generated",
       cards: [
-        { title: "Ask RTI Sahayak", body: "The Ask page offers fixed question chips and returns text already authored in the RTI rule pack. It is not a chatbot and is not connected to a model.", href: "/ask", linkLabel: "Open the scripted assistant" },
+        { title: "Ask RTI Sahayak", body: "The Ask page offers fixed question chips and returns text already authored in the RTI rule pack. It is scripted and is not connected to a model.", href: "/ask", linkLabel: "Open the scripted assistant" },
       ],
     },
     {

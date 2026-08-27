@@ -88,8 +88,8 @@ export const shellCopy = {
   },
   floating: {
     top: "Back to top",
-    chat: "Open help preview",
-    chatHeading: "Prototype help",
+    chat: "Open the chatbot",
+    chatHeading: "Chatbot",
     chatBody: "No live helpdesk or government service is connected.",
     close: "Close",
   },

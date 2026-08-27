@@ -12,7 +12,8 @@ export interface UtilityCardCopy {
 }
 
 export interface UtilitySectionCopy {
-  heading: string;
+  /** Optional. Some sections carry their cards without a heading above them. */
+  heading?: string;
   intro?: string;
   cards: UtilityCardCopy[];
 }

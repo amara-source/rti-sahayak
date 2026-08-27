@@ -21,11 +21,13 @@ export function UtilityPage({
       {hero ?? (<PageHero eyebrow={copy.eyebrow} illustration={copy.illustration} supporting={copy.intro} title={copy.heading} tone={copy.tone} />)}
       <div className="utility-page__content rti-overlap-card">
         {copy.sections.map((section) => (
-          <section className="utility-section" key={section.heading}>
-            <div className="utility-section__heading">
-              <h2>{section.heading}</h2>
-              {section.intro ? <p>{section.intro}</p> : null}
-            </div>
+          <section className="utility-section" key={section.heading ?? section.cards[0]?.title}>
+            {section.heading || section.intro ? (
+              <div className="utility-section__heading">
+                {section.heading ? <h2>{section.heading}</h2> : null}
+                {section.intro ? <p>{section.intro}</p> : null}
+              </div>
+            ) : null}
             <div className="utility-card-grid">
               {section.cards.map((card) => (
                 <article className={card.featured ? "utility-card utility-card--featured" : "utility-card"} key={card.title}>
