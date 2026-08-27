@@ -26,6 +26,20 @@ Confirmation action: Yes, this is right
 
 Disabled action: Write a few words or choose a starting point to continue.
 
+Starting points:
+
+- The road outside my house was dug up and never repaired. I want the work
+  order, the contractor's name and what was paid.
+- Streetlights on my street have been out for months and I want the complaint
+  records and repair orders.
+- My father's pension application has been pending for eight months and I have
+  had no reply.
+- I want copies of my answer sheet and the evaluation record.
+- My scholarship has not been credited for this academic year.
+- I want the current status of the FIR I filed and what action has been taken.
+- My railway ticket refund has not arrived though the train was cancelled.
+- My provident fund claim is pending and I want the records showing its status.
+
 Question: What are you hoping for?
 
 Options: Copies of documents, files or records; To find out what stage
