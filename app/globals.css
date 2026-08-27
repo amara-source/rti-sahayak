@@ -34,7 +34,7 @@
   --quick-lavender: #e1e0fa;
   --shadow: rgb(14 37 64 / 18%);
   --section-space: clamp(2rem, 3vw, 3rem);
-  --content-width: 1100px;
+  --content-width: 1400px;
   --card-radius: 20px;
   --type-hero: clamp(2.5rem, 5vw, 4.75rem);
   --type-section: clamp(1.75rem, 3vw, 2.5rem);
