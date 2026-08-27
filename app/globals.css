@@ -10107,3 +10107,15 @@ small,
   font-size: var(--card-body);
   line-height: var(--card-body-lh);
 }
+
+/* Footer social marks: 12px between the circles, 16px above the row. The
+   note below them keeps its own line, so the gap between the icons does not
+   set the distance to it. */
+.footer-social-row {
+  margin-top: 16px;
+  gap: 12px;
+}
+
+.footer-social-row small {
+  margin-top: 8px;
+}
