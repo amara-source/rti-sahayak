@@ -67,7 +67,7 @@ const heroByEyebrow: Record<
   },
   [rtiCopy.submit.eyebrow]: {
     illustration: "/illustrations/submit.png",
-    supporting: rtiCopy.submit.label,
+    supporting: rtiCopy.submit.supporting,
     tone: "blue",
   },
 };

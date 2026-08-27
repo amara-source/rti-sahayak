@@ -146,6 +146,7 @@ export const rtiCopy = {
   submit: {
     eyebrow: "Submission",
     heading: "Practice the submission safely",
+    supporting: "The four steps the real portal puts in front of you, from the OTP to the registration number.",
     label: "Simulation only. No government portal, payment gateway or email service is contacted.",
     emailStep: "1. Email and OTP",
     email: "Email address",
