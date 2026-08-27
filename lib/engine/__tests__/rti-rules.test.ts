@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { listAuthorities, matchAuthority, matchAuthorityWithReason } from "../authority";
+import { listAuthorities, listAuthoritiesForLevel, matchAuthority, matchAuthorityWithReason } from "../authority";
 import { evaluatePreflightChecks } from "../checks";
 import { computeJourney } from "../journey";
 import { listJurisdictions } from "../jurisdictions";
@@ -170,7 +170,7 @@ describe("RTI authority pack completeness", () => {
   it("gives every real authority routing guidance and a record description", () => {
     for (const authority of listAuthorities()) {
       expect(authority.officerNote.length).toBeGreaterThan(0);
-      if (authority.id !== "unknown_central") {
+      if (!authority.id.startsWith("unknown_")) {
         expect(authority.records.length).toBeGreaterThan(0);
         expect(authority.ministry.length).toBeGreaterThan(0);
         expect(authority.matches.length).toBeGreaterThan(0);
@@ -270,6 +270,44 @@ describe("authority outbound links", () => {
     for (const authority of listAuthorities()) {
       const host = new URL(authority.siteUrl).hostname;
       expect(host.endsWith(".gov.in"), `${authority.id} -> ${host}`).toBe(true);
+    }
+  });
+});
+
+describe("state public authorities", () => {
+  it("offers a real list for a state filing", () => {
+    const state = listAuthoritiesForLevel("state").filter(
+      (item) => !item.id.startsWith("unknown_"),
+    );
+    // A state citizen previously got a select with no options at all.
+    expect(state.length).toBeGreaterThanOrEqual(9);
+    for (const authority of state) {
+      expect(authority.officer).toBe("State Public Information Officer");
+      expect(authority.records.length).toBeGreaterThan(0);
+      expect(authority.officerNote.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("keeps the two governments separate", () => {
+    const central = listAuthoritiesForLevel("central");
+    const state = listAuthoritiesForLevel("state");
+    expect(central.some((a) => a.level === "state")).toBe(false);
+    expect(state.some((a) => a.level === "central")).toBe(false);
+    for (const authority of central.filter((a) => !a.id.startsWith("unknown_"))) {
+      expect(authority.officer).toBe("Central Public Information Officer");
+    }
+  });
+
+  it("matches within the chosen government only", () => {
+    expect(matchAuthorityWithReason("my FIR status", "state").authority.id).toBe("state_police");
+    // The same words must not pull a state body into a central filing.
+    expect(matchAuthorityWithReason("my FIR status", "central").authority.id).toBe("unknown_central");
+  });
+
+  it("names no individual office holder", () => {
+    for (const authority of listAuthorities()) {
+      expect(authority.officer).toMatch(/Information Officer$/);
+      expect(authority.officerNote).not.toMatch(/\bMr\.?\b|\bMrs\.?\b|\bShri\b|\bSmt\b/);
     }
   });
 });

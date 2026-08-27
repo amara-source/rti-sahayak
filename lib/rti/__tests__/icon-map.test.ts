@@ -39,17 +39,25 @@ describe("icon map", () => {
         `no icon for authority ${authority.id}`,
       ).toBeTruthy();
     }
-    const used = Object.values(authorityIcons);
+    // The two "not identified" fallbacks are the same concept, so they share
+    // a glyph deliberately. Everything else must be unique.
+    const used = Object.values(authorityIcons).filter(
+      (_, index) => !Object.keys(authorityIcons)[index].startsWith("unknown_"),
+    );
     expect(new Set(used).size).toBe(used.length);
   });
 
   it("never uses one icon for two different concepts", () => {
     // Steps deliberately reuse the icon of the concept they are about, so they
     // are excluded. Everything else must be unique across the whole product.
+    const withoutFallbacks = (map: Record<string, string>) =>
+      Object.entries(map)
+        .filter(([key]) => !key.startsWith("unknown_"))
+        .map(([, value]) => value);
     const distinctConcepts = [
       ...Object.values(nodeIcons),
       ...Object.values(checkIcons),
-      ...Object.values(authorityIcons),
+      ...withoutFallbacks(authorityIcons),
       ...Object.values(conceptIcons),
     ];
     const seen = new Map<string, number>();

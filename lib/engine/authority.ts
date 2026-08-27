@@ -12,6 +12,8 @@ export interface AuthorityRule {
   /** The body's own RTI page, or the government directory when it has none. */
   siteUrl: string;
   siteLabel: string;
+  /** Which government this body belongs to. */
+  level: "central" | "state";
   matches: string[];
 }
 
@@ -50,12 +52,22 @@ export function listAuthorities(): AuthorityRule[] {
   }));
 }
 
-export function matchAuthorityWithReason(subject: string): AuthorityMatch {
+export function listAuthoritiesForLevel(
+  level: "central" | "state",
+): AuthorityRule[] {
+  return listAuthorities().filter((authority) => authority.level === level);
+}
+
+export function matchAuthorityWithReason(
+  subject: string,
+  level: "central" | "state" = "central",
+): AuthorityMatch {
   const subjectWords = words(subject);
   let best: { authority: AuthorityRule; matchedTerm: string; score: number } | null = null;
 
   for (const authority of authorities) {
-    if (authority.id === "unknown_central") continue;
+    if (authority.level !== level) continue;
+    if (authority.id.startsWith("unknown_")) continue;
     for (const term of authority.matches) {
       const termWords = words(term);
       const score = [...termWords].filter((word) => subjectWords.has(word)).length;
@@ -70,11 +82,16 @@ export function matchAuthorityWithReason(subject: string): AuthorityMatch {
   }
 
   return {
-    authority: authorities.find((item) => item.id === "unknown_central")!,
+    authority: authorities.find(
+      (item) => item.id === (level === "state" ? "unknown_state" : "unknown_central"),
+    )!,
     matchedTerm: null,
   };
 }
 
-export function matchAuthority(subject: string): AuthorityRule {
-  return matchAuthorityWithReason(subject).authority;
+export function matchAuthority(
+  subject: string,
+  level: "central" | "state" = "central",
+): AuthorityRule {
+  return matchAuthorityWithReason(subject, level).authority;
 }

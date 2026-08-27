@@ -50,6 +50,18 @@ export const authorityIcons: Record<string, IconName> = {
   nsp_scholarship: "medal",
   health_central: "stethoscope",
   unknown_central: "question",
+  // State public authorities.
+  municipal_corporation: "city",
+  state_police: "badge",
+  state_transport: "bus",
+  land_records: "map",
+  state_treasury_pension: "vault",
+  state_education: "blackboard",
+  electricity_board: "bolt",
+  water_board: "droplet",
+  district_collector: "stamp",
+  // Same concept as unknown_central, so deliberately the same glyph.
+  unknown_state: "question",
 };
 
 /** Steps of the filing journey, keyed by route segment. */

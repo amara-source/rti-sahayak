@@ -96,7 +96,7 @@ export const rtiCopy = {
     customName: "Enter the public authority",
     officer: "Officer title",
     directory: "The officer directory is on rti.gov.in. Filing happens on rtionline.gov.in. They are different sites.",
-    transfer: "A wrongly addressed application should be transferred within five days under Section 6(3), but that transfer is not guaranteed.",
+    stateRoute: "This is a state public authority. The central portal does not accept state applications, so you file this with your state RTI portal or by post to the officer named above. We will draft it either way.",
     disabledReason: "Choose an authority or enter one below to continue.",
   },
   draft: {
@@ -132,6 +132,7 @@ export const rtiCopy = {
     download: "Download the application",
     blocked: "Resolve every blocking check before you continue.",
     resolve: "Resolve the government type first",
+    chooseStateAuthority: "Choose your state authority",
     fixAction: "Fix this",
     downloadReady: "Your PDF is ready.",
     stateNextHeading: "File outside this central portal",

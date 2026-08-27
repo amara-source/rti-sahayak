@@ -449,7 +449,7 @@ function AuthorityStep() {
     if (!draft) return;
     const matched =
       draft.bodyLevel === "central"
-        ? matchAuthorityWithReason(draft.subject)
+        ? matchAuthorityWithReason(draft.subject, "central")
         : { authority: authorities.find((item) => item.id === "unknown_central")!, matchedTerm: null };
     const match = matched.authority;
     const existingIsAuthored = authorities.some(
@@ -486,7 +486,13 @@ function AuthorityStep() {
   const selected = authorities.find((item) => item.id === authorityId);
   const customAuthority = authorityId === "custom";
   const isCentral = draft.bodyLevel === "central";
-  const browsable = authorities.filter((item) => item.id !== "unknown_central");
+  // The list follows the government the citizen chose. Before this, a state
+  // answer produced a select containing only the placeholder and "something
+  // else", so there was no list to pick from at all.
+  const level: "central" | "state" = isCentral ? "central" : "state";
+  const browsable = authorities.filter(
+    (item) => item.level === level && !item.id.startsWith("unknown_"),
+  );
   const authorityGroups = new Map<
     string,
     Array<(typeof browsable)[number]>
@@ -535,7 +541,7 @@ function AuthorityStep() {
 
   return (
     <Shell step="authority" eyebrow={rtiCopy.authority.eyebrow} heading={rtiCopy.authority.heading}>
-      {isCentral && selected ? (
+      {selected ? (
         <p className="rti-reasoning">
           {pickedManually || !matchedTerm
             ? rtiCopy.authority.reasoningManual(selected.name)
@@ -547,15 +553,13 @@ function AuthorityStep() {
         <span>{rtiCopy.authority.name}</span>
         <select onChange={(event) => choose(event.target.value)} required value={authorityId}>
           <option value="">{rtiCopy.authority.selectPlaceholder}</option>
-          {isCentral
-            ? groupedAuthorities.map(([ministry, entries]) => (
-                <optgroup key={ministry} label={ministry}>
-                  {entries.map((authority) => (
-                    <option key={authority.id} value={authority.id}>{authority.name}</option>
-                  ))}
-                </optgroup>
-              ))
-            : null}
+          {groupedAuthorities.map(([ministry, entries]) => (
+            <optgroup key={ministry} label={ministry}>
+              {entries.map((authority) => (
+                <option key={authority.id} value={authority.id}>{authority.name}</option>
+              ))}
+            </optgroup>
+          ))}
           <option value="custom">{rtiCopy.common.somethingElse}</option>
         </select>
       </label>
@@ -601,8 +605,10 @@ function AuthorityStep() {
         <span>{rtiCopy.authority.officer}</span>
         <strong>{officer}</strong>
       </div>
+      {!isCentral ? (
+        <p className="rti-warning rti-warning--caution">{rtiCopy.authority.stateRoute}</p>
+      ) : null}
       <p className="rti-note">{rtiCopy.authority.directory}</p>
-      <p className="rti-note">{rtiCopy.authority.transfer}</p>
       <button
         className="rti-primary"
         disabled={!authorityName.trim() || !officer.trim()}
@@ -907,7 +913,21 @@ function ChecksStep() {
             </header>
             <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
             <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
-            <Link className="rti-secondary rti-fix-link" href={checkFixHrefs[result.id] ?? "/file"}>{rtiCopy.checks.fixAction}</Link>
+            <Link
+              className="rti-secondary rti-fix-link"
+              href={
+                // A state case cannot fix the jurisdiction check by changing
+                // the government type, because state really is the answer. It
+                // needs the authority step, where the state list now lives.
+                result.id === "jurisdiction" && draft.bodyLevel === "state"
+                  ? "/file/authority"
+                  : checkFixHrefs[result.id] ?? "/file"
+              }
+            >
+              {result.id === "jurisdiction" && draft.bodyLevel === "state"
+                ? rtiCopy.checks.chooseStateAuthority
+                : rtiCopy.checks.fixAction}
+            </Link>
           </article>
         ))}
       </div>

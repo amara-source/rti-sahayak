@@ -56,7 +56,17 @@ export type IconName =
   | "book"
   | "route"
   | "form"
-  | "timeline";
+  | "timeline"
+  // State authorities
+  | "city"
+  | "badge"
+  | "bus"
+  | "map"
+  | "vault"
+  | "blackboard"
+  | "bolt"
+  | "droplet"
+  | "stamp";
 
 const glyphs: Record<IconName, ReactNode> = {
   compass: (
@@ -325,6 +335,67 @@ const glyphs: Record<IconName, ReactNode> = {
       <circle className="icon-fill" cx="6" cy="6" r="3" />
       <circle cx="18" cy="18" r="3" />
       <path d="M9 6h5a4 4 0 0 1 0 8h-4a4 4 0 0 0 0 8h5" />
+    </>
+  ),
+  city: (
+    <>
+      <path className="icon-fill" d="M3 21V9l6-3v15z" />
+      <path d="M9 21V4l6 2v15" />
+      <path d="M15 21v-8l6 2v6" />
+      <path d="M2 21h20M6 12v.01M6 16v.01M12 9v.01M12 13v.01M12 17v.01" />
+    </>
+  ),
+  badge: (
+    <>
+      <path className="icon-fill" d="M12 3l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6z" />
+      <path d="M9.3 12l1.9 1.9L15 10" />
+    </>
+  ),
+  bus: (
+    <>
+      <rect className="icon-fill" height="13" rx="3" width="16" x="4" y="4" />
+      <path d="M4 11h16" />
+      <path d="M8 14v.01M16 14v.01" />
+      <path d="M7 17v3M17 17v3" />
+    </>
+  ),
+  map: (
+    <>
+      <path className="icon-fill" d="M3 6l6-2v14l-6 2z" />
+      <path d="M9 4l6 2v14l-6-2" />
+      <path d="M15 6l6-2v14l-6 2" />
+    </>
+  ),
+  vault: (
+    <>
+      <rect className="icon-fill" height="16" rx="3" width="18" x="3" y="4" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 6.5v2M12 15.5v2M6.5 12h2M15.5 12h2" />
+    </>
+  ),
+  blackboard: (
+    <>
+      <rect className="icon-fill" height="13" rx="2" width="18" x="3" y="4" />
+      <path d="M7 9h7M7 13h4" />
+      <path d="M8 17v3M16 17v3" />
+    </>
+  ),
+  bolt: (
+    <>
+      <path className="icon-fill" d="M13 2L4 14h6l-1 8 9-12h-6z" />
+    </>
+  ),
+  droplet: (
+    <>
+      <path className="icon-fill" d="M12 3c4 5 6.5 7.7 6.5 10.8A6.5 6.5 0 0 1 5.5 13.8C5.5 10.7 8 8 12 3z" />
+      <path d="M9 14a3 3 0 0 0 3 3" />
+    </>
+  ),
+  stamp: (
+    <>
+      <path className="icon-fill" d="M9 3h6a3 3 0 0 1 3 3l-1.2 5H7.2L6 6a3 3 0 0 1 3-3z" />
+      <rect height="4" rx="1.5" width="18" x="3" y="14" />
+      <path d="M5 20h14" />
     </>
   ),
   form: (

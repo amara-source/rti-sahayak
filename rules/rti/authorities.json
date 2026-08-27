@@ -1,5 +1,5 @@
 {
-  "_note": "Central public authorities only. Officer titles and designations, never names. Under section 5(1) every central public authority designates Central Public Information Officers, so the designation is the same across these entries. What differs, and what actually decides whether an application reaches the right desk, is which office holds the records. That is what officerNote records. The government directory of PIOs is at rti.gov.in. Nothing here is a substitute for checking it.",
+  "_note": "Central and state public authorities. Each entry carries a level of central or state. Officer titles and designations, never names. Under section 5(1) every central public authority designates Central Public Information Officers, so the designation is the same across these entries. What differs, and what actually decides whether an application reaches the right desk, is which office holds the records. That is what officerNote records. The government directory of PIOs is at rti.gov.in. Nothing here is a substitute for checking it.",
   "verifiedOn": "2026-08-25",
   "sourceLabel": "RTI Act 2005, section 5(1); RTI Portal Gateway officer directory",
   "sourceUrl": "https://rti.gov.in/",
@@ -19,7 +19,8 @@
         "family pension"
       ],
       "siteUrl": "https://doppw.gov.in/en/rti",
-      "siteLabel": "Department of Pension and Pensioners' Welfare RTI"
+      "siteLabel": "Department of Pension and Pensioners' Welfare RTI",
+      "level": "central"
     },
     {
       "id": "epfo",
@@ -36,7 +37,8 @@
         "EDLI"
       ],
       "siteUrl": "https://www.epfindia.gov.in/",
-      "siteLabel": "EPFO"
+      "siteLabel": "EPFO",
+      "level": "central"
     },
     {
       "id": "esic",
@@ -51,7 +53,8 @@
         "insured person"
       ],
       "siteUrl": "https://esic.gov.in/rti",
-      "siteLabel": "ESIC RTI"
+      "siteLabel": "ESIC RTI",
+      "level": "central"
     },
     {
       "id": "income_tax",
@@ -67,7 +70,8 @@
         "assessment"
       ],
       "siteUrl": "https://www.incometax.gov.in/iec/foportal/",
-      "siteLabel": "Income Tax Department"
+      "siteLabel": "Income Tax Department",
+      "level": "central"
     },
     {
       "id": "railways",
@@ -83,7 +87,8 @@
         "refund of ticket"
       ],
       "siteUrl": "https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&id=0,1,304",
-      "siteLabel": "Indian Railways RTI"
+      "siteLabel": "Indian Railways RTI",
+      "level": "central"
     },
     {
       "id": "uidai",
@@ -98,7 +103,8 @@
         "UIDAI"
       ],
       "siteUrl": "https://uidai.gov.in/en/",
-      "siteLabel": "UIDAI"
+      "siteLabel": "UIDAI",
+      "level": "central"
     },
     {
       "id": "passport",
@@ -113,7 +119,8 @@
         "PSK"
       ],
       "siteUrl": "https://www.mea.gov.in/",
-      "siteLabel": "Ministry of External Affairs"
+      "siteLabel": "Ministry of External Affairs",
+      "level": "central"
     },
     {
       "id": "psu_bank",
@@ -129,7 +136,8 @@
         "loan"
       ],
       "siteUrl": "https://financialservices.gov.in/",
-      "siteLabel": "Department of Financial Services"
+      "siteLabel": "Department of Financial Services",
+      "level": "central"
     },
     {
       "id": "central_university",
@@ -145,7 +153,8 @@
         "degree"
       ],
       "siteUrl": "https://www.education.gov.in/rti",
-      "siteLabel": "Ministry of Education RTI"
+      "siteLabel": "Ministry of Education RTI",
+      "level": "central"
     },
     {
       "id": "nsp_scholarship",
@@ -160,7 +169,8 @@
         "post matric"
       ],
       "siteUrl": "https://socialjustice.gov.in/common/76750",
-      "siteLabel": "Ministry of Social Justice and Empowerment RTI"
+      "siteLabel": "Ministry of Social Justice and Empowerment RTI",
+      "level": "central"
     },
     {
       "id": "health_central",
@@ -176,7 +186,192 @@
         "AIIMS"
       ],
       "siteUrl": "https://www.mohfw.gov.in/?q=en/about-us/rti",
-      "siteLabel": "Ministry of Health and Family Welfare RTI"
+      "siteLabel": "Ministry of Health and Family Welfare RTI",
+      "level": "central"
+    },
+    {
+      "id": "municipal_corporation",
+      "name": "The municipal corporation or council concerned",
+      "ministry": "Urban local body, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "Every municipal corporation and council designates its own SPIO, usually in the commissioner's office. A ward office may hold the day to day record.",
+      "records": "Ward works and expenditure records, building plan approvals, property tax records, birth and death registration records, sanitation and water complaints.",
+      "matches": [
+        "municipal",
+        "ward",
+        "corporation",
+        "property tax",
+        "garbage",
+        "street light",
+        "birth certificate",
+        "death certificate"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "state_police",
+      "name": "The state police concerned",
+      "ministry": "Home department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the district superintendent's office and at commissionerates. The station holding the case papers is the one to name.",
+      "records": "First Information Report copies, case diaries subject to exemptions, station records, complaint receipts and action taken reports.",
+      "matches": [
+        "FIR",
+        "police",
+        "police station",
+        "complaint status",
+        "case diary"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "state_transport",
+      "name": "The state transport authority concerned",
+      "ministry": "Transport department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the regional transport office. Apply to the office that holds the licence or permit record.",
+      "records": "Driving licence and learner records, vehicle registration files, permit and fitness records, challan and penalty records.",
+      "matches": [
+        "RTO",
+        "driving licence",
+        "vehicle registration",
+        "permit",
+        "challan",
+        "transport"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "land_records",
+      "name": "The revenue and land records office concerned",
+      "ministry": "Revenue department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the tehsil or taluk office. Mutation and survey records sit with the local revenue office, not the state headquarters.",
+      "records": "Record of rights, mutation entries, survey and settlement records, encumbrance records and land acquisition files.",
+      "matches": [
+        "land record",
+        "mutation",
+        "khata",
+        "patta",
+        "survey number",
+        "revenue record",
+        "7/12"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "state_treasury_pension",
+      "name": "The state treasury or pension office concerned",
+      "ministry": "Finance department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the district treasury. A state pension file usually sits with the treasury that issues the payment.",
+      "records": "State pension sanction and payment records, gratuity and commutation files, treasury bill records and arrears calculations.",
+      "matches": [
+        "state pension",
+        "treasury",
+        "gratuity",
+        "pension payment order",
+        "state pensioner"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "state_education",
+      "name": "The state education department concerned",
+      "ministry": "Education department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the directorate and at district education offices. A school record sits with the district office, not the directorate.",
+      "records": "School recognition and admission records, scholarship disbursement records, examination and result records, teacher appointment records.",
+      "matches": [
+        "state school",
+        "state board",
+        "scholarship",
+        "admission",
+        "school record",
+        "education department"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "electricity_board",
+      "name": "The state electricity board or distribution company concerned",
+      "ministry": "Energy department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the divisional or subdivisional office. The office serving the connection holds the record.",
+      "records": "Connection and meter records, billing and metering disputes, load sanction files, outage and fault records.",
+      "matches": [
+        "electricity",
+        "power cut",
+        "meter",
+        "electricity bill",
+        "connection",
+        "discom"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "water_board",
+      "name": "The water supply and sewerage board concerned",
+      "ministry": "Urban development department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "SPIOs are designated at the divisional office of the board or at the municipal body where water supply sits with the corporation.",
+      "records": "Connection records, billing records, supply schedules, pipeline and sewerage works records and complaint registers.",
+      "matches": [
+        "water supply",
+        "water bill",
+        "sewerage",
+        "drainage",
+        "water connection"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "district_collector",
+      "name": "The office of the District Collector or District Magistrate",
+      "ministry": "Revenue department, state government",
+      "officer": "State Public Information Officer",
+      "officerNote": "The collectorate designates its own SPIO. Many district level schemes and certificates are held here rather than at the state headquarters.",
+      "records": "Certificates such as income, caste and residence, relief and compensation files, district scheme records and land acquisition records.",
+      "matches": [
+        "collector",
+        "district magistrate",
+        "caste certificate",
+        "income certificate",
+        "ration card",
+        "relief",
+        "compensation"
+      ],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
+    },
+    {
+      "id": "unknown_state",
+      "name": "Not identified",
+      "ministry": "",
+      "officer": "State Public Information Officer",
+      "officerNote": "Look the authority up in your state's own RTI portal or the directory at rti.gov.in before filing. State bodies are not listed on the central portal.",
+      "records": "",
+      "matches": [],
+      "level": "state",
+      "siteUrl": "https://rti.gov.in/",
+      "siteLabel": "RTI Portal Gateway"
     },
     {
       "id": "unknown_central",
@@ -187,8 +382,10 @@
       "records": "",
       "matches": [],
       "siteUrl": "https://rti.gov.in/",
-      "siteLabel": "RTI Portal Gateway"
+      "siteLabel": "RTI Portal Gateway",
+      "level": "central"
     }
   ],
-  "_linkNote": "siteUrl points at the body's own RTI or transparency page where one could be verified, and at the RTI Portal Gateway where it could not. Every URL was checked to return 200."
+  "_linkNote": "siteUrl points at the body's own RTI or transparency page where one could be verified, and at the RTI Portal Gateway where it could not. Every URL was checked to return 200.",
+  "_stateNote": "State entries are generic role descriptions of the body a citizen deals with, never a named office holder and never a specific named institution. Under section 5(1) a state public authority designates a State Public Information Officer. State bodies are not on the central portal, so these carry the RTI Portal Gateway link rather than a filing link."
 }
