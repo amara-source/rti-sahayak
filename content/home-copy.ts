@@ -160,7 +160,8 @@ export const homeCopy = {
     numbers: ["011-24010690", "011-24010691"],
     hours: "9:00 AM to 5:30 PM, Monday to Friday, except public holidays",
     disclaimer: "RTI Sahayak is a concept prototype and is not affiliated with the Government of India. For anything about a real application, use the numbers above or the portal itself.",
-    portalLabel: "Open the filing portal",
+    portalLabel: "rtionline.gov.in",
     portalHref: "https://rtionline.gov.in/",
+    portalLeaves: "opens the government site in a new tab, away from this prototype",
   },
 } as const;

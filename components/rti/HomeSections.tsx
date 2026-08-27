@@ -68,15 +68,6 @@ export function HelpdeskCard() {
     <section className="utility-section" aria-labelledby="home-helpdesk-heading">
       <div className="home-helpdesk">
         <div className="home-helpdesk__body">
-          <img
-            alt=""
-            aria-hidden="true"
-            className="home-helpdesk__art"
-            height={667}
-            loading="lazy"
-            src="/illustrations/authority.png"
-            width={1000}
-          />
           <h2 id="home-helpdesk-heading">{copy.heading}</h2>
           <p>{copy.intro}</p>
           <ul className="home-helpdesk__numbers">
@@ -88,14 +79,14 @@ export function HelpdeskCard() {
           </ul>
           <p className="home-helpdesk__hours">{copy.hours}</p>
           <p className="home-helpdesk__disclaimer">{copy.disclaimer}</p>
-          <a
-            className="rti-secondary"
-            href={copy.portalHref}
-            rel="noreferrer"
-            target="_blank"
-          >
-            {copy.portalLabel}
-          </a>
+          {/* A small text link, not a button. A primary action must not take
+              someone out of the product mid-journey. */}
+          <p className="home-helpdesk__external">
+            <a href={copy.portalHref} rel="noreferrer" target="_blank">
+              {copy.portalLabel}
+            </a>
+            <span>{copy.portalLeaves}</span>
+          </p>
         </div>
       </div>
     </section>
