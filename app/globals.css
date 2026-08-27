@@ -6215,6 +6215,24 @@ small,
   background: var(--surface);
 }
 
+.utility-page--act .utility-card {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-content: start;
+  column-gap: 18px;
+}
+
+.utility-page--act .utility-card > .rti-icon-tile {
+  grid-column: 1;
+  grid-row: 1 / span 5;
+  margin: 0;
+}
+
+.utility-page--act .utility-card > :not(.rti-icon-tile) {
+  grid-column: 2;
+  min-width: 0;
+}
+
 .rti-icon-tile {
   width: 64px;
   height: 64px;

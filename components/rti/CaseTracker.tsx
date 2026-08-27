@@ -202,7 +202,17 @@ export function CaseTracker({ code }: { code: string }) {
     const elapsed = data.case.elapsedHours ?? 0;
     const lifeLiberty = data.case.answers.lifeLiberty === "yes";
     const firstJump = lifeLiberty ? 2 : 31;
-    const days = elapsed === 0 ? firstJump : 30;
+    const appealStart = data.case.startedAtHours?.first_appeal;
+    const appealIsRunning =
+      data.case.statuses.first_appeal === "applied" && appealStart !== undefined;
+    const currentAppealDays = appealIsRunning
+      ? Math.max(0, Math.floor((elapsed - appealStart) / 24))
+      : 0;
+    const days = appealIsRunning
+      ? Math.min(30, Math.max(1, 45 - currentAppealDays))
+      : elapsed === 0
+        ? firstJump
+        : 30;
     try {
       const response = await fetch(`/api/case/${code}/advance`, {
         method: "POST",
@@ -300,7 +310,7 @@ export function CaseTracker({ code }: { code: string }) {
       ? null
       : Math.max(0, APPEAL_DECISION_DAYS - appealElapsedDays);
   const appealDecisionLapsed =
-    appealElapsedDays !== null && appealElapsedDays > APPEAL_DECISION_DAYS;
+    appealElapsedDays !== null && appealElapsedDays >= APPEAL_DECISION_DAYS;
 
   return (
     <section className="rti-case-page">

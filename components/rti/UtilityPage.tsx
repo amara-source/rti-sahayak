@@ -7,12 +7,14 @@ import { PageHero } from "./PageHero";
 export function UtilityPage({
   copy,
   children,
+  className,
 }: {
   copy: UtilityPageCopy;
   children?: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <article className="utility-page">
+    <article className={className ? `utility-page ${className}` : "utility-page"}>
       <PageHero eyebrow={copy.eyebrow} illustration={copy.illustration} supporting={copy.intro} title={copy.heading} tone={copy.tone} />
       <div className="utility-page__content rti-overlap-card">
         {copy.sections.map((section) => (
