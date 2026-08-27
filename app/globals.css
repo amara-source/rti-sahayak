@@ -4782,11 +4782,17 @@ small,
 .rti-process-card,
 .rti-appeal-facts > section,
 .rti-appeal-lock,
-.rti-appeal-draft,
-.rti-appeal-clock {
+.rti-appeal-draft {
   border: 1px solid color-mix(in srgb, var(--line) 80%, var(--accent));
   border-radius: var(--card-radius);
   background: var(--surface);
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--shadow) 60%, transparent);
+}
+
+/* The clock is a dark panel, so it takes the shared shape but not the light
+   ground the surrounding cards use. */
+.rti-appeal-clock {
+  border-radius: var(--card-radius);
   box-shadow: 0 16px 42px color-mix(in srgb, var(--shadow) 60%, transparent);
 }
 
@@ -6577,7 +6583,10 @@ small,
   .rti-appeal-draft,
   .rti-appeal-clock {
     border-radius: var(--card-radius);
-    background: var(--surface);
+    /* This used to set a white background and leave the text white, so the
+       whole appeal clock was invisible and advancing time looked like it did
+       nothing. The clock keeps its dark ground. */
+    background: var(--accent-deep);
   }
 
   .rti-primary,
@@ -9296,3 +9305,14 @@ small,
   width: max-content;
   max-width: 100%;
 }
+
+/* Safety net: whatever else the cascade does, the appeal clock's text and its
+   ground must never be the same colour. Defined last. */
+.rti-appeal-clock {
+  color: #ffffff;
+  background: var(--accent-deep);
+}
+
+.rti-appeal-clock strong,
+.rti-appeal-clock p { color: #ffffff; }
+.rti-appeal-clock span { color: rgb(255 255 255 / 78%); }
