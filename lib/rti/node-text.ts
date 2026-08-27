@@ -33,3 +33,17 @@ export function nodeClockLabel(
   if (language === "hi" && node.hi?.clockLabel) return node.hi.clockLabel;
   return node.clock?.label ?? "";
 }
+
+/**
+ * The office a node addresses, in the selected language.
+ *
+ * Role names translate. The Act's own name and the portal's name do not:
+ * those are proper names, and a citation has to match what the Act says.
+ */
+export function nodeAuthority(
+  node: { authority: string; hi?: { authority?: string } },
+  language: string,
+): string {
+  if (language === "hi" && node.hi?.authority) return node.hi.authority;
+  return node.authority;
+}

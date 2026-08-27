@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
-import { nodeClockLabel, nodeSummary, nodeTitle } from "@/lib/rti/node-text";
+import { nodeAuthority, nodeClockLabel, nodeSummary, nodeTitle } from "@/lib/rti/node-text";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
@@ -549,7 +549,7 @@ export function CaseNodeDetail({
         <span className="rti-icon-tile"><Icon name={nodeIcon(node.id)} /></span>
         <div className="rti-node__top"><JobTag job={node.job} /></div>
         <dl>
-          <div><dt>{rtiCopy.detail.authority}</dt><dd>{node.authority}</dd></div>
+          <div><dt>{rtiCopy.detail.authority}</dt><dd>{nodeAuthority(node, language)}</dd></div>
           <div><dt>{rtiCopy.detail.basis}</dt><dd>{node.sourceLabel}</dd></div>
         </dl>
         <section>

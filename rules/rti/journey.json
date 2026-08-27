@@ -197,7 +197,8 @@
       "lead": "Every public authority appoints a Central Public Information Officer, or a State PIO for state bodies. Your application goes to that officer. On the central portal, applications reach the Nodal Officer of the ministry or department, who transmits them to the CPIO.",
       "hi": {
         "title": "सही लोक प्राधिकरण पहचानिए",
-        "summary": "ग़लत अधिकारी को भेजना आवेदन खत्म होने की सबसे आम वजह है।"
+        "summary": "ग़लत अधिकारी को भेजना आवेदन खत्म होने की सबसे आम वजह है।",
+        "authority": "संबंधित लोक प्राधिकरण"
       }
     },
     {
@@ -233,7 +234,8 @@
       "lead": "The Act covers information held in material form: records, documents, memos, file notings, orders, logbooks, contracts and reports. It does not cover opinions, explanations or answers to questions. This is why 'why has my pension not been released' is refusable and 'provide a copy of the file notings on application number X, the current stage of processing, and the name and designation of the officer holding the file' is not.",
       "hi": {
         "title": "आवेदन का मसौदा बनाइए",
-        "summary": "रिकॉर्ड माँगिए, वजह नहीं।"
+        "summary": "रिकॉर्ड माँगिए, वजह नहीं।",
+        "authority": "संबंधित लोक प्राधिकरण"
       }
     },
     {
@@ -357,7 +359,8 @@
       "lead": "The Right to Information Act applies to state public authorities in exactly the same way. Only the destination changes. Most states run their own online RTI portal.",
       "hi": {
         "title": "अपने राज्य में दाखिल कीजिए",
-        "summary": "कानून वही, खिड़की अलग।"
+        "summary": "कानून वही, खिड़की अलग।",
+        "authority": "संबंधित राज्य लोक प्राधिकरण"
       }
     },
     {
@@ -388,7 +391,8 @@
       "hi": {
         "title": "दूसरे कार्यालय को भेजने की अवधि",
         "summary": "सही कार्यालय तक भेजने के लिए उनके पास पाँच दिन हैं।",
-        "clockLabel": "सही कार्यालय को भेजने की समय सीमा"
+        "clockLabel": "सही कार्यालय को भेजने की समय सीमा",
+        "authority": "जिस लोक प्राधिकरण को भेजा गया"
       }
     },
     {
@@ -449,7 +453,8 @@
       "hi": {
         "title": "जवाब का इंतज़ार कीजिए",
         "summary": "तीस दिन। जीवन या स्वतंत्रता का मामला हो तो अड़तालीस घंटे।",
-        "clockLabel": "जवाब की समय सीमा"
+        "clockLabel": "जवाब की समय सीमा",
+        "authority": "लोक सूचना अधिकारी"
       }
     },
     {
@@ -522,7 +527,8 @@
       "hi": {
         "title": "पहली अपील दाखिल कीजिए",
         "summary": "मुफ़्त। दाखिल करने के लिए तीस दिन। फ़ैसले के लिए उनके पास पैंतालीस दिन तक हैं।",
-        "clockLabel": "पहली अपील दाखिल करने की समय सीमा"
+        "clockLabel": "पहली अपील दाखिल करने की समय सीमा",
+        "authority": "प्रथम अपीलीय अधिकारी"
       }
     },
     {
@@ -560,7 +566,8 @@
       "hi": {
         "title": "दूसरी अपील दाखिल कीजिए",
         "summary": "नब्बे दिन। आयोग अधिकारी पर निजी तौर पर जुर्माना लगा सकता है।",
-        "clockLabel": "दूसरी अपील दाखिल करने की समय सीमा"
+        "clockLabel": "दूसरी अपील दाखिल करने की समय सीमा",
+        "authority": "केंद्रीय या राज्य सूचना आयोग"
       }
     },
     {
@@ -590,7 +597,8 @@
       "lead": "An appeal challenges the decision. A complaint under Section 18 challenges the conduct of the officer: refusing to accept your application, demanding a reason for wanting the information, giving deliberately misleading information, or charging an unreasonable fee. It goes directly to the Information Commission and, unlike an appeal, it carries no time limit.",
       "hi": {
         "title": "धारा 18 की शिकायत",
-        "summary": "एक अलग रास्ता, जिस पर कोई समय सीमा है ही नहीं।"
+        "summary": "एक अलग रास्ता, जिस पर कोई समय सीमा है ही नहीं।",
+        "authority": "केंद्रीय या राज्य सूचना आयोग"
       }
     }
   ],
