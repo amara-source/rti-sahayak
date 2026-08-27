@@ -8879,8 +8879,15 @@ small,
 .rti-icon-tile--sm { width: 44px; height: 44px; flex-basis: 44px; border-radius: 13px; }
 .rti-icon-tile--sm .rti-icon { width: 28px; height: 28px; }
 
-.journey-stage__step { display: none; }
-.journey-stage__day { padding: 7px 12px; font-size: 13px; }
+.journey-stage__day {
+  width: max-content;
+  padding: 9px 14px;
+  color: var(--accent-contrast);
+  background: var(--accent-deep);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
 .trap-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .trap-card__face { min-height: 250px; }
 
