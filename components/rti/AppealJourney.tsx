@@ -92,7 +92,9 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
       const response = await fetch(`/api/case/${data.case.code}/advance`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ days: 46 }),
+        // Two steps rather than one jump: part way through the window, then
+        // past it. Each click has to show a different state.
+        body: JSON.stringify({ days: decisionElapsed < 30 ? 30 : 16 }),
       });
       if (!response.ok) throw new Error("advance");
       setData(await response.json() as CaseResponse);
@@ -136,11 +138,11 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
                 <label className="rti-field"><span>{rtiCopy.appeals.draftLabel}</span><textarea onChange={(event) => setDraft(event.target.value)} rows={12} value={draft} /></label>
               </section>
             ) : null}
-            {kind === "first" && status === "applied" ? (
+            {kind === "first" && status !== "none" ? (
               <section className="rti-appeal-clock">
                 <div><strong>{decisionElapsed}</strong><span>{rtiCopy.appeals.daysElapsed}</span></div>
                 <div><strong>{decisionRemaining}</strong><span>{rtiCopy.appeals.daysRemaining}</span></div>
-                <p>{rtiCopy.appeals.first.clockReason}</p>
+                <p>{status === "done" ? rtiCopy.appeals.decidedBody : rtiCopy.appeals.first.clockReason}</p>
               </section>
             ) : null}
             <div className="rti-appeal-actions">
@@ -148,6 +150,16 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
               {kind === "first" && status === "applied" && decisionElapsed <= 45 ? <button className="rti-secondary" disabled={pending} onClick={advanceDecision} type="button">{rtiCopy.tracker.next}</button> : null}
               {kind === "first" && status === "applied" && decisionElapsed > 45 ? <button className="rti-primary" disabled={pending} onClick={() => setStatus("done")} type="button">{rtiCopy.appeals.first.complete}</button> : null}
               {status === "applied" && kind !== "first" ? <button className="rti-secondary" disabled={pending} onClick={() => setStatus("done")} type="button">{rtiCopy.detail.save}</button> : null}
+              {/* Once the appeal is decided every earlier branch is false, which
+                  previously left this block empty and stranded the citizen. */}
+              {status === "done" ? (
+                <>
+                  {kind === "first" ? (
+                    <Link className="rti-primary" href="/appeal/second">{rtiCopy.appeals.openSecond}</Link>
+                  ) : null}
+                  <Link className="rti-secondary" href={`/case/${data.case.code}`}>{rtiCopy.appeals.backToCase}</Link>
+                </>
+              ) : null}
               {status !== "none" ? <p role="status">{kind === "first" ? rtiCopy.appeals.first.submitted : kind === "second" ? rtiCopy.appeals.second.submitted : rtiCopy.appeals.complaint.submitted}</p> : null}
               <small>{rtiCopy.appeals.simulation}</small>
             </div>
