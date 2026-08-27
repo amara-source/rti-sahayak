@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { rtiCopy as englishCopy } from "@/content/rti-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
-import { nodeTitle } from "@/lib/rti/node-text";
-import { trackerCopy } from "@/content/tracker-copy";
+import { nodeSummary, nodeTitle } from "@/lib/rti/node-text";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
@@ -162,7 +160,7 @@ function CaseFacts({ code, plan }: { code: string; plan: Plan }) {
 
 export function CaseTracker({ code }: { code: string }) {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy, language } = useCopy();
+  const { rti: rtiCopy, tracker: trackerCopy, language } = useCopy();
   const [data, setData] = useState<CaseResponse | null>(null);
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
@@ -457,7 +455,7 @@ export function CaseTracker({ code }: { code: string }) {
                         <span>{rtiCopy.tracker.status}: {statusLabel}</span>
                       </div>
                       <h3>{nodeTitle(node, language)}</h3>
-                      <p>{node.summary}</p>
+                      <p>{nodeSummary(node, language)}</p>
                       {node.locked ? (
                         <small>{rtiCopy.tracker.locked} {dependencies}</small>
                       ) : (
@@ -542,7 +540,7 @@ export function CaseNodeDetail({
       <PageHero
         eyebrow={rtiCopy.tracker.jobs[node.job]}
         illustration="/illustrations/tracker.png"
-        supporting={node.summary}
+        supporting={nodeSummary(node, language)}
         title={nodeTitle(node, language)}
         tone="violet"
       />

@@ -65,7 +65,7 @@ export interface RuleNode {
    */
   lead?: string;
   /** Translations that live in the rule pack beside the English. */
-  hi?: { title?: string };
+  hi?: { title?: string; summary?: string };
   appliesIf: Condition[];
   dependsOn: string[];
   authority: string;

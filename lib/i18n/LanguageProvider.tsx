@@ -7,12 +7,13 @@ import { shellCopy as englishShell } from "@/content/shell-copy";
 import { homeCopy as englishHome } from "@/content/home-copy";
 import { utilityPages as englishPages } from "@/content/utility-copy";
 import { layoutCopy as englishLayout } from "@/content/layout-copy";
+import { trackerCopy as englishTracker } from "@/content/tracker-copy";
 import { hi } from "@/content/i18n/hi";
 import { overlay } from "./merge";
 import { STORAGE_KEY, languages, type Language } from "./languages";
 
 const dictionaries: Partial<
-  Record<Language, { rti?: unknown; shell?: unknown; home?: unknown; pages?: unknown; layout?: unknown }>
+  Record<Language, { rti?: unknown; shell?: unknown; home?: unknown; pages?: unknown; layout?: unknown; tracker?: unknown }>
 > = { hi };
 
 interface LanguageValue {
@@ -23,6 +24,7 @@ interface LanguageValue {
   home: typeof englishHome;
   pages: typeof englishPages;
   layout: typeof englishLayout;
+  tracker: typeof englishTracker;
 }
 
 const LanguageContext = createContext<LanguageValue>({
@@ -33,6 +35,7 @@ const LanguageContext = createContext<LanguageValue>({
   home: englishHome,
   pages: englishPages,
   layout: englishLayout,
+  tracker: englishTracker,
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -67,6 +70,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       home: dictionary?.home ? overlay(englishHome, dictionary.home) : englishHome,
       pages: dictionary?.pages ? overlay(englishPages, dictionary.pages) : englishPages,
       layout: dictionary?.layout ? overlay(englishLayout, dictionary.layout) : englishLayout,
+      tracker: dictionary?.tracker ? overlay(englishTracker, dictionary.tracker) : englishTracker,
     };
   }, [language, setLanguage]);
 

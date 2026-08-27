@@ -15,3 +15,12 @@ export function nodeTitle(
   if (language === "hi" && node.hi?.title) return node.hi.title;
   return node.title;
 }
+
+/** A node's one-line summary in the selected language. */
+export function nodeSummary(
+  node: Pick<RenderedNode, "summary"> & { hi?: { summary?: string } },
+  language: string,
+): string {
+  if (language === "hi" && node.hi?.summary) return node.hi.summary;
+  return node.summary;
+}

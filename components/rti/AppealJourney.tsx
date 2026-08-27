@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { rtiCopy as englishCopy } from "@/content/rti-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
-import { nodeTitle } from "@/lib/rti/node-text";
+import { nodeSummary, nodeTitle } from "@/lib/rti/node-text";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { PageHero } from "./PageHero";
 import { EmptyStep } from "./EmptyStep";
@@ -160,7 +160,7 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
                 ) : null}
               </section>
               <section><span className="rti-icon-tile"><Icon name="receipt" /></span><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
-              {kind === "complaint" ? <section className="rti-appeal-no-limit"><span className="rti-icon-tile"><Icon name="megaphone" /></span><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
+              {kind === "complaint" ? <section className="rti-appeal-no-limit"><span className="rti-icon-tile"><Icon name="megaphone" /></span><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{nodeSummary(node, language)}</p></section> : null}
             </div>
             {data.case.answers.bodyLevel === "state" && kind !== "complaint" ? (
               <p className="rti-warning rti-warning--info">
