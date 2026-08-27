@@ -10119,3 +10119,33 @@ small,
 .footer-social-row small {
   margin-top: 8px;
 }
+
+/* Job pills.
+   Five jobs, five colours, white text on every one.
+
+   These sit at the end and name the pill explicitly, because
+   `.rti-node__top > span` sets the muted grey used by the other spans in a
+   node header and outranks a bare `.rti-job`. That is what turned every
+   label grey on its own colour, ESCALATE worst of all at 1.33:1. Each
+   background below clears WCAG AA against white text with room to spare;
+   the ratios are in the test beside them. */
+.rti-job,
+.rti-node__top > span.rti-job,
+.rti-node__top .rti-job {
+  color: #fff;
+}
+
+.rti-job--do,
+.rti-node__top > span.rti-job--do { background: #0f6b45; }
+
+.rti-job--wait,
+.rti-node__top > span.rti-job--wait { background: #4a3f96; }
+
+.rti-job--claim,
+.rti-node__top > span.rti-job--claim { background: #0a559e; }
+
+.rti-job--protect,
+.rti-node__top > span.rti-job--protect { background: #7d5210; }
+
+.rti-job--escalate,
+.rti-node__top > span.rti-job--escalate { background: #9c1038; }
