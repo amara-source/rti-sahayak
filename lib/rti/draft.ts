@@ -11,7 +11,14 @@ export interface RtiDraft {
   state?: string;
   lifeLiberty?: "yes" | "no";
   isBPL?: "yes" | "no" | "na";
-  wantsAction?: "records" | "status" | "action";
+  wantsAction?:
+    | "records"
+    | "status"
+    | "decision"
+    | "recorded_reasons"
+    | "inspection"
+    | "spending"
+    | "action";
   draftOnly?: boolean;
   authorityId?: string;
   authorityName?: string;

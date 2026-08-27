@@ -15,6 +15,18 @@ describe("RTI authority rules", () => {
       "unknown_central",
     );
   });
+
+  it("matches meaningful individual words from an authored phrase", () => {
+    expect(matchAuthority("My provident account record is pending").id).toBe(
+      "epfo",
+    );
+    expect(matchAuthority("I need the cancelled ticket record").id).toBe(
+      "railways",
+    );
+    expect(matchAuthority("A government record with no subject clue").id).toBe(
+      "unknown_central",
+    );
+  });
 });
 
 describe("RTI preflight rules", () => {
@@ -171,9 +183,10 @@ describe("home page traps stay tied to the rule pack", () => {
   it("names only checks the pack actually authors", () => {
     const authored = new Set(loadRtiRulePack().checks.map((check) => check.id));
 
-    expect(homeCopy.traps.items).toHaveLength(5);
+    expect(homeCopy.traps.items).toHaveLength(9);
     for (const trap of homeCopy.traps.items) {
-      expect(authored.has(trap.checkId)).toBe(true);
+      const nodeIds = new Set(loadRtiRulePack().nodes.map((node) => node.id));
+      expect(authored.has(trap.ruleId) || nodeIds.has(trap.ruleId)).toBe(true);
       expect(trap.basis.length).toBeGreaterThan(0);
     }
   });
@@ -181,7 +194,6 @@ describe("home page traps stay tied to the rule pack", () => {
   it("quotes no rupee figure other than the statutory fee", () => {
     const prose = [
       ...homeCopy.traps.items.flatMap((trap) => [trap.front, trap.back]),
-      ...homeCopy.why.cards.map((card) => card.body),
       homeCopy.helpdesk.intro,
       homeCopy.helpdesk.disclaimer,
     ].join(" ");

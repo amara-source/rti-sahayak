@@ -5963,6 +5963,325 @@ html[data-theme="dark"] .rti-node-groups > section {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   MEASURED UI QUALITY PASS
+   The public layout uses the available desktop width while paragraphs retain
+   their own reading measure. Action controls share two fixed height scales.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --content-width: 1400px;
+  --type-hero: 48px;
+  --type-section: 32px;
+  --type-card: 20px;
+  --type-body: 16px;
+  --type-label: 13px;
+  --type-caption: 13px;
+  --display-size: 48px;
+  --section-size: 32px;
+  --card-title-size: 20px;
+  --label-size: 13px;
+  --caption-size: 13px;
+}
+
+.site-shell,
+.rti-page-hero__inner,
+.rti-flow-shell,
+.rti-case-content,
+.rti-detail-content,
+.utility-page__content,
+.directory-page__content,
+.ask-page__content,
+.honesty-page__content,
+.manual-steps {
+  width: min(1400px, 92vw);
+  max-width: 1400px;
+}
+
+.rti-page-hero__copy h1 {
+  font-size: var(--type-hero);
+}
+
+.utility-section__heading h2,
+.rti-node-groups > section > h2,
+.honesty-page__content h2,
+.directory-page__content > h2,
+.ask-page__content > h2,
+.rti-process-card__heading h2,
+.rti-rewrite-grid > section h2,
+.rti-confirmation h2,
+.rti-submit-step h2,
+.rti-changes h2,
+.rti-detail-content > section > h2 {
+  font-size: var(--type-section);
+  font-weight: 700;
+}
+
+.utility-card h3,
+.authority-card h2,
+.rti-node h3,
+.manual-step h2,
+.scripted-assistant__answer h2,
+.rti-appeal-facts h2,
+.trap-card__face strong,
+.journey-stage__title {
+  font-size: var(--type-card);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+body,
+.utility-card p,
+.authority-card p,
+.rti-node p,
+.manual-step p,
+.scripted-assistant p,
+.trap-card__line,
+.journey-stage__line {
+  font-size: var(--type-body);
+}
+
+.authority-card__level,
+.scripted-assistant__label,
+.rti-job,
+dt,
+.rti-page-hero__copy > p,
+.rti-process-card__heading p {
+  font-size: var(--type-label);
+}
+
+small,
+.rti-source-line,
+.rti-process-caption,
+.rti-disabled-reason {
+  font-size: var(--type-caption);
+}
+
+.utility-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  width: 100%;
+}
+
+.utility-card-grid:has(> .utility-card--featured) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* The generic four-card layout has higher selector specificity. This home
+   grid deliberately uses one featured row and three equal secondary cards. */
+.utility-card-grid.utility-card-grid:has(> .utility-card--featured):has(> :nth-child(4):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.utility-card-grid:has(> .utility-card--featured) > .utility-card:not(.utility-card--featured) {
+  min-height: 230px;
+}
+
+.utility-card {
+  height: 100%;
+}
+
+.utility-card > a {
+  margin-top: auto;
+}
+
+.rti-primary,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 22px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rti-secondary,
+.rti-fix-link {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 18px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rti-icon-tile {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 18px;
+}
+
+.rti-icon-tile .rti-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.rti-icon-tile--sm {
+  width: 44px;
+  height: 44px;
+  flex-basis: 44px;
+  border-radius: 13px;
+}
+
+.rti-icon-tile--sm .rti-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.journey-stage__step {
+  display: none;
+}
+
+.journey-stage__day {
+  padding: 7px 12px;
+  font-size: var(--type-label);
+}
+
+.trap-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trap-card__face {
+  min-height: 250px;
+}
+
+.rti-appeal-facts section {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-content: start;
+  column-gap: 18px;
+}
+
+.rti-appeal-facts section > .rti-icon-tile {
+  grid-row: 1 / span 4;
+  grid-column: 1;
+}
+
+.rti-appeal-facts section > :not(.rti-icon-tile) {
+  grid-column: 2;
+}
+
+.rti-authority-groups {
+  display: grid;
+  gap: 24px;
+}
+
+.rti-authority-groups > section {
+  display: grid;
+  gap: 10px;
+}
+
+.rti-authority-groups h3 {
+  margin: 0;
+  font-size: var(--type-card);
+}
+
+.rti-authority-groups .rti-authority-options {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-height: none;
+  overflow: visible;
+}
+
+.rti-state-field {
+  margin-top: 24px;
+}
+
+.rti-state-field > span {
+  display: block;
+}
+
+.rti-check {
+  display: grid;
+  align-content: start;
+}
+
+.rti-check .rti-fix-link {
+  width: max-content;
+  margin-top: 10px;
+}
+
+#government-type:target,
+#filing-text:target,
+#identity-documents:target,
+#attachment:target,
+#bpl-certificate:target {
+  outline: 4px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 5px;
+  scroll-margin-top: 150px;
+}
+
+.rti-post-download {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  margin-top: 20px;
+  border: 1px solid var(--accent);
+  border-radius: var(--card-radius);
+  padding: clamp(22px, 3vw, 34px);
+  background: color-mix(in srgb, var(--accent-soft) 68%, var(--surface));
+}
+
+.rti-post-download h2,
+.rti-post-download p {
+  margin: 0;
+}
+
+.rti-fired-notice {
+  border: 1px solid var(--accent);
+}
+
+@media (max-width: 900px) {
+  .trap-grid,
+  .utility-card-grid:has(> .utility-card--featured) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  html,
+  body { overflow-x: clip; }
+
+  .site-shell,
+  .rti-page-hero__inner,
+  .rti-flow-shell,
+  .rti-case-content,
+  .rti-detail-content,
+  .utility-page__content,
+  .directory-page__content,
+  .ask-page__content,
+  .honesty-page__content,
+  .manual-steps {
+    width: 92vw;
+  }
+
+  .trap-grid,
+  .utility-card-grid:has(> .utility-card--featured) {
+    grid-template-columns: 1fr;
+  }
+
+  .utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
+    grid-column: auto;
+  }
+
+  .rti-primary,
+  .rti-secondary,
+  .utility-card > a,
+  .demo-profile-link,
+  .authority-directory__empty > a {
+    max-width: 100%;
+    padding-inline: 16px;
+    font-size: 14px;
+  }
+}
+
 @media screen {
   .directory-page,
   .ask-page { width: 100%; max-width: none; margin: 0; padding: 0 0 var(--section-space); background: var(--surface-soft); }
@@ -8267,5 +8586,245 @@ html[data-theme="dark"] .rti-icon .icon-fill {
 
   .utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
     grid-column: auto;
+  }
+}
+
+/* Final measured overrides. Kept last so the legacy cascade cannot narrow the
+   rebuilt shell or restore the older button and icon metrics. */
+:root {
+  --content-width: 1400px;
+  --type-hero: 48px;
+  --type-section: 32px;
+  --type-card: 20px;
+  --type-body: 16px;
+  --type-label: 13px;
+  --type-caption: 13px;
+  --display-size: 48px;
+  --section-size: 32px;
+  --card-title-size: 20px;
+  --label-size: 13px;
+  --caption-size: 13px;
+}
+
+.site-shell,
+.rti-page-hero__inner,
+.rti-flow-shell,
+.rti-case-content,
+.rti-detail-content,
+.utility-page__content,
+.directory-page__content,
+.ask-page__content,
+.honesty-page__content,
+.manual-steps {
+  width: min(1400px, 92vw);
+  max-width: 1400px;
+}
+
+.rti-page-hero__copy h1 { font-size: 48px; }
+
+.utility-section__heading h2,
+.rti-node-groups > section > h2,
+.honesty-page__content h2,
+.directory-page__content > h2,
+.ask-page__content > h2,
+.rti-process-card__heading h2,
+.rti-rewrite-grid > section h2,
+.rti-confirmation h2,
+.rti-submit-step h2,
+.rti-changes h2,
+.rti-detail-content > section > h2 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.utility-card h3,
+.authority-card h2,
+.rti-node h3,
+.manual-step h2,
+.scripted-assistant__answer h2,
+.rti-appeal-facts h2,
+.trap-card__face strong,
+.journey-stage__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+body,
+.utility-card p,
+.authority-card p,
+.rti-node p,
+.manual-step p,
+.scripted-assistant p,
+.trap-card__line,
+.journey-stage__line { font-size: 16px; }
+
+.authority-card__level,
+.scripted-assistant__label,
+.rti-job,
+dt,
+.rti-process-card__heading p { font-size: 13px; }
+
+small,
+.rti-source-line,
+.rti-process-caption,
+.rti-disabled-reason { font-size: 13px; }
+
+.utility-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  width: 100%;
+}
+
+.utility-card-grid:has(> .utility-card--featured) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.utility-card-grid:has(> .utility-card--featured) > .utility-card--featured {
+  grid-column: 1 / -1;
+}
+
+.utility-card-grid:has(> .utility-card--featured) > .utility-card:not(.utility-card--featured) {
+  min-height: 230px;
+}
+
+.utility-card { height: 100%; }
+.utility-card > a { margin-top: auto; }
+
+.rti-primary,
+.utility-card > a,
+.demo-profile-link,
+.authority-directory__empty > a {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 22px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rti-secondary,
+.rti-fix-link {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 18px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rti-icon-tile {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 18px;
+}
+.rti-icon-tile .rti-icon { width: 40px; height: 40px; }
+.rti-icon-tile--sm { width: 44px; height: 44px; flex-basis: 44px; border-radius: 13px; }
+.rti-icon-tile--sm .rti-icon { width: 28px; height: 28px; }
+
+.journey-stage__step { display: none; }
+.journey-stage__day { padding: 7px 12px; font-size: 13px; }
+.trap-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.trap-card__face { min-height: 250px; }
+
+.rti-appeal-facts section {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-content: start;
+  column-gap: 18px;
+}
+.rti-appeal-facts section > .rti-icon-tile { grid-row: 1 / span 4; grid-column: 1; }
+.rti-appeal-facts section > :not(.rti-icon-tile) { grid-column: 2; }
+
+.rti-authority-groups { display: grid; gap: 24px; }
+.rti-authority-groups > section { display: grid; gap: 10px; }
+.rti-authority-groups h3 { margin: 0; font-size: 20px; }
+.rti-authority-groups .rti-authority-options {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-height: none;
+  overflow: visible;
+}
+
+.rti-state-field { margin-top: 24px; }
+.rti-state-field > span { display: block; }
+.rti-check { display: grid; align-content: start; }
+.rti-check .rti-fix-link { width: max-content; margin-top: 10px; }
+
+#government-type:target,
+#filing-text:target,
+#identity-documents:target,
+#attachment:target,
+#bpl-certificate:target {
+  outline: 4px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 5px;
+  scroll-margin-top: 150px;
+}
+
+.rti-post-download {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  margin-top: 20px;
+  border: 1px solid var(--accent);
+  border-radius: var(--card-radius);
+  padding: clamp(22px, 3vw, 34px);
+  background: color-mix(in srgb, var(--accent-soft) 68%, var(--surface));
+}
+.rti-post-download h2,
+.rti-post-download p { margin: 0; }
+.rti-fired-notice { border: 1px solid var(--accent); }
+
+@media (max-width: 900px) {
+  .trap-grid,
+  .utility-card-grid:has(> .utility-card--featured),
+  .utility-card-grid.utility-card-grid:has(> .utility-card--featured):has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .site-shell,
+  .rti-page-hero__inner,
+  .rti-flow-shell,
+  .rti-case-content,
+  .rti-detail-content,
+  .utility-page__content,
+  .directory-page__content,
+  .ask-page__content,
+  .honesty-page__content,
+  .manual-steps { width: 92vw; }
+
+  .trap-grid,
+  .utility-card-grid:has(> .utility-card--featured),
+  .utility-card-grid.utility-card-grid:has(> .utility-card--featured):has(> :nth-child(4):last-child) {
+    grid-template-columns: 1fr;
+  }
+
+  .utility-card-grid:has(> .utility-card--featured) > .utility-card--featured { grid-column: auto; }
+
+  .rti-page-hero__art { right: 0; }
+
+  .rti-case-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rti-case-content > *,
+  .rti-node-groups,
+  .rti-node-groups > section,
+  .tracker-panel,
+  .rti-process-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .rti-primary,
+  .rti-secondary,
+  .utility-card > a,
+  .demo-profile-link,
+  .authority-directory__empty > a {
+    max-width: 100%;
+    padding-inline: 16px;
+    font-size: 14px;
   }
 }

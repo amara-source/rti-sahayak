@@ -31,7 +31,7 @@ const actPdf =
   "https://rti.gov.in/Writereaddata/RTI%20Act,%202005%20(Amended)-English%20Version.PDF";
 
 function actLink(section: string) {
-  return { href: actPdf, linkLabel: `Open the Act PDF, then find ${section}` };
+  return { href: actPdf, linkLabel: `Official text, ${section}` };
 }
 
 export const utilityPages = {
@@ -45,10 +45,10 @@ export const utilityPages = {
       {
         heading: "One continuous journey",
         cards: [
-          { icon: "route", title: "See the day 31 example", body: "See a finished case in thirty seconds. No typing. Deemed refusal has fired and the First Appeal is ready.", href: "/example", linkLabel: "Open the example case", featured: true },
-          { icon: "form", title: "File an RTI", body: "Describe the records you need, confirm the jurisdiction, choose the authority and run every pre-flight check before the simulated submission.", href: "/file", linkLabel: "Start a request" },
-          { icon: "timeline", title: "Track your case", body: "Keep the reply deadline visible and watch the statutory process map change as simulated time advances.", href: "/case", linkLabel: "Open your case" },
-          { icon: "book", title: "Understand the law", body: "Read the sections of the RTI Act that power each warning, clock, appeal and complaint route.", href: "/act", linkLabel: "Read the RTI Act guide" },
+          { icon: "route", title: "See the day 31 example", body: "See a finished case in thirty seconds. No typing. First Appeal is ready.", href: "/example", linkLabel: "Open example case", featured: true },
+          { icon: "form", title: "File an RTI", body: "Describe the records, choose the authority and check the request.", href: "/file", linkLabel: "Start a request" },
+          { icon: "timeline", title: "Track your case", body: "Keep the reply deadline visible and see what opens next.", href: "/case", linkLabel: "Open your case" },
+          { icon: "book", title: "Understand the law", body: "Read the sections behind each warning, clock and appeal.", href: "/act", linkLabel: "The RTI Act" },
         ],
       },
     ],

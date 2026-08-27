@@ -23,6 +23,26 @@ export interface AuthorityMatch {
 
 const authorities = authorityRules.authorities as AuthorityRule[];
 
+const ignoredMatchWords = new Set([
+  "a",
+  "an",
+  "and",
+  "central",
+  "government",
+  "my",
+  "of",
+  "the",
+]);
+
+function words(value: string): Set<string> {
+  return new Set(
+    value
+      .toLocaleLowerCase("en-IN")
+      .split(/[^\p{L}\p{N}]+/u)
+      .filter((word) => word.length > 1 && !ignoredMatchWords.has(word)),
+  );
+}
+
 export function listAuthorities(): AuthorityRule[] {
   return authorities.map((authority) => ({
     ...authority,
@@ -31,16 +51,22 @@ export function listAuthorities(): AuthorityRule[] {
 }
 
 export function matchAuthorityWithReason(subject: string): AuthorityMatch {
-  const normalized = subject.toLocaleLowerCase("en-IN");
+  const subjectWords = words(subject);
+  let best: { authority: AuthorityRule; matchedTerm: string; score: number } | null = null;
 
   for (const authority of authorities) {
     if (authority.id === "unknown_central") continue;
-    const matchedTerm = authority.matches.find((term) =>
-      normalized.includes(term.toLocaleLowerCase("en-IN")),
-    );
-    if (matchedTerm) {
-      return { authority, matchedTerm };
+    for (const term of authority.matches) {
+      const termWords = words(term);
+      const score = [...termWords].filter((word) => subjectWords.has(word)).length;
+      if (score > 0 && (!best || score > best.score)) {
+        best = { authority, matchedTerm: term, score };
+      }
     }
+  }
+
+  if (best) {
+    return { authority: best.authority, matchedTerm: best.matchedTerm };
   }
 
   return {

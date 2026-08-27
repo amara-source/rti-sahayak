@@ -214,6 +214,23 @@ export function CaseTracker({ code }: { code: string }) {
       setData(result);
       if (result.fired?.includes("deemed_refusal")) {
         setNotice(rtiCopy.tracker.fired);
+      } else {
+        const appealStart = result.case.startedAtHours?.first_appeal;
+        if (
+          result.case.statuses.first_appeal === "applied" &&
+          appealStart !== undefined
+        ) {
+          const appealElapsed = Math.max(
+            0,
+            Math.floor(((result.case.elapsedHours ?? 0) - appealStart) / 24),
+          );
+          setNotice(
+            rtiCopy.tracker.appealAdvanced(
+              appealElapsed,
+              Math.max(0, 45 - appealElapsed),
+            ),
+          );
+        }
       }
     } catch {
       setError(rtiCopy.common.error);
@@ -351,10 +368,10 @@ export function CaseTracker({ code }: { code: string }) {
             </section>
           ) : null}
           <div className="rti-time-control">
-            <button className={advanceBlocked ? "rti-secondary" : "rti-primary"} disabled={pending || advanceBlocked} onClick={advance} type="button">
+            <button className={advanceBlocked || appealDecisionLapsed ? "rti-secondary" : "rti-primary"} disabled={pending || advanceBlocked || appealDecisionLapsed} onClick={advance} type="button">
               {pending ? rtiCopy.common.loading : rtiCopy.tracker.next}
             </button>
-            <p>{advanceBlocked ? rtiCopy.tracker.advanceBlocked : rtiCopy.tracker.nextNote}</p>
+            <p>{appealDecisionLapsed ? rtiCopy.tracker.appealAdvanceBlocked : advanceBlocked ? rtiCopy.tracker.advanceBlocked : rtiCopy.tracker.nextNote}</p>
           </div>
           {notice ? <p className="rti-fired-notice" role="status">{notice}</p> : null}
         </section>

@@ -25,6 +25,17 @@ import {
 
 type Step = "describe" | "jurisdiction" | "authority" | "draft" | "checks" | "submit";
 
+const checkFixHrefs: Record<string, string> = {
+  jurisdiction: "/file/jurisdiction#government-type",
+  length: "/file/draft#filing-text",
+  charset: "/file/draft#filing-text",
+  single_subject: "/file/draft#filing-text",
+  asks_for_records: "/file/draft#filing-text",
+  no_identity_docs: "/file/checks#identity-documents",
+  attachment: "/file/checks#attachment",
+  bpl_certificate: "/file/checks#bpl-certificate",
+};
+
 const heroByEyebrow: Record<
   string,
   { illustration: string; supporting: string; tone: HeroTone }
@@ -115,7 +126,7 @@ function DescribeStep() {
   const [subject, setSubject] = useState("");
   const [summary, setSummary] = useState("");
   const [wantsAction, setWantsAction] =
-    useState<"records" | "status" | "action">("records");
+    useState<NonNullable<RtiDraft["wantsAction"]>>("records");
   const [lifeLiberty, setLifeLiberty] = useState<"yes" | "no">("no");
   const [isBPL, setIsBPL] = useState<"yes" | "no" | "na">("no");
   const [confirming, setConfirming] = useState(false);
@@ -228,6 +239,10 @@ function DescribeStep() {
             >
               <option value="records">{rtiCopy.describe.records}</option>
               <option value="status">{rtiCopy.describe.status}</option>
+              <option value="decision">{rtiCopy.describe.decision}</option>
+              <option value="recorded_reasons">{rtiCopy.describe.recordedReasons}</option>
+              <option value="inspection">{rtiCopy.describe.inspection}</option>
+              <option value="spending">{rtiCopy.describe.spending}</option>
               <option value="action">{rtiCopy.describe.actionOption}</option>
             </select>
           </label>
@@ -315,7 +330,7 @@ function JurisdictionStep() {
 
   return (
     <Shell step="jurisdiction" eyebrow={rtiCopy.jurisdiction.eyebrow} heading={rtiCopy.jurisdiction.heading}>
-      <fieldset className="rti-choice-group">
+      <fieldset className="rti-choice-group" id="government-type">
         <legend>{rtiCopy.jurisdiction.bodyLevel}</legend>
         {([
           ["central", rtiCopy.jurisdiction.central],
@@ -334,7 +349,7 @@ function JurisdictionStep() {
         ))}
       </fieldset>
       {needsState ? (
-        <label className="rti-field">
+        <label className="rti-field rti-state-field">
           <span>{rtiCopy.jurisdiction.stateLabel}</span>
           <select onChange={(event) => setState(event.target.value)} value={state}>
             <option value="">{rtiCopy.jurisdiction.statePlaceholder}</option>
@@ -435,6 +450,19 @@ function AuthorityStep() {
       )
     );
   });
+  const browsable = filtered.length > 0
+    ? filtered
+    : authorities.filter((item) => item.id !== "unknown_central");
+  const authorityGroups = new Map<
+    string,
+    Array<(typeof browsable)[number]>
+  >();
+  for (const authority of browsable) {
+    const group = authorityGroups.get(authority.ministry) ?? [];
+    group.push(authority);
+    authorityGroups.set(authority.ministry, group);
+  }
+  const groupedAuthorities = [...authorityGroups.entries()];
 
   function choose(id: string) {
     const picked = authorities.find((item) => item.id === id);
@@ -486,30 +514,36 @@ function AuthorityStep() {
 
           {/* A visible list, not a datalist. A datalist renders nothing until
               the field is focused and gives no sign it exists at all. */}
-          <ul className="rti-authority-options">
-            {filtered.map((authority) => (
-              <li key={authority.id}>
-                <button
-                  aria-pressed={authorityId === authority.id}
-                  className={authorityId === authority.id ? "is-selected" : undefined}
-                  onClick={() => choose(authority.id)}
-                  type="button"
-                >
-                  <span className="rti-icon-tile rti-icon-tile--sm">
-                    <Icon name={authorityIcon(authority.id)} />
-                  </span>
-                  <span>
-                    <strong>{authority.name}</strong>
-                    <small>{authority.ministry}</small>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-
           {filtered.length === 0 ? (
             <p className="rti-warning rti-warning--caution">{rtiCopy.authority.noMatch}</p>
           ) : null}
+          <div className="rti-authority-groups">
+            {groupedAuthorities.map(([ministry, entries]) => (
+              <section key={ministry}>
+                <h3>{ministry}</h3>
+                <ul className="rti-authority-options">
+                  {entries.map((authority) => (
+                    <li key={authority.id}>
+                      <button
+                        aria-pressed={authorityId === authority.id}
+                        className={authorityId === authority.id ? "is-selected" : undefined}
+                        onClick={() => choose(authority.id)}
+                        type="button"
+                      >
+                        <span className="rti-icon-tile rti-icon-tile--sm">
+                          <Icon name={authorityIcon(authority.id)} />
+                        </span>
+                        <span>
+                          <strong>{authority.name}</strong>
+                          <small>{authority.ministry}</small>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
         </section>
       ) : null}
 
@@ -544,7 +578,11 @@ function AuthorityStep() {
         </section>
       ) : null}
 
-      {unknown ? <p className="rti-warning rti-warning--caution">{rtiCopy.authority.unknown}</p> : null}
+      {unknown ? (
+        <p className="rti-warning rti-warning--caution">
+          {isCentral ? rtiCopy.authority.unknown : rtiCopy.authority.stateUnknown}
+        </p>
+      ) : null}
       <label className="rti-field">
         <span>{rtiCopy.authority.name}</span>
         <input
@@ -642,6 +680,7 @@ function DraftStep() {
           <h2>{rtiCopy.draft.rewritten}</h2>
           <textarea
             aria-label={rtiCopy.draft.rewritten}
+            id="filing-text"
             onChange={(event) => setRewritten(event.target.value)}
             rows={14}
             value={rewritten}
@@ -687,6 +726,9 @@ function ChecksStep() {
   const [hasIdentityDocuments, setHasIdentityDocuments] = useState(false);
   const [hasBplCertificate, setHasBplCertificate] = useState(false);
   const [attachment, setAttachment] = useState<PreflightInput["attachment"]>();
+  const [downloaded, setDownloaded] = useState(false);
+  const [trackingPending, setTrackingPending] = useState(false);
+  const [trackingError, setTrackingError] = useState("");
 
   useEffect(() => {
     if (!draft) return;
@@ -715,6 +757,9 @@ function ChecksStep() {
   };
   const results = evaluatePreflightChecks(input);
   const blocked = results.some((result) => result.status === "block");
+  const manualBlocked = results.some(
+    (result) => result.status === "block" && result.id !== "jurisdiction",
+  );
 
   async function download() {
     const current = draft!;
@@ -732,7 +777,9 @@ function ChecksStep() {
           ? authority.ministry || undefined
           : undefined,
       body: current.rewritten || current.rawText,
-      registrationNumber: current.registrationNumber || rtiCopy.submit.registration,
+      registrationNumber:
+        current.registrationNumber ||
+        (current.bodyLevel === "central" ? rtiCopy.submit.registration : undefined),
       date: new Date().toLocaleDateString("en-IN", {
         day: "numeric",
         month: "long",
@@ -749,6 +796,35 @@ function ChecksStep() {
     anchor.click();
     anchor.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+    setDownloaded(true);
+  }
+
+  async function startStateTracker() {
+    setTrackingPending(true);
+    setTrackingError("");
+    try {
+      const response = await fetch("/api/case", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          extracted: {
+            ...draft,
+            singleSubject,
+            asksForRecords,
+            hasIdentityDocuments,
+            attachment,
+            hasBplCertificate,
+          },
+          manualFiling: true,
+        }),
+      });
+      const result = (await response.json()) as { code?: string };
+      if (!response.ok || !result.code) throw new Error("case");
+      router.push(`/case/${result.code}`);
+    } catch {
+      setTrackingError(rtiCopy.common.error);
+      setTrackingPending(false);
+    }
   }
 
   function proceed() {
@@ -768,9 +844,9 @@ function ChecksStep() {
       <div className="rti-check-controls">
         <label><input checked={singleSubject} onChange={(event) => setSingleSubject(event.target.checked)} type="checkbox" /> {rtiCopy.checks.singleSubject}</label>
         <label><input checked={asksForRecords} onChange={(event) => setAsksForRecords(event.target.checked)} type="checkbox" /> {rtiCopy.checks.asksForRecords}</label>
-        <label><input checked={hasIdentityDocuments} onChange={(event) => setHasIdentityDocuments(event.target.checked)} type="checkbox" /> {rtiCopy.checks.identity}</label>
-        {draft.isBPL === "yes" ? <label><input checked={hasBplCertificate} onChange={(event) => setHasBplCertificate(event.target.checked)} type="checkbox" /> {rtiCopy.checks.bpl}</label> : null}
-        <label className="rti-field">
+        <label id="identity-documents"><input checked={hasIdentityDocuments} onChange={(event) => setHasIdentityDocuments(event.target.checked)} type="checkbox" /> {rtiCopy.checks.identity}</label>
+        {draft.isBPL === "yes" ? <label id="bpl-certificate"><input checked={hasBplCertificate} onChange={(event) => setHasBplCertificate(event.target.checked)} type="checkbox" /> {rtiCopy.checks.bpl}</label> : null}
+        <label className="rti-field" id="attachment">
           <span>{rtiCopy.checks.attachment}</span>
           <input
             accept="application/pdf"
@@ -794,18 +870,33 @@ function ChecksStep() {
               <>
                 <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
                 <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
+                <Link className="rti-secondary rti-fix-link" href={checkFixHrefs[result.id] ?? "/file"}>{rtiCopy.checks.fixAction}</Link>
               </>
             ) : null}
           </article>
         ))}
       </div>
       {draft.draftOnly ? (
-        <div className="rti-actions">
-          <button className="rti-primary" onClick={download} type="button">{rtiCopy.checks.download}</button>
-          {draft.bodyLevel === "unknown" ? <Link href="/file/jurisdiction">{rtiCopy.checks.resolve}</Link> : null}
-        </div>
+        <>
+          <div className="rti-actions">
+            <button className={downloaded ? "rti-secondary" : "rti-primary"} onClick={download} type="button">{rtiCopy.checks.download}</button>
+            {draft.bodyLevel === "unknown" ? <Link href="/file/jurisdiction">{rtiCopy.checks.resolve}</Link> : null}
+          </div>
+          {downloaded && draft.bodyLevel === "state" ? (
+            <section className="rti-post-download" role="status">
+              <h2>{rtiCopy.checks.downloadReady}</h2>
+              <p>{rtiCopy.checks.stateNext}</p>
+              <button className="rti-primary" disabled={manualBlocked || trackingPending} onClick={startStateTracker} type="button">
+                {trackingPending ? rtiCopy.checks.tracking : rtiCopy.checks.stateTrack}
+              </button>
+              <small>{rtiCopy.checks.stateTrackNote}</small>
+              {trackingError ? <p className="rti-error">{trackingError}</p> : null}
+            </section>
+          ) : null}
+        </>
       ) : (
         <div className="rti-actions">
+          <button className="rti-secondary" onClick={download} type="button">{rtiCopy.checks.download}</button>
           <button className="rti-primary" disabled={blocked} onClick={proceed} type="button">{rtiCopy.checks.submit}</button>
           {blocked ? <small>{rtiCopy.checks.blocked}</small> : null}
         </div>

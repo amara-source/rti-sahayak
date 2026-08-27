@@ -24,6 +24,13 @@ Confirmation action: Yes, this is right
 
 Disabled action: Write a few words or choose a starting point to continue.
 
+Question: What are you hoping for?
+
+Options: Copies of documents, files or records; To find out what stage
+something is at; A copy of a decision or order; The reasons recorded for a
+decision; Inspection of files; Details of money spent; For someone to actually
+do something.
+
 ## Journey progress
 
 Label: Request progress
@@ -49,9 +56,17 @@ Heading: Send it to the right public authority
 Directory note: The officer directory is on rti.gov.in. Filing happens on
 rtionline.gov.in. They are different sites.
 
-Unknown authority: We could not work out which authority this belongs to. The
-government's own directory of Public Information Officers is at rti.gov.in.
-Search there, then come back and enter it.
+Unknown authority: We could not identify one automatically. Browse the authored
+list below. If none fits, check the government's directory of Public
+Information Officers at rti.gov.in, then come back and enter it.
+
+No search match: No authored entry matches those words. Browse the full
+directory below, or enter the authority yourself. Use rti.gov.in only if none
+fits.
+
+State authority: This rule pack contains central authorities only, so it
+cannot name a state authority safely. Enter the state public authority below,
+then verify it in the government's directory at rti.gov.in.
 
 Disabled action: Choose an authority or enter one below to continue.
 
@@ -84,6 +99,19 @@ Submission action: Continue to simulated submission
 
 Offline action: Download the application
 
+Failure action: Fix this
+
+Download confirmation: Your PDF is ready.
+
+State filing next step: File this with your state portal or send it by post.
+Once you have filed it, start the browser-only tracker to follow the statutory
+clock.
+
+State tracker action: I filed it, start tracking
+
+State tracker note: Use this only after you have filed the application with
+the state authority. Nothing is sent from this prototype.
+
 ## Simulated submission
 
 Standing label: Simulation only. No government portal, payment gateway or email
@@ -105,6 +133,12 @@ Heading: The legal clock is visible
 Time control: See what happens next
 
 Time note: This advances simulated time. No department is contacted.
+
+First Appeal time update: The Appellate Authority clock advanced to {elapsed}
+days. {remaining} days remain in the 45-day decision window.
+
+First Appeal time limit: The Appellate Authority's 45-day window has ended.
+The Second Appeal route is now available.
 
 Deemed refusal: Silence has become a deemed refusal. First Appeal is now
 unlocked.
@@ -176,7 +210,20 @@ choosing the right authority to appealing when silence becomes a refusal.
 
 Cards: File an RTI, Track your case, Understand the law
 
+Card actions: Start filing, Open your case, The RTI Act
+
 Example case: See a finished case in thirty seconds. No typing.
+
+Example action: Open example case
+
+## Common filing traps
+
+Heading: Nine traps that end applications
+
+Cards: The wrong government; Too many characters; One request, several
+subjects; Asking why instead of asking for records; Attaching identity proof;
+Missing BPL certificate; An attachment the portal rejects; Requesting paper
+copies; Skipping First Appeal.
 
 ## About
 
@@ -219,6 +266,8 @@ Sections shown: 2(f) and 2(j), 5, 6(2), 6(3), 7(1), 7(3), 7(2), 8, 11, 18,
 
 Each card states what the section means in plain language, where RTI Sahayak
 uses it, and links to the official RTI Portal Gateway.
+
+Source action: Official text, {section}
 
 ## FAQ
 

@@ -127,11 +127,8 @@ export function JourneyStrip() {
       </div>
 
       <ol className="journey-strip">
-        {copy.stages.map((stage, index) => (
+        {copy.stages.map((stage) => (
           <li className="journey-stage" key={stage.id}>
-            <span aria-hidden="true" className="journey-stage__step">
-              {index + 1}
-            </span>
             <StageIcon id={stage.id} />
             <span className="journey-stage__day">{dayLabel[stage.id]}</span>
             <strong className="journey-stage__title">{stage.title}</strong>

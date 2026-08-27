@@ -7,8 +7,9 @@
  */
 
 export interface TrapCopy {
-  /** Matches the id of a check in the rule pack. */
-  checkId: string;
+  /** Matches the id of a check or node in the rule pack. */
+  ruleId: string;
+  ruleKind: "check" | "node";
   title: string;
   front: string;
   back: string;
@@ -17,7 +18,7 @@ export interface TrapCopy {
 
 export const homeCopy = {
   traps: {
-    heading: "Five traps that end applications",
+    heading: "Nine traps that end applications",
     intro: "Each one is a check this prototype runs before you pay. Select a card to read what goes wrong.",
     linkLabel: "See all the ways applications fail",
     href: "/rejections",
@@ -25,39 +26,76 @@ export const homeCopy = {
     backHint: "Select to turn back",
     items: [
       {
-        checkId: "jurisdiction",
+        ruleId: "jurisdiction",
+        ruleKind: "check",
         title: "Wrong government",
         front: "File a state matter on the central portal and you lose the fee.",
         back: "The central portal takes only central bodies. Its own homepage warns in red that state applications are returned and the fee is not refunded. Most everyday problems are state matters.",
         basis: "RTI Online portal notice",
       },
       {
-        checkId: "asks_for_records",
+        ruleId: "asks_for_records",
+        ruleKind: "check",
         title: "Asking for reasons",
         front: "The Act gives you records. It cannot make anyone explain themselves.",
         back: "Information means material already held: files, notings, orders, reports. A question can be refused. Ask for the file notings, not for why it was delayed.",
         basis: "RTI Act 2005, sections 2(f), 2(i) and 2(j)",
       },
       {
-        checkId: "no_identity_docs",
+        ruleId: "no_identity_docs",
+        ruleKind: "check",
         title: "Attaching identity proof",
         front: "You do not have to prove who you are, and you should not try.",
         back: "Section 6(2) requires no identity proof, and you cannot be asked why you want the information. The only document needed is a BPL certificate, and only for free filing.",
         basis: "RTI Act 2005, section 6(2)",
       },
       {
-        checkId: "single_subject",
+        ruleId: "single_subject",
+        ruleKind: "check",
         title: "Several subjects at once",
         front: "One application, one subject, one public authority.",
         back: "Unrelated questions get split, transferred and half answered. Each transfer restarts the clock at the receiving authority, so bundling costs you time as well as answers.",
         basis: "RTI Act 2005, section 6(3)",
       },
       {
-        checkId: "charset",
+        ruleId: "charset",
+        ruleKind: "check",
         title: "Characters the form rejects",
         front: "A rupee sign or a curly quote can break the submission.",
         back: "The text field accepts only plain letters, digits and a short list of punctuation. Rupee signs, curly quotes and long dashes are the usual culprits, and the form rarely says why.",
         basis: "RTI Online guidelines",
+      },
+      {
+        ruleId: "bpl_certificate",
+        ruleKind: "check",
+        title: "Missing BPL certificate",
+        front: "Free filing needs the certificate issued by the appropriate government.",
+        back: "If you claim free filing without the certificate, the application will not be accepted. Attach it, or use paid filing at the statutory ten rupee fee.",
+        basis: "RTI Online guidelines; RTI Rules 2012",
+      },
+      {
+        ruleId: "attachment",
+        ruleKind: "check",
+        title: "An attachment the portal rejects",
+        front: "Use one PDF under 1 MB with no spaces in its filename.",
+        back: "An oversized file, the wrong format or a space in the filename can make the upload fail silently.",
+        basis: "RTI Online guidelines",
+      },
+      {
+        ruleId: "preflight",
+        ruleKind: "node",
+        title: "Requesting paper copies",
+        front: "Ask for electronic records when they meet your need.",
+        back: "The authored pre-flight warning says paper copies add a per-page charge beyond the first set. Electronic records avoid that copying cost.",
+        basis: "RTI Online guidelines; RTI Rules 2012",
+      },
+      {
+        ruleId: "second_appeal",
+        ruleKind: "node",
+        title: "Skipping the First Appeal",
+        front: "A Second Appeal does not replace the First Appeal.",
+        back: "The authored Second Appeal warning says an appeal filed without a First Appeal is liable to be returned.",
+        basis: "RTI Act 2005, section 19(3); RTI Online portal notice",
       },
     ] as TrapCopy[],
   },
@@ -103,27 +141,6 @@ export const homeCopy = {
         id: "second",
         title: "Second Appeal",
         line: "The Information Commission can penalise the officer personally.",
-      },
-    ],
-  },
-
-  why: {
-    heading: "Why this exists",
-    cards: [
-      {
-        icon: "two-websites",
-        title: "The government runs two separate websites",
-        body: "rti.gov.in explains the Act and holds the directory of Public Information Officers. rtionline.gov.in is where you file, pay and start the legal clock. Neither site tells you that you need the other one.",
-      },
-      {
-        icon: "paid-industry",
-        title: "A ten rupee right became a paid service",
-        body: "The application fee set by the RTI Rules 2012 is ten rupees, and nothing for a household below the poverty line. An industry has grown up charging citizens hundreds of rupees to fill in that form for them.",
-      },
-      {
-        icon: "filing-is-easy",
-        title: "Filing is the easy part",
-        body: "The reply period, the deemed refusal on silence, the First Appeal and the Second Appeal are where most applications are lost. None of that is visible on the portal after you pay.",
       },
     ],
   },

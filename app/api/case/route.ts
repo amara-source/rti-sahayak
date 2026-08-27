@@ -38,8 +38,9 @@ export async function POST(request: Request) {
   }
 
   const extracted = body.extracted;
+  const manualFiling = body.manualFiling === true && extracted.bodyLevel === "state";
   if (
-    extracted.bodyLevel !== "central" ||
+    (extracted.bodyLevel !== "central" && !manualFiling) ||
     typeof extracted.rewritten !== "string" ||
     typeof extracted.singleSubject !== "boolean" ||
     typeof extracted.asksForRecords !== "boolean" ||
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
       }
     : undefined;
   const checks = evaluatePreflightChecks({
-    bodyLevel: "central",
+    bodyLevel: extracted.bodyLevel as "central" | "state",
     text: extracted.rewritten,
     singleSubject: extracted.singleSubject,
     asksForRecords: extracted.asksForRecords,
@@ -70,7 +71,13 @@ export async function POST(request: Request) {
     isBPL: extracted.isBPL as "yes" | "no" | "na",
     hasBplCertificate: extracted.hasBplCertificate,
   });
-  if (checks.some((check) => check.status === "block")) {
+  if (
+    checks.some(
+      (check) =>
+        check.status === "block" &&
+        !(manualFiling && check.id === "jurisdiction"),
+    )
+  ) {
     return NextResponse.json(
       { error: rtiCopy.checks.blocked, checks },
       { status: 409 },

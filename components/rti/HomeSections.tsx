@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { homeCopy } from "@/content/home-copy";
 import { Icon } from "./Icon";
-import { checkIcon, conceptIcons } from "@/lib/rti/icon-map";
+import { checkIcon, nodeIcon } from "@/lib/rti/icon-map";
 
 /**
  * The five traps.
@@ -26,7 +26,7 @@ function TrapCard({ trap }: { trap: (typeof homeCopy.traps.items)[number] }) {
         type="button"
       >
         <span className="trap-card__face trap-card__front">
-          <span className="rti-icon-tile"><Icon name={checkIcon(trap.checkId)} /></span>
+          <span className="rti-icon-tile"><Icon name={trap.ruleKind === "check" ? checkIcon(trap.ruleId) : nodeIcon(trap.ruleId)} /></span>
           <strong>{trap.title}</strong>
           <span className="trap-card__line">{trap.front}</span>
           <span className="trap-card__hint">{homeCopy.traps.flipHint}</span>
@@ -51,31 +51,12 @@ export function TrapCards() {
       </div>
       <ul className="trap-grid">
         {homeCopy.traps.items.map((trap) => (
-          <TrapCard key={trap.checkId} trap={trap} />
+          <TrapCard key={trap.ruleId} trap={trap} />
         ))}
       </ul>
       <Link className="rti-secondary" href={homeCopy.traps.href}>
         {homeCopy.traps.linkLabel}
       </Link>
-    </section>
-  );
-}
-
-export function WhyThisExists() {
-  return (
-    <section className="utility-section" aria-labelledby="home-why-heading">
-      <div className="utility-section__heading">
-        <h2 id="home-why-heading">{homeCopy.why.heading}</h2>
-      </div>
-      <div className="utility-card-grid">
-        {homeCopy.why.cards.map((card) => (
-          <article className="utility-card" key={card.title}>
-            <span className="rti-icon-tile"><Icon name={conceptIcons[card.icon]} /></span>
-            <h3>{card.title}</h3>
-            <p>{card.body}</p>
-          </article>
-        ))}
-      </div>
     </section>
   );
 }
