@@ -849,7 +849,8 @@ function ChecksStep() {
       attachments,
       hasBplCertificate,
     });
-    router.push("/file/submit");
+    // A state case goes to the state route, not the central portal.
+    router.push(draft!.bodyLevel === "state" ? "/file/state" : "/file/submit");
   }
 
   return (

@@ -65,6 +65,8 @@ export interface RuleNode {
   clock: Clock | null;
   clockOverrides?: ClockOverride[];
   firesWhen?: FiresWhen;
+  /** When this node applies, the node it names does not. Used for branching routes. */
+  replaces?: string;
   warnings: Warning[];
   generates?: string[];
   confidence: Confidence;

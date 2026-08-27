@@ -16,6 +16,7 @@ export const nodeIcons: Record<string, IconName> = {
   draft_request: "document-pen",
   preflight: "clipboard-check",
   submit: "send",
+  state_filing: "post-box",
   transfer_window: "transfer",
   await_reply: "clock",
   deemed_refusal: "bell-off",

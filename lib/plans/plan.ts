@@ -14,12 +14,11 @@ export interface PatchedPlan {
   unlocked: string[];
 }
 
-const submittedNodeIds = [
+const preFilingNodeIds = [
   "jurisdiction_check",
   "identify_authority",
   "draft_request",
   "preflight",
-  "submit",
 ] as const;
 
 function createCode(): string {
@@ -56,8 +55,12 @@ export function createSubmittedCase(
   answers: Record<string, unknown>,
 ): Plan {
   const plan = createPlan("rti", answers);
+  // The filing step differs by route: a state case is filed with the state
+  // authority, a central one on the portal. Everything after it is identical.
+  const filingNode =
+    answers.bodyLevel === "state" ? "state_filing" : "submit";
   plan.statuses = Object.fromEntries(
-    submittedNodeIds.map((id) => [id, "done" as const]),
+    [...preFilingNodeIds, filingNode].map((id) => [id, "done" as const]),
   );
   return plan;
 }

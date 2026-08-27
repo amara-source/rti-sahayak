@@ -41,11 +41,13 @@ describe("RTI preflight rules", () => {
       hasBplCertificate: false,
     });
 
+    // A state filing is a different route, not an error, so the jurisdiction
+    // check warns rather than blocks.
     expect(results.find((item) => item.id === "jurisdiction")?.status).toBe(
-      "block",
+      "warn",
     );
     expect(results.find((item) => item.id === "jurisdiction")?.fix).toMatch(
-      /draft it anyway/i,
+      /file with your state/i,
     );
     expect(results.find((item) => item.id === "length")?.status).toBe("block");
     expect(
@@ -309,5 +311,50 @@ describe("state public authorities", () => {
       expect(authority.officer).toMatch(/Information Officer$/);
       expect(authority.officerNote).not.toMatch(/\bMr\.?\b|\bMrs\.?\b|\bShri\b|\bSmt\b/);
     }
+  });
+});
+
+describe("branching routes", () => {
+  const base = { lifeLiberty: "no", isBPL: "no", wantsAction: "records" };
+
+  it("uses the central submit node and drops the state one", () => {
+    const ids = computeJourney("rti", { ...base, bodyLevel: "central" }).map((n) => n.id);
+    expect(ids).toContain("submit");
+    expect(ids).not.toContain("state_filing");
+  });
+
+  it("uses the state filing node and drops the central one", () => {
+    const ids = computeJourney("rti", { ...base, bodyLevel: "state" }).map((n) => n.id);
+    expect(ids).toContain("state_filing");
+    expect(ids).not.toContain("submit");
+  });
+
+  it("a dependency on a node that does not apply is not a dependency", () => {
+    // transfer_window, await_reply and the section 18 complaint list both
+    // filing routes. Only one is ever present, and the case must not stall.
+    const nodes = computeJourney(
+      "rti",
+      { ...base, bodyLevel: "state" },
+      { jurisdiction_check: "done", identify_authority: "done", draft_request: "done", preflight: "done", state_filing: "done" },
+      31 * 24,
+    );
+    expect(nodes.find((n) => n.id === "await_reply")?.locked).toBe(false);
+    expect(nodes.find((n) => n.id === "deemed_refusal")?.fired).toBe(true);
+    expect(nodes.find((n) => n.id === "first_appeal")?.locked).toBe(false);
+  });
+
+  it("runs the same statutory clocks on the state branch", () => {
+    const state = computeJourney("rti", { ...base, bodyLevel: "state" });
+    const central = computeJourney("rti", { ...base, bodyLevel: "central" });
+    const days = (list: typeof state, id: string) =>
+      list.find((n) => n.id === id)?.clock?.days;
+    for (const id of ["await_reply", "first_appeal", "second_appeal"]) {
+      expect(days(state, id)).toBe(days(central, id));
+    }
+  });
+
+  it("no longer blocks a state filing at pre-flight", () => {
+    const pack = loadRtiRulePack();
+    expect(pack.checks.find((c) => c.id === "jurisdiction")?.level).toBe("warn");
   });
 });

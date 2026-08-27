@@ -9316,3 +9316,66 @@ small,
 .rti-appeal-clock strong,
 .rti-appeal-clock p { color: #ffffff; }
 .rti-appeal-clock span { color: rgb(255 255 255 / 78%); }
+
+/* ---------------------------------------------------------------------------
+   THE STATE ROUTE
+   Same law, different counter. Three valid ways to file, then the same case.
+   --------------------------------------------------------------------------- */
+
+.rti-state-lead {
+  margin: 0 0 24px;
+  border-left: 4px solid var(--accent);
+  padding-left: 16px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.rti-state-routes__heading { margin: 0 0 16px; font-size: 1.15rem; }
+
+.rti-state-routes {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.rti-state-route {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--surface);
+}
+
+.rti-state-route > div { display: grid; justify-items: start; gap: 8px; }
+.rti-state-route h3 { margin: 0; font-size: 18px; font-weight: 650; }
+.rti-state-route p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+.rti-state-route__why {
+  border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  padding-left: 12px;
+  color: var(--ink) !important;
+  font-weight: 700;
+}
+
+.rti-state-route small { color: var(--muted); font-size: 13px; }
+.rti-state-route .rti-secondary,
+.rti-state-route button { margin-top: 8px; }
+
+.rti-state-date {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--surface-soft);
+  margin-bottom: 24px;
+}
+
+.rti-state-date h2 { margin: 0; font-size: 18px; }
+.rti-state-date .rti-field { max-width: 260px; }

@@ -35,11 +35,11 @@ export function topologicalSort<T extends DependencyNode>(nodes: readonly T[]): 
 
     for (const dependencyId of node.dependsOn) {
       const dependency = byId.get(dependencyId);
-      if (!dependency) {
-        throw new Error(
-          `Rule node ${node.id} depends on missing node ${dependencyId}`,
-        );
-      }
+      // A dependency on a node that does not apply to this case is not a
+      // dependency. The pack has branching routes: a case is filed either on
+      // the central portal or with a state authority, never both, so the steps
+      // after filing list both and only one is ever present.
+      if (!dependency) continue;
       visit(dependency);
     }
 

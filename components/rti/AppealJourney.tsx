@@ -131,6 +131,13 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
               <section><span className="rti-icon-tile"><Icon name="receipt" /></span><h2>{rtiCopy.appeals.originalRegistration}</h2><strong>{registration}</strong></section>
               {kind === "complaint" ? <section className="rti-appeal-no-limit"><span className="rti-icon-tile"><Icon name="megaphone" /></span><h2>{rtiCopy.appeals.complaint.noLimit}</h2><p>{node.summary}</p></section> : null}
             </div>
+            {data.case.answers.bodyLevel === "state" && kind !== "complaint" ? (
+              <p className="rti-warning rti-warning--info">
+                {kind === "second"
+                  ? rtiCopy.appeals.stateCommission
+                  : rtiCopy.appeals.stateFirstAppeal}
+              </p>
+            ) : null}
             {node.warnings.map((warning) => <div className={`rti-warning rti-warning--${warning.severity}`} key={warning.text}>{warning.text}</div>)}
             {kind !== "complaint" ? (
               <section className="rti-appeal-draft">

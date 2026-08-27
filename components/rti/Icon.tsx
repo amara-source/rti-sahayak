@@ -66,7 +66,8 @@ export type IconName =
   | "blackboard"
   | "bolt"
   | "droplet"
-  | "stamp";
+  | "stamp"
+  | "post-box";
 
 const glyphs: Record<IconName, ReactNode> = {
   compass: (
@@ -396,6 +397,15 @@ const glyphs: Record<IconName, ReactNode> = {
       <path className="icon-fill" d="M9 3h6a3 3 0 0 1 3 3l-1.2 5H7.2L6 6a3 3 0 0 1 3-3z" />
       <rect height="4" rx="1.5" width="18" x="3" y="14" />
       <path d="M5 20h14" />
+    </>
+  ),
+  "post-box": (
+    <>
+      <path className="icon-fill" d="M5 9a5 5 0 0 1 10 0v11H5z" />
+      <path d="M5 9a5 5 0 0 1 10 0v11H5z" />
+      <path d="M8 12h4" />
+      <path d="M15 20h4V9a4 4 0 0 0-4-4" />
+      <path d="M18 5V3" />
     </>
   ),
   form: (

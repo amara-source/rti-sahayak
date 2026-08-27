@@ -3,9 +3,7 @@
   "version": "1.0",
   "verifiedOn": "2026-08-25",
   "label": "File an RTI request",
-
   "_note": "AUTHORITATIVE RULE CONTENT. Do not add, remove or alter nodes, clocks, section references or authorities. If something is missing, stop and ask.",
-
   "intake": [
     {
       "k": "subject",
@@ -17,24 +15,48 @@
       "k": "bodyLevel",
       "q": "Which government does this concern?",
       "opts": [
-        { "v": "central", "label": "A central government ministry, department or public sector body" },
-        { "v": "state", "label": "A state government department, municipality or police" },
-        { "v": "unknown", "label": "I am not sure" }
+        {
+          "v": "central",
+          "label": "A central government ministry, department or public sector body"
+        },
+        {
+          "v": "state",
+          "label": "A state government department, municipality or police"
+        },
+        {
+          "v": "unknown",
+          "label": "I am not sure"
+        }
       ]
     },
     {
       "k": "state",
       "type": "select",
       "q": "Which state is this about?",
-      "showIf": [{ "field": "bodyLevel", "op": "in", "value": ["state", "unknown"] }]
+      "showIf": [
+        {
+          "field": "bodyLevel",
+          "op": "in",
+          "value": [
+            "state",
+            "unknown"
+          ]
+        }
+      ]
     },
     {
       "k": "lifeLiberty",
       "q": "Does this concern someone's life or liberty?",
       "hint": "For example, a person in custody, or an urgent situation in a government hospital.",
       "opts": [
-        { "v": "yes", "label": "Yes" },
-        { "v": "no", "label": "No" }
+        {
+          "v": "yes",
+          "label": "Yes"
+        },
+        {
+          "v": "no",
+          "label": "No"
+        }
       ]
     },
     {
@@ -42,24 +64,40 @@
       "q": "Is your household below the poverty line?",
       "hint": "If yes, there is no fee at all. You will need to attach the certificate.",
       "opts": [
-        { "v": "yes", "label": "Yes" },
-        { "v": "no", "label": "No" },
-        { "v": "na", "label": "Prefer not to say" }
+        {
+          "v": "yes",
+          "label": "Yes"
+        },
+        {
+          "v": "no",
+          "label": "No"
+        },
+        {
+          "v": "na",
+          "label": "Prefer not to say"
+        }
       ]
     },
     {
       "k": "wantsAction",
       "q": "What are you hoping for?",
       "opts": [
-        { "v": "records", "label": "Copies of documents, files or records" },
-        { "v": "status", "label": "To find out what stage something is at" },
-        { "v": "action", "label": "For someone to actually do something about it" }
+        {
+          "v": "records",
+          "label": "Copies of documents, files or records"
+        },
+        {
+          "v": "status",
+          "label": "To find out what stage something is at"
+        },
+        {
+          "v": "action",
+          "label": "For someone to actually do something about it"
+        }
       ]
     }
   ],
-
   "nodes": [
-
     {
       "id": "jurisdiction_check",
       "job": "PROTECT",
@@ -75,12 +113,24 @@
         {
           "severity": "critical",
           "text": "This is a state government matter. If you file it on the central portal the application is returned and your fee is not refunded. We will still draft it for you to file with your state or by post.",
-          "showIf": [{ "field": "bodyLevel", "op": "eq", "value": "state" }]
+          "showIf": [
+            {
+              "field": "bodyLevel",
+              "op": "eq",
+              "value": "state"
+            }
+          ]
         },
         {
           "severity": "caution",
           "text": "You are not sure which government this belongs to. Getting it wrong costs you the fee with no refund, so it is worth checking before you pay.",
-          "showIf": [{ "field": "bodyLevel", "op": "eq", "value": "unknown" }]
+          "showIf": [
+            {
+              "field": "bodyLevel",
+              "op": "eq",
+              "value": "unknown"
+            }
+          ]
         }
       ],
       "confidence": "verified",
@@ -88,7 +138,6 @@
       "sourceUrl": "https://rtionline.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "not_an_rti",
       "job": "PROTECT",
@@ -96,7 +145,13 @@
       "title": "This may be a grievance rather than an RTI",
       "summary": "RTI gets you records. It cannot make anyone act.",
       "body": "The Right to Information Act gives you access to information held by a public authority. It does not give you the power to make an official do something, and a request phrased as a demand for action is likely to be refused. If you want something fixed, a grievance to CPGRAMS is the right route. You can do both, and it often helps: an RTI asking what has been done so far frequently moves a file that a grievance alone did not.",
-      "appliesIf": [{ "field": "wantsAction", "op": "eq", "value": "action" }],
+      "appliesIf": [
+        {
+          "field": "wantsAction",
+          "op": "eq",
+          "value": "action"
+        }
+      ],
       "dependsOn": [],
       "authority": "RTI Act 2005",
       "clock": null,
@@ -106,7 +161,6 @@
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "identify_authority",
       "job": "DO",
@@ -115,7 +169,9 @@
       "summary": "Addressing the wrong officer is the most common way applications die.",
       "body": "Every public authority appoints a Central Public Information Officer, or a State PIO for state bodies. Your application goes to that officer. On the central portal, applications reach the Nodal Officer of the ministry or department, who transmits them to the CPIO. If you address the wrong authority, the officer receiving it should transfer it to the correct one within five days under Section 6(3), but that transfer is not guaranteed and it costs you time. The government maintains a directory of PIOs and Appellate Authorities on its RTI Portal Gateway, which is a separate website from the one where you file.",
       "appliesIf": [],
-      "dependsOn": ["jurisdiction_check"],
+      "dependsOn": [
+        "jurisdiction_check"
+      ],
       "authority": "The relevant public authority",
       "clock": null,
       "warnings": [
@@ -129,7 +185,6 @@
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "draft_request",
       "job": "DO",
@@ -138,7 +193,9 @@
       "summary": "Ask for records, not for reasons.",
       "body": "The Act covers information held in material form: records, documents, memos, file notings, orders, logbooks, contracts and reports. It does not cover opinions, explanations or answers to questions. This is why 'why has my pension not been released' is refusable and 'provide a copy of the file notings on application number X, the current stage of processing, and the name and designation of the officer holding the file' is not. You are also not required to give any reason for wanting the information, and you should not be asked for one. Keep each application to one subject and one public authority. Unrelated questions in a single application get split, transferred and half answered.",
       "appliesIf": [],
-      "dependsOn": ["identify_authority"],
+      "dependsOn": [
+        "identify_authority"
+      ],
       "authority": "The relevant public authority",
       "clock": null,
       "warnings": [
@@ -151,13 +208,14 @@
           "text": "Only these characters are accepted in the request text: A to Z, a to z, 0 to 9, and , . - _ ( ) / @ : & ? \\ % — anything else will break the form."
         }
       ],
-      "generates": ["rti_application"],
+      "generates": [
+        "rti_application"
+      ],
       "confidence": "verified",
       "sourceLabel": "RTI Act 2005, sections 2(f), 2(i), 2(j) and 6(2); RTI Online guidelines",
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "preflight",
       "job": "PROTECT",
@@ -166,7 +224,9 @@
       "summary": "Six things that get applications rejected, all of them avoidable.",
       "body": "Every one of these has caused applications to be returned or refused. The portal checks none of them for you before it takes your money.",
       "appliesIf": [],
-      "dependsOn": ["draft_request"],
+      "dependsOn": [
+        "draft_request"
+      ],
       "authority": "RTI Online portal rules",
       "clock": null,
       "warnings": [
@@ -188,16 +248,17 @@
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "submit",
       "job": "DO",
       "bucket": "now",
-      "title": "File it and pay the fee",
+      "title": "File it on the central portal and pay the fee",
       "summary": "Ten rupees, or free if your household is below the poverty line.",
       "body": "The application fee is ten rupees, prescribed under the RTI Rules 2012, and there is no fee at all for applicants below the poverty line, though you must attach the certificate issued by the appropriate government. Payment on the portal goes through a payment gateway that opens in a separate tab. Once the application is submitted you receive a unique registration number, in a format such as DOPTR/E/2026/00000, which you will need for tracking and for any appeal.",
       "appliesIf": [],
-      "dependsOn": ["preflight"],
+      "dependsOn": [
+        "preflight"
+      ],
       "authority": "RTI Online portal",
       "clock": null,
       "warnings": [
@@ -208,7 +269,13 @@
         {
           "severity": "caution",
           "text": "You are filing free as a BPL applicant, so remember to attach the certificate. Without it the application will not be accepted.",
-          "showIf": [{ "field": "isBPL", "op": "eq", "value": "yes" }]
+          "showIf": [
+            {
+              "field": "isBPL",
+              "op": "eq",
+              "value": "yes"
+            }
+          ]
         }
       ],
       "confidence": "verified",
@@ -216,7 +283,48 @@
       "sourceUrl": "https://rtionline.gov.in/guidelines.php",
       "verifiedOn": "2026-08-25"
     },
-
+    {
+      "id": "state_filing",
+      "job": "DO",
+      "bucket": "now",
+      "title": "File it with your state",
+      "summary": "The same law, a different counter.",
+      "body": "The Right to Information Act applies to state public authorities in exactly the same way. Only the destination changes. Most states run their own online RTI portal. Where a state does not, or where the portal is unavailable, an application on plain paper delivered or posted to the State Public Information Officer is equally valid. There is no prescribed form. The fee is ten rupees, and there is no fee if you hold a BPL certificate.",
+      "appliesIf": [
+        {
+          "field": "bodyLevel",
+          "op": "eq",
+          "value": "state"
+        }
+      ],
+      "dependsOn": [
+        "preflight"
+      ],
+      "authority": "The state public authority concerned",
+      "clock": null,
+      "warnings": [
+        {
+          "severity": "info",
+          "text": "The central portal will not take this. The law still will."
+        },
+        {
+          "severity": "caution",
+          "text": "Send it by registered post if you file on paper. The thirty day clock runs from the date the authority receives it, so you need proof of that date."
+        },
+        {
+          "severity": "info",
+          "text": "An application handed to an Assistant Public Information Officer is valid. Five days are added to the reply period under the proviso to section 7(1)."
+        }
+      ],
+      "generates": [
+        "rti_application"
+      ],
+      "confidence": "verified",
+      "sourceLabel": "RTI Act 2005 sections 6(1) and 7(1); RTI Rules 2012",
+      "sourceUrl": "https://rti.gov.in/",
+      "verifiedOn": "2026-08-26",
+      "replaces": "submit"
+    },
     {
       "id": "transfer_window",
       "job": "WAIT",
@@ -225,7 +333,10 @@
       "summary": "They have five days to send it to the right one.",
       "body": "If the public authority that receives your application does not hold the information, Section 6(3) requires it to transfer the application to the authority that does, and to inform you, within five days. Time for the reply then runs from the date the correct authority receives it, which is why a transfer effectively adds to your wait.",
       "appliesIf": [],
-      "dependsOn": ["submit"],
+      "dependsOn": [
+        "submit",
+        "state_filing"
+      ],
       "authority": "The receiving public authority",
       "clock": {
         "days": 5,
@@ -239,7 +350,6 @@
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "await_reply",
       "job": "WAIT",
@@ -248,7 +358,10 @@
       "summary": "Thirty days. Forty eight hours if life or liberty is involved.",
       "body": "The Public Information Officer must provide the information, or reject the request with reasons, within thirty days of receiving it. Where the request concerns the life or liberty of a person, the period is forty eight hours. If the application was filed through an Assistant PIO, five days are added. If the information relates to a third party, the authority must give that party notice and the period extends to forty days.",
       "appliesIf": [],
-      "dependsOn": ["submit"],
+      "dependsOn": [
+        "submit",
+        "state_filing"
+      ],
       "authority": "The Public Information Officer",
       "clock": {
         "days": 30,
@@ -259,7 +372,13 @@
       "clockOverrides": [
         {
           "hours": 48,
-          "when": [{ "field": "lifeLiberty", "op": "eq", "value": "yes" }],
+          "when": [
+            {
+              "field": "lifeLiberty",
+              "op": "eq",
+              "value": "yes"
+            }
+          ],
           "label": "Reply due, life or liberty",
           "consequence": "silence becomes a deemed refusal and you may appeal"
         }
@@ -268,7 +387,13 @@
         {
           "severity": "critical",
           "text": "This concerns life or liberty, so the officer has forty eight hours, not thirty days. Say so clearly in the application, because otherwise it will be treated as an ordinary request.",
-          "showIf": [{ "field": "lifeLiberty", "op": "eq", "value": "yes" }]
+          "showIf": [
+            {
+              "field": "lifeLiberty",
+              "op": "eq",
+              "value": "yes"
+            }
+          ]
         },
         {
           "severity": "info",
@@ -280,7 +405,6 @@
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "deemed_refusal",
       "job": "ESCALATE",
@@ -289,18 +413,24 @@
       "summary": "You can appeal now. You do not need a rejection letter.",
       "body": "Where the Public Information Officer fails to give a decision within the time specified, the officer is deemed to have refused the request under Section 7(2). This is the single most useful thing most applicants never learn. Silence is not the end of the matter. It is a refusal, it starts your right of appeal, and you do not need any letter from the department to act on it.",
       "appliesIf": [],
-      "dependsOn": ["await_reply"],
+      "dependsOn": [
+        "await_reply"
+      ],
       "authority": "RTI Act 2005",
       "clock": null,
-      "firesWhen": { "node": "await_reply", "state": "lapsed" },
+      "firesWhen": {
+        "node": "await_reply",
+        "state": "lapsed"
+      },
       "warnings": [],
-      "generates": ["first_appeal_draft"],
+      "generates": [
+        "first_appeal_draft"
+      ],
       "confidence": "verified",
       "sourceLabel": "RTI Act 2005, section 7(2)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "first_appeal",
       "job": "ESCALATE",
@@ -309,7 +439,9 @@
       "summary": "Free. Thirty days to file. They have up to forty five days to decide.",
       "body": "A First Appeal goes to an officer senior in rank to the Public Information Officer, called the First Appellate Authority, within the same public authority. You may appeal if you received no reply, if the reply was incomplete or misleading, or if the information was refused. No fee is payable for a first appeal. The appeal must normally be filed within thirty days of the decision or of the date the reply was due, though the Appellate Authority may admit a late appeal if satisfied there was sufficient cause. The Authority must dispose of the appeal within thirty days, extendable to a maximum of forty five days with reasons recorded in writing.",
       "appliesIf": [],
-      "dependsOn": ["deemed_refusal"],
+      "dependsOn": [
+        "deemed_refusal"
+      ],
       "authority": "First Appellate Authority",
       "clock": {
         "days": 30,
@@ -327,13 +459,14 @@
           "text": "Quote the registration number of the original application. Without it the appeal cannot be linked to your request."
         }
       ],
-      "generates": ["first_appeal_draft"],
+      "generates": [
+        "first_appeal_draft"
+      ],
       "confidence": "verified",
       "sourceLabel": "RTI Act 2005, section 19(1) and 19(6)",
       "sourceUrl": "https://rti.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "second_appeal",
       "job": "ESCALATE",
@@ -342,7 +475,9 @@
       "summary": "Ninety days. The Commission can penalise the officer personally.",
       "body": "If the First Appellate Authority refuses, or does not decide, you may appeal to the Central Information Commission, or the State Information Commission for state bodies. A second appeal must be filed within ninety days from the date the decision should have been made or was actually received, and the Commission may admit a later appeal for sufficient cause. A second appeal filed without a first appeal is liable to be returned. The Central Information Commission has integrated its second appeal filing with the RTI Online portal, so entering the First Appeal registration number, the email address and the filing date pulls the earlier details across automatically.",
       "appliesIf": [],
-      "dependsOn": ["first_appeal"],
+      "dependsOn": [
+        "first_appeal"
+      ],
       "authority": "Central or State Information Commission",
       "clock": {
         "days": 90,
@@ -356,13 +491,14 @@
           "text": "You cannot skip the First Appeal. A second appeal filed without one is liable to be returned."
         }
       ],
-      "generates": ["second_appeal_draft"],
+      "generates": [
+        "second_appeal_draft"
+      ],
       "confidence": "verified",
       "sourceLabel": "RTI Act 2005, section 19(3); RTI Online portal notice on CIC integration",
       "sourceUrl": "https://rtionline.gov.in/",
       "verifiedOn": "2026-08-25"
     },
-
     {
       "id": "section_18_complaint",
       "job": "ESCALATE",
@@ -371,7 +507,10 @@
       "summary": "A different route, with no time limit at all.",
       "body": "An appeal challenges the decision. A complaint under Section 18 challenges the conduct of the officer: refusing to accept your application, demanding a reason for wanting the information, giving deliberately misleading information, or charging an unreasonable fee. It goes directly to the Information Commission and, unlike an appeal, it carries no time limit. The Commission can impose a penalty on the officer personally through either route.",
       "appliesIf": [],
-      "dependsOn": ["submit"],
+      "dependsOn": [
+        "submit",
+        "state_filing"
+      ],
       "authority": "Central or State Information Commission",
       "clock": null,
       "warnings": [
@@ -386,15 +525,69 @@
       "verifiedOn": "2026-08-25"
     }
   ],
-
   "checks": [
-    { "id": "jurisdiction", "level": "block", "label": "Correct government", "fail": "The central portal will return this and will not refund the fee.", "fix": "Change the government type above, or use 'draft it anyway' to file with your state or by post." },
-    { "id": "length", "level": "block", "label": "Under 3,000 characters", "fail": "Longer text has to go in as a PDF attachment instead.", "fix": "Shorten the text, or move the detail into a PDF attachment under 1 MB." },
-    { "id": "charset", "level": "block", "label": "Accepted characters only", "fail": "The form accepts only A-Z a-z 0-9 and , . - _ ( ) / @ : & ? \\ % — remove anything else.", "fix": "Remove the flagged characters. Rupee signs, curly quotes and em dashes are the usual culprits." },
-    { "id": "single_subject", "level": "warn", "label": "One subject, one authority", "fail": "Unrelated questions in one application get transferred and half answered.", "fix": "Split this into separate applications. We can do that for you." },
-    { "id": "asks_for_records", "level": "warn", "label": "Asks for records, not reasons", "fail": "The Act covers information held in material form. Questions and requests for explanations can be refused.", "fix": "Ask for the document instead of the reason. For example, 'provide a copy of the file notings' rather than 'why was this delayed'." },
-    { "id": "no_identity_docs", "level": "block", "label": "No identity documents attached", "fail": "Section 6(2) does not require identity proof. Do not upload Aadhaar or PAN.", "fix": "Remove the attachment. You do not need to prove who you are to make an RTI request." },
-    { "id": "attachment", "level": "warn", "label": "PDF under 1 MB, no spaces in the filename", "fail": "The upload will fail silently.", "fix": "Save as a single PDF under 1 MB and rename it without spaces." },
-    { "id": "bpl_certificate", "level": "block", "label": "BPL certificate attached", "fail": "Free filing requires the certificate issued by the appropriate government.", "fix": "Attach the BPL certificate issued by your state government, or switch to paid filing at the ten rupee fee.", "appliesIf": [{ "field": "isBPL", "op": "eq", "value": "yes" }] }
+    {
+      "id": "jurisdiction",
+      "level": "warn",
+      "label": "Correct government",
+      "fail": "This is a state matter, so the central portal will return it. Your state route is set out at the filing step.",
+      "fix": "Nothing to fix if the records are held by a state body. Continue and file with your state."
+    },
+    {
+      "id": "length",
+      "level": "block",
+      "label": "Under 3,000 characters",
+      "fail": "Longer text has to go in as a PDF attachment instead.",
+      "fix": "Shorten the text, or move the detail into a PDF attachment under 1 MB."
+    },
+    {
+      "id": "charset",
+      "level": "block",
+      "label": "Accepted characters only",
+      "fail": "The form accepts only A-Z a-z 0-9 and , . - _ ( ) / @ : & ? \\ % — remove anything else.",
+      "fix": "Remove the flagged characters. Rupee signs, curly quotes and em dashes are the usual culprits."
+    },
+    {
+      "id": "single_subject",
+      "level": "warn",
+      "label": "One subject, one authority",
+      "fail": "Unrelated questions in one application get transferred and half answered.",
+      "fix": "Split this into separate applications. We can do that for you."
+    },
+    {
+      "id": "asks_for_records",
+      "level": "warn",
+      "label": "Asks for records, not reasons",
+      "fail": "The Act covers information held in material form. Questions and requests for explanations can be refused.",
+      "fix": "Ask for the document instead of the reason. For example, 'provide a copy of the file notings' rather than 'why was this delayed'."
+    },
+    {
+      "id": "no_identity_docs",
+      "level": "block",
+      "label": "No identity documents attached",
+      "fail": "Section 6(2) does not require identity proof. Do not upload Aadhaar or PAN.",
+      "fix": "Remove the attachment. You do not need to prove who you are to make an RTI request."
+    },
+    {
+      "id": "attachment",
+      "level": "warn",
+      "label": "PDF under 1 MB, no spaces in the filename",
+      "fail": "The upload will fail silently.",
+      "fix": "Save as a single PDF under 1 MB and rename it without spaces."
+    },
+    {
+      "id": "bpl_certificate",
+      "level": "block",
+      "label": "BPL certificate attached",
+      "fail": "Free filing requires the certificate issued by the appropriate government.",
+      "fix": "Attach the BPL certificate issued by your state government, or switch to paid filing at the ten rupee fee.",
+      "appliesIf": [
+        {
+          "field": "isBPL",
+          "op": "eq",
+          "value": "yes"
+        }
+      ]
+    }
   ]
 }

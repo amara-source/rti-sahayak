@@ -100,22 +100,49 @@ export function computeJourneyFromPack(
   elapsedHoursSinceSubmission = 0,
 ): RenderedNode[] {
   const loadedPack = parseRtiRulePack(pack);
-  const applicableNodes = loadedPack.nodes.filter(
+  const conditionallyApplicable = loadedPack.nodes.filter(
     (node) =>
       node.confidence !== "unverified" &&
       everyConditionPasses(node.appliesIf, answers),
+  );
+  // A node that applies can stand in for another, so the pack can branch: the
+  // state filing step replaces the central submit step on that route.
+  const replaced = new Set(
+    conditionallyApplicable
+      .map((node) => node.replaces)
+      .filter((id): id is string => Boolean(id)),
+  );
+  const applicableNodes = conditionallyApplicable.filter(
+    (node) => !replaced.has(node.id),
   );
   const orderedNodes = topologicalSort(applicableNodes);
   const resolvedClocks = new Map(
     orderedNodes.map((node) => [node.id, resolveClock(node, answers)]),
   );
+  const applicableIdsForClocks = new Set(orderedNodes.map((node) => node.id));
+  /**
+   * A clock starts from the node named in `from`. Where that node does not
+   * apply to this case, because the pack branches between the central and the
+   * state filing route, the clock starts from whichever of the owning node's
+   * dependencies actually applies and is done. The statutory period is the
+   * same either way; only the counter it is filed at changes.
+   */
+  const clockHasStarted = (node: RuleNode, clock: ResolvedClock) => {
+    if (applicableIdsForClocks.has(clock.from)) {
+      return statuses[clock.from] === "done";
+    }
+    return node.dependsOn.some(
+      (id) => applicableIdsForClocks.has(id) && statuses[id] === "done",
+    );
+  };
+
   const lapsedNodes = new Set(
     orderedNodes
       .filter((node) => {
         const clock = resolvedClocks.get(node.id) ?? null;
         return (
           clock !== null &&
-          statuses[clock.from] === "done" &&
+          clockHasStarted(node, clock) &&
           clockHasLapsed(clock, elapsedHoursSinceSubmission)
         );
       })
@@ -130,8 +157,11 @@ export function computeJourneyFromPack(
       )
       .map((node) => node.id),
   );
+  const applicableIds = new Set(orderedNodes.map((node) => node.id));
+  // Same rule as the sort: a dependency that does not apply to this case is
+  // not a dependency, so a branching route cannot leave the case stalled.
   const dependencyIsSatisfied = (id: string) =>
-    statuses[id] === "done" || firedNodes.has(id);
+    !applicableIds.has(id) || statuses[id] === "done" || firedNodes.has(id);
 
   return orderedNodes
     .map((node) => {
