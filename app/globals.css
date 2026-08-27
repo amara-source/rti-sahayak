@@ -9163,7 +9163,17 @@ small,
   padding: 34px;
 }
 
-.home-helpdesk__art { grid-row: span 6; width: 100%; height: auto; }
+/* Place the art explicitly. Auto-placement put the image, as the first child,
+   into the wide column and pushed every line of text into the 200px one. */
+.home-helpdesk__art {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
+  width: 100%;
+  height: auto;
+}
+
+.home-helpdesk__body > :not(.home-helpdesk__art) { grid-column: 1; }
 .home-helpdesk__numbers a { font-size: 1.6rem; }
 .home-helpdesk__hours { font-size: 1rem; }
 
