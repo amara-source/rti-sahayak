@@ -9626,3 +9626,66 @@ small,
 .rti-state-browse h2 { margin: 0; font-size: 18px; }
 .rti-state-browse p { margin: 0; color: var(--muted); font-size: var(--card-body); line-height: var(--card-body-lh); }
 .rti-state-browse .rti-field { max-width: 340px; width: 100%; }
+
+/* ---------------------------------------------------------------------------
+   CASE NODE CARDS
+   The job pill sat almost touching the icon tile, and the status floated right
+   at a larger size than the pill beside it. Fixed rhythm: icon, 16px, the pill
+   row, 12px, the title.
+   --------------------------------------------------------------------------- */
+
+.rti-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: var(--card-pad-all);
+}
+
+.rti-node > .rti-icon-tile,
+.rti-node > .rti-icon-tile--sm {
+  margin-bottom: 16px;
+}
+
+.rti-node__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  /* The status reads at the same size as the pill it sits beside. */
+  font-size: var(--caption);
+  line-height: 1;
+}
+
+.rti-node__top > span {
+  font-size: var(--caption);
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.rti-node__top .rti-job {
+  font-size: var(--caption);
+  line-height: 1;
+}
+
+.rti-node h3 {
+  margin: 0 0 8px;
+  font-size: var(--card-title);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.rti-node > p {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: var(--card-body);
+  line-height: var(--card-body-lh);
+}
+
+.rti-node > a,
+.rti-node > small {
+  margin-top: var(--card-gap-to-button);
+}
+
+.rti-node-list { align-items: stretch; }
