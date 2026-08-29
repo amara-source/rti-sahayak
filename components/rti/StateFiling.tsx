@@ -8,6 +8,7 @@ import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { loadDraft, type RtiDraft } from "@/lib/rti/draft";
 import { listJurisdictions, statePortal } from "@/lib/engine/jurisdictions";
 import { listAuthorities } from "@/lib/engine/authority";
+import { evaluatePreflightChecks } from "@/lib/engine/checks";
 import { Icon } from "./Icon";
 import { PageHero } from "./PageHero";
 
@@ -50,7 +51,7 @@ function typedFromIso(iso: string): string {
 
 export function StateFiling() {
   // Interface copy in the selected language, English where untranslated.
-  const { rti: rtiCopy } = useCopy();
+  const { rti: rtiCopy, language } = useCopy();
   const router = useRouter();
   const copy = rtiCopy.stateFiling;
   const [draft, setDraft] = useState<RtiDraft | null>(null);
@@ -62,6 +63,10 @@ export function StateFiling() {
   const filedOn = isoFromTyped(typedDate);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  // Set when the refusal is something the citizen fixes at the checks step.
+  const [blockedBy, setBlockedBy] = useState<string[]>([]);
+  // What the server said, shown beside our own line rather than instead of it.
+  const [reason, setReason] = useState("");
   // Used only when the page is opened directly with no request in session.
   const [browseState, setBrowseState] = useState("");
 
@@ -80,6 +85,25 @@ export function StateFiling() {
   const state = browsing ? browseState : String(draft?.state ?? "");
   const portal = statePortal(state);
   const jurisdictions = listJurisdictions();
+
+  // The same rules the server runs, so a refusal is shown before the click
+  // rather than after it. Jurisdiction is exempt: state really is the answer
+  // here, which is the whole point of this page.
+  const blockingChecks = draft
+    ? evaluatePreflightChecks(
+        {
+          bodyLevel: "state",
+          text: draft.rewritten || draft.rawText || "",
+          singleSubject: draft.singleSubject ?? true,
+          asksForRecords: draft.asksForRecords ?? true,
+          hasIdentityDocuments: draft.hasIdentityDocuments ?? false,
+          attachments: draft.attachments,
+          isBPL: draft.isBPL ?? "no",
+          hasBplCertificate: draft.hasBplCertificate ?? false,
+        },
+        language,
+      ).filter((check) => check.status === "block" && check.id !== "jurisdiction")
+    : [];
   const authority = listAuthorities().find((item) => item.id === draft?.authorityId);
 
   async function download() {
@@ -104,6 +128,8 @@ export function StateFiling() {
   async function openCase() {
     setPending(true);
     setError("");
+    setBlockedBy([]);
+    setReason("");
     try {
       const response = await fetch("/api/case", {
         method: "POST",
@@ -113,10 +139,28 @@ export function StateFiling() {
           extracted: { ...draft, bodyLevel: "state", filedOn: filedOn || undefined },
         }),
       });
-      const result = (await response.json()) as { code?: string; error?: string };
-      if (!response.ok || !result.code) throw new Error(result.error || "case");
+      const result = (await response.json()) as {
+        code?: string;
+        error?: string;
+        checks?: Array<{ id: string; label: string; status: string }>;
+      };
+      if (!response.ok || !result.code) {
+        // The reason the server gave, rather than a reassurance that hides it.
+        // A blocking check is named, because that is something to go and fix.
+        const blocking = (result.checks ?? [])
+          .filter((check) => check.status === "block" && check.id !== "jurisdiction")
+          .map((check) => check.label);
+        setBlockedBy(blocking);
+        if (!blocking.length) {
+          setError(copy.openError);
+          setReason(result.error ? `${copy.openReason} ${result.error}` : `${copy.openReason} ${response.status}`);
+        }
+        setPending(false);
+        return;
+      }
       router.push(`/case/${result.code}`);
     } catch {
+      // Never reached the server, or the reply was not readable.
       setError(copy.openError);
       setPending(false);
     }
@@ -237,19 +281,36 @@ export function StateFiling() {
           </label>
           <button
             className="rti-primary"
-            disabled={pending || !filedOn}
+            disabled={pending || !filedOn || blockingChecks.length > 0}
             onClick={openCase}
             type="button"
           >
             {pending ? rtiCopy.common.loading : copy.open}
           </button>
           {/* Never fails on click: it says what is missing before you press it. */}
-          {!filedOn ? (
+          {blockingChecks.length ? (
+            <p className="rti-error" role="alert">
+              {copy.openBlocked}{" "}
+              <strong>{blockingChecks.map((check) => check.label).join(", ")}</strong>.{" "}
+              <Link href="/file/checks">{copy.openBlockedFix}</Link>
+            </p>
+          ) : !filedOn ? (
             <small className="rti-disabled-reason">
               {typedDate.trim() ? copy.dateInvalid : copy.dateRequired}
             </small>
           ) : null}
-          {error ? <p className="rti-error" role="alert">{error}</p> : null}
+          {blockedBy.length ? (
+            <p className="rti-error" role="alert">
+              {copy.openBlocked} <strong>{blockedBy.join(", ")}</strong>.{" "}
+              <Link href="/file/checks">{copy.openBlockedFix}</Link>
+            </p>
+          ) : null}
+          {error ? (
+            <p className="rti-error" role="alert">
+              {error}
+              {reason ? <><br /><small>{reason}</small></> : null}
+            </p>
+          ) : null}
         </section>
         )}
 
