@@ -38,3 +38,14 @@ describe("portal text sanitisation", () => {
     expect(sanitiseForPortal(clean)).toBe(clean);
   });
 });
+
+describe("the text a citizen actually writes", () => {
+  it("survives the charset check after sanitising, apostrophes and all", () => {
+    const written =
+      "My street's water line hasn't been repaired since March, and they haven't answered my complaints.";
+    const cleaned = sanitiseForPortal(written);
+    // The same set the rule pack enforces.
+    expect(/^[A-Za-z0-9,\.\-_()\/@:&?\\%\s]*$/.test(cleaned)).toBe(true);
+    expect(cleaned).toContain("streets water line");
+  });
+});

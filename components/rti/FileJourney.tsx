@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { rtiCopy as englishCopy } from "@/content/rti-copy";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
+import { sanitiseForPortal } from "@/lib/ai/portal-text";
 import { PageHero, type HeroTone } from "@/components/rti/PageHero";
 import { listAuthorities, matchAuthorityWithReason } from "@/lib/engine/authority";
 import { listJurisdictions } from "@/lib/engine/jurisdictions";
@@ -653,7 +654,11 @@ function DraftStep() {
   useEffect(() => {
     if (!draft) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only storage and matchMedia can only be read after mount. This previously ran inside requestAnimationFrame, which never fires in a hidden tab and left the page blank.
-    setRewritten(draft.rewritten ?? draft.rawText);
+    // Falling back to what the citizen wrote means falling back to ordinary
+    // prose, and an apostrophe alone fails the portal charset check. The model
+    // path is already sanitised; this one has to be too, or the request is
+    // blocked at the checks step through no fault of the person filing it.
+    setRewritten(draft.rewritten ?? sanitiseForPortal(draft.rawText));
     setChanges(draft.changes ?? []);
     if (draft.rewritten) setPending(false);
   }, [draft]);
@@ -672,12 +677,12 @@ function DraftStep() {
       .then((response) => response.json())
       .then((result: { rewritten?: string; changes?: RewriteChange[] }) => {
         if (cancelled) return;
-        setRewritten(result.rewritten || draft.rawText);
+        setRewritten(result.rewritten || sanitiseForPortal(draft.rawText));
         setChanges(result.changes ?? []);
       })
       .catch(() => {
         if (cancelled) return;
-        setRewritten(draft.rawText);
+        setRewritten(sanitiseForPortal(draft.rawText));
         setChanges([
           {
             title: rtiCopy.draft.fallbackTitle,
