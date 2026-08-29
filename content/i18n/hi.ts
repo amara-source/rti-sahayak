@@ -659,6 +659,7 @@ export const hi = {
           title: "यह नमूना",
           links: [
             { label: "पारदर्शिता" },
+            { label: "अधिकारी वाली झलक" },
             { label: "निजता" },
             { label: "शर्तें" },
             { label: "सुगमता" },

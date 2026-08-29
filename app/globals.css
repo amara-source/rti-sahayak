@@ -10183,3 +10183,90 @@ small,
 @media (max-width: 760px) {
   .rti-check-list { columns: 1; }
 }
+
+/* The officer preview. It borrows the node card, the clock panel and the job
+   pill; only the queue's own counts and layout are new. */
+.officer-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.officer-count {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--accent);
+  border-radius: var(--card-radius);
+  padding: var(--card-pad-all);
+  background: var(--surface);
+}
+
+.officer-count--overdue { border-left-color: #a63f44; }
+
+.officer-count strong {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.officer-count span {
+  color: var(--muted);
+  font-size: var(--card-body);
+}
+
+.officer-queue { gap: 14px; }
+
+.officer-row { border-left: 6px solid #347c4b; }
+.officer-row--due_soon { border-left-color: #b87917; }
+.officer-row--overdue { border-left-color: #a63f44; }
+
+.officer-row__facts {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.officer-row__facts dt {
+  color: var(--muted);
+  font-size: var(--caption);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.officer-row__facts dd {
+  margin: 2px 0 0;
+  color: var(--ink);
+  font-size: var(--card-body);
+}
+
+/* The status pill reuses the job pill, so it needs its own colours only. */
+.officer-status--on_time { background: #0f6b45; }
+.officer-status--due_soon { background: #7d5210; }
+.officer-status--overdue { background: #9c1038; }
+
+.officer-disclaimer { margin-top: 28px; }
+
+@media (max-width: 980px) {
+  .officer-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .officer-counts { grid-template-columns: 1fr; }
+}
+
+/* The clock panel is built for the full width of a tracker. Inside a queue
+   card it carries two figures, and the registration sits with the subject
+   above it rather than as a third column that will not fit. */
+.officer-row .rti-clock {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.officer-row__registration {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: var(--caption);
+  letter-spacing: .04em;
+}

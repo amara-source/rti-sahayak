@@ -64,6 +64,7 @@ export const shellCopy = {
         title: "Prototype",
         links: [
           { label: "Honesty", href: "/honesty" },
+          { label: "Officer preview", href: "/officer" },
           { label: "Privacy", href: "/privacy" },
           { label: "Terms", href: "/terms" },
           { label: "Accessibility", href: "/accessibility" },

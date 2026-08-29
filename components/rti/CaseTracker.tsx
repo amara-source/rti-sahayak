@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useCopy } from "@/lib/i18n/LanguageProvider";
 import { nodeAuthority, nodeClockLabel, nodeSummary, nodeTitle } from "@/lib/rti/node-text";
+import { replyClock } from "@/lib/rti/reply-clock";
 import type { Plan, RenderedNode, Status } from "@/lib/engine/types";
 import { TrackerPanel } from "@/components/tracker/TrackerPanel";
 import { PageHero } from "@/components/rti/PageHero";
@@ -40,17 +41,10 @@ function Clock({
   const { rti: rtiCopy } = useCopy();
   const reply = nodes.find((node) => node.id === "await_reply");
   const lifeLiberty = plan.answers.lifeLiberty === "yes";
-  const elapsed = plan.elapsedHours ?? 0;
-  const limit = lifeLiberty ? 48 : 30 * 24;
-  const elapsedValue = lifeLiberty ? elapsed : Math.floor(elapsed / 24);
-  const remainingValue = lifeLiberty
-    ? Math.max(0, limit - elapsed)
-    : Math.max(0, 30 - Math.floor(elapsed / 24));
-  const overdueValue = lifeLiberty
-    ? Math.max(0, elapsed - limit)
-    : Math.max(0, Math.floor((elapsed - limit) / 24));
+  const clock = replyClock(plan.elapsedHours ?? 0, lifeLiberty);
+  const elapsedValue = clock.elapsed;
   const consequence = reply?.clock?.consequence;
-  const secondValue = lapsed ? overdueValue : remainingValue;
+  const secondValue = lapsed ? clock.overdue : clock.remaining;
 
   return (
     <section className={lapsed ? "rti-clock is-lapsed" : "rti-clock"}>

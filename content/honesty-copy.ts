@@ -31,6 +31,12 @@ export const honestyCopy: UtilityPageCopy = {
       ],
     },
     {
+      heading: "Concept previews",
+      cards: [
+        { title: "The officer's queue", body: "The same rule pack seen from the other side: six synthetic requests ordered by closest deadline, with the step each one has reached. It is a preview of an idea, not a working product, and no government system is involved.", href: "/officer", linkLabel: "Open the officer preview" },
+      ],
+    },
+    {
       cards: [
         { title: "Ask RTI Sahayak", body: "The Ask page offers fixed question chips and returns text already authored in the RTI rule pack. It is scripted and is not connected to a model.", href: "/ask", linkLabel: "Open the scripted assistant" },
       ],
