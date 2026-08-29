@@ -437,7 +437,12 @@ function JurisdictionStep() {
             >
               {rtiCopy.jurisdiction.draftAnyway}
             </button>
-            <small>{rtiCopy.jurisdiction.resolveFirst}</small>
+            {/* Only while the button is actually blocked. It used to show
+                under an enabled button, telling a citizen who had already
+                chosen their state to go and choose one. */}
+            {!(customState ? stateOther.trim() : state.trim()) ? (
+              <small className="rti-disabled-reason">{rtiCopy.jurisdiction.resolveFirst}</small>
+            ) : null}
           </>
         )}
       </div>
@@ -772,6 +777,27 @@ function ChecksStep() {
     setAttachments(draft.attachments ?? []);
   }, [draft]);
 
+  // The check answers belong to the request as soon as they are set, not only
+  // when Continue is pressed. Leaving this step by any other route, such as
+  // the state filing link on the government check, used to drop them, and the
+  // case could then not be opened at all: the API rejected a request whose
+  // check answers were missing, and the state route showed a failure with no
+  // way past it. Storage only, so this cannot loop through React state.
+  useEffect(() => {
+    const current = loadDraft();
+    if (!current) return;
+    const next = {
+      ...current,
+      singleSubject,
+      asksForRecords,
+      hasIdentityDocuments,
+      attachments,
+      hasBplCertificate,
+    };
+    if (JSON.stringify(next) === JSON.stringify(current)) return;
+    saveDraft(next);
+  }, [singleSubject, asksForRecords, hasIdentityDocuments, attachments, hasBplCertificate]);
+
   if (!ready) return null;
   if (!draft?.bodyLevel) return <Shell step="checks" eyebrow={rtiCopy.checks.eyebrow} heading={rtiCopy.checks.heading}><EmptyStep icon="clipboard-check" what="Runs every pre-flight rule against the request before it is filed." /></Shell>;
 
@@ -852,7 +878,7 @@ function ChecksStep() {
       if (!response.ok || !result.code) throw new Error("case");
       router.push(`/case/${result.code}`);
     } catch {
-      setTrackingError(rtiCopy.common.error);
+      setTrackingError(rtiCopy.checks.trackError);
       setTrackingPending(false);
     }
   }

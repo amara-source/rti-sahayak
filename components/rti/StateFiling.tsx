@@ -22,6 +22,32 @@ import { PageHero } from "./PageHero";
  * The portal link is only ever shown where the URL was verified. Where it was
  * not, this says so rather than guessing an address.
  */
+/**
+ * dd/mm/yyyy as a citizen writes it, to the ISO date the engine wants.
+ *
+ * Returns "" for anything incomplete, impossible or in the future. A native
+ * date input was here before and could not be typed into at all, which left
+ * the whole state route with no way to reach the tracker.
+ */
+function isoFromTyped(value: string): string {
+  const match = value.trim().match(/^(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{4})$/);
+  if (!match) return "";
+  const [day, month, year] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  if (month < 1 || month > 12 || day < 1 || day > 31) return "";
+  const date = new Date(Date.UTC(year, month - 1, day));
+  // Rejects the 31st of a 30 day month, and the 29th outside a leap year.
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return "";
+  const iso = date.toISOString().slice(0, 10);
+  if (iso > new Date().toISOString().slice(0, 10)) return "";
+  return iso;
+}
+
+/** ISO back to dd/mm/yyyy, for what the picker hands back. */
+function typedFromIso(iso: string): string {
+  const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : "";
+}
+
 export function StateFiling() {
   // Interface copy in the selected language, English where untranslated.
   const { rti: rtiCopy } = useCopy();
@@ -29,7 +55,11 @@ export function StateFiling() {
   const copy = rtiCopy.stateFiling;
   const [draft, setDraft] = useState<RtiDraft | null>(null);
   const [ready, setReady] = useState(false);
-  const [filedOn, setFiledOn] = useState("");
+  // What the citizen typed, exactly as typed, and the date it resolves to.
+  // They are kept apart so a half typed date never clears itself under the
+  // cursor and the button can say why it is not ready yet.
+  const [typedDate, setTypedDate] = useState("");
+  const filedOn = isoFromTyped(typedDate);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   // Used only when the page is opened directly with no request in session.
@@ -87,7 +117,7 @@ export function StateFiling() {
       if (!response.ok || !result.code) throw new Error(result.error || "case");
       router.push(`/case/${result.code}`);
     } catch {
-      setError(rtiCopy.common.error);
+      setError(copy.openError);
       setPending(false);
     }
   }
@@ -179,19 +209,46 @@ export function StateFiling() {
         ) : (
         <section className="rti-state-date">
           <h2>{copy.dateHeading}</h2>
-          <label className="rti-field">
+          <label className="rti-field rti-date-field">
             <span>{copy.dateLabel}</span>
-            <input
-              max={new Date().toISOString().slice(0, 10)}
-              onChange={(event) => setFiledOn(event.target.value)}
-              type="date"
-              value={filedOn}
-            />
+            <span className="rti-date-field__controls">
+              {/* Typed entry is a plain text field. A native date input cannot
+                  be typed into reliably, and this route has to be usable
+                  without reaching for the picker at all. */}
+              <input
+                autoComplete="off"
+                inputMode="numeric"
+                onChange={(event) => setTypedDate(event.target.value)}
+                placeholder={copy.datePlaceholder}
+                type="text"
+                value={typedDate}
+              />
+              {/* And the picker, for anyone who would rather choose one. */}
+              <input
+                aria-label={copy.datePickerLabel}
+                className="rti-date-field__picker"
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(event) => setTypedDate(typedFromIso(event.target.value))}
+                type="date"
+                value={filedOn}
+              />
+            </span>
             <small>{copy.dateNote}</small>
           </label>
-          <button className="rti-primary" disabled={pending} onClick={openCase} type="button">
+          <button
+            className="rti-primary"
+            disabled={pending || !filedOn}
+            onClick={openCase}
+            type="button"
+          >
             {pending ? rtiCopy.common.loading : copy.open}
           </button>
+          {/* Never fails on click: it says what is missing before you press it. */}
+          {!filedOn ? (
+            <small className="rti-disabled-reason">
+              {typedDate.trim() ? copy.dateInvalid : copy.dateRequired}
+            </small>
+          ) : null}
           {error ? <p className="rti-error" role="alert">{error}</p> : null}
         </section>
         )}

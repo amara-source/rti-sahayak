@@ -10,6 +10,19 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/**
+ * A filing date is optional, but when given it must be a real ISO date and
+ * cannot be in the future: the reply period runs from the day the authority
+ * received the application.
+ */
+function isFilingDate(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) return false;
+  return value <= new Date().toISOString().slice(0, 10);
+}
+
 export async function GET() {
   const storage = cookiePlanStorage(await cookies());
   const plan = await storage.load();
@@ -46,7 +59,8 @@ export async function POST(request: Request) {
     typeof extracted.asksForRecords !== "boolean" ||
     typeof extracted.hasIdentityDocuments !== "boolean" ||
     !["yes", "no", "na"].includes(String(extracted.isBPL)) ||
-    typeof extracted.hasBplCertificate !== "boolean"
+    typeof extracted.hasBplCertificate !== "boolean" ||
+    !isFilingDate(extracted.filedOn)
   ) {
     return NextResponse.json({ error: rtiCopy.api.invalid }, { status: 400 });
   }
@@ -101,6 +115,7 @@ export async function POST(request: Request) {
     officer: extracted.officer,
     rewritten: extracted.rewritten,
     registrationNumber: extracted.registrationNumber,
+    filedOn: extracted.filedOn,
   });
   const storage = cookiePlanStorage(await cookies());
   await storage.save(plan);

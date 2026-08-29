@@ -87,7 +87,7 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
       if (!response.ok) throw new Error("status");
       setData(await response.json() as CaseResponse);
     } catch {
-      setError(rtiCopy.common.error);
+      setError(rtiCopy.appeals.submitError);
     } finally {
       setPending(false);
     }
@@ -107,7 +107,7 @@ export function AppealJourney({ kind }: { kind: AppealKind }) {
       if (!response.ok) throw new Error("advance");
       setData(await response.json() as CaseResponse);
     } catch {
-      setError(rtiCopy.common.error);
+      setError(rtiCopy.appeals.advanceError);
     } finally {
       setPending(false);
     }

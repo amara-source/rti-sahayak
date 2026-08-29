@@ -3,6 +3,11 @@ export const rtiCopy = {
     back: "Back",
     continue: "Continue",
     loading: "Working",
+    /**
+     * The rewriting service falling back to the citizen's own words. It
+     * belongs to the describe and draft steps and nowhere else: every other
+     * screen says what failed there and what to do about it.
+     */
     error: "Something went wrong. You can continue with your own text.",
     somethingElse: "Something else, let me type it",
   },
@@ -76,7 +81,7 @@ export const rtiCopy = {
     unionTerritoriesGroup: "Union territories",
     helper: "Central means a ministry, a central department, a public sector bank, EPFO, Indian Railways, a central university. State means municipality, state police, state schools, land records, state transport, state pensions.",
     draftAnyway: "Draft it anyway",
-    resolveFirst: "Choose central or state before you continue.",
+    resolveFirst: "Choose your state or union territory to continue.",
   },
   authority: {
     eyebrow: "Authority and officer",
@@ -145,6 +150,7 @@ export const rtiCopy = {
     stateTrack: "Track your deadlines anyway",
     stateTrackNote: "Use this only after you have filed the application with the state authority. Nothing is sent from this prototype.",
     tracking: "Opening your tracker",
+    trackError: "Your case could not be opened. Nothing you entered has been lost. Check your connection and try again.",
   },
   empty: {
     heading: "There is no request open yet",
@@ -187,6 +193,11 @@ export const rtiCopy = {
     startYoursAction: "Start a request",
     dateHeading: "When did you send it?",
     dateLabel: "Date of filing",
+    datePlaceholder: "dd/mm/yyyy",
+    datePickerLabel: "Pick the date of filing from a calendar",
+    dateRequired: "Enter the date you sent it, as dd/mm/yyyy, to open your case.",
+    dateInvalid: "That is not a date we can read. Use dd/mm/yyyy, and a day on or before today.",
+    openError: "Your case could not be opened. Nothing you entered has been lost. Check your connection and try again.",
     dateNote: "The thirty days are counted from the day it reaches them. Tell us when you sent it and we will work out the date they must reply by.",
     open: "Open your case",
     appealNote: "The appeal ladder is the same, with two differences. The First Appeal goes to the First Appellate Authority of that state body, and the Second Appeal goes to the State Information Commission rather than the Central Information Commission.",
@@ -243,6 +254,7 @@ export const rtiCopy = {
     ordinaryReason: "The standard 30-day reply period applies.",
     libertyReason: "Life or liberty was marked yes, so the 48-hour reply period applies.",
     next: "See what happens next",
+    advanceError: "The case clock could not be moved. Your case is unchanged. Try again in a moment.",
     nextNote: "This moves the case forward in time. No department is contacted.",
     fired: "They did not reply in time, so in law that counts as a refusal. You can appeal now.",
     overdue: "Overdue by",
@@ -378,6 +390,7 @@ export const rtiCopy = {
     basis: "Statutory basis",
     status: "Update status",
     save: "Save status",
+    saveError: "That status could not be saved. Your case is unchanged. Try again in a moment.",
     source: "Open the primary source",
     missing: "This step is not part of the case.",
   },
@@ -423,6 +436,8 @@ export const rtiCopy = {
     windowClosed: "Decision window closed",
     stateCommission: "This is a state case, so the Second Appeal goes to the State Information Commission, not the Central Information Commission. The ninety day limit is the same.",
     stateFirstAppeal: "This is a state case, so the First Appeal goes to the First Appellate Authority inside that state body. The thirty day limit is the same.",
+    submitError: "That could not be recorded. Your appeal is unchanged. Try again in a moment.",
+    advanceError: "The decision clock could not be moved. Your appeal is unchanged. Try again in a moment.",
     daysElapsed: "days elapsed",
     daysRemaining: "days remaining",
     back: "Back to your case",

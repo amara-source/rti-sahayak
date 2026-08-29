@@ -5,6 +5,7 @@ import { computeJourney } from "../journey";
 import { listJurisdictions } from "../jurisdictions";
 import { loadRtiRulePack } from "../journey";
 import { homeCopy } from "../../../content/home-copy";
+import { createSubmittedCase } from "../../plans/plan";
 
 describe("RTI authority rules", () => {
   it("matches an authored central authority and falls back honestly", () => {
@@ -380,3 +381,19 @@ describe("statutory leads", () => {
   });
 });
 
+describe("a state case opened after filing", () => {
+  it("counts the reply period from the date the citizen filed, not from today", () => {
+    const filed = new Date(Date.now() - 20 * 86_400_000).toISOString().slice(0, 10);
+    const plan = createSubmittedCase({ bodyLevel: "state", filedOn: filed });
+    expect(plan.elapsedHours).toBe(20 * 24);
+  });
+
+  it("starts at zero when no filing date was given", () => {
+    expect(createSubmittedCase({ bodyLevel: "state" }).elapsedHours).toBe(0);
+  });
+
+  it("never runs the clock backwards", () => {
+    const tomorrow = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
+    expect(createSubmittedCase({ bodyLevel: "state", filedOn: tomorrow }).elapsedHours).toBe(0);
+  });
+});

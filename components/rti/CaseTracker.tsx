@@ -254,7 +254,7 @@ export function CaseTracker({ code }: { code: string }) {
         }
       }
     } catch {
-      setError(rtiCopy.common.error);
+      setError(rtiCopy.tracker.advanceError);
     } finally {
       setPending(false);
     }
@@ -523,7 +523,7 @@ export function CaseNodeDetail({
       body: JSON.stringify({ nodeId, status }),
     });
     if (!response.ok) {
-      setError(rtiCopy.common.error);
+      setError(rtiCopy.detail.saveError);
       return;
     }
     const result = (await response.json()) as CaseResponse;

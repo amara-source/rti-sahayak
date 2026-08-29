@@ -51,10 +51,27 @@ export function createPlan(
   };
 }
 
+/**
+ * Whole days between an ISO date and today, floored at zero.
+ *
+ * A state applicant files with their own authority and comes here afterwards,
+ * so the clock has usually been running for a while before the case exists.
+ */
+function daysSince(iso: unknown): number {
+  if (typeof iso !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return 0;
+  const filed = Date.parse(`${iso}T00:00:00Z`);
+  if (Number.isNaN(filed)) return 0;
+  const today = Date.parse(`${new Date().toISOString().slice(0, 10)}T00:00:00Z`);
+  return Math.max(0, Math.floor((today - filed) / 86_400_000));
+}
+
 export function createSubmittedCase(
   answers: Record<string, unknown>,
 ): Plan {
   const plan = createPlan("rti", answers);
+  // The reply period runs from the day the authority received it, not from
+  // the moment this case was opened.
+  plan.elapsedHours = daysSince(answers.filedOn) * 24;
   // The filing step differs by route: a state case is filed with the state
   // authority, a central one on the portal. Everything after it is identical.
   const filingNode =
