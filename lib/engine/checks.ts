@@ -23,6 +23,14 @@ export interface CheckResult {
   status: "pass" | "warn" | "block";
   fail: string;
   fix: string;
+  /**
+   * Set where the check has nothing for the applicant to fix and is telling
+   * them something instead. A state applicant has already chosen a state
+   * authority: the central portal not accepting the application is a fact
+   * about where it goes, not a fault in the request. Where this is set the
+   * card shows this one line in place of the consequence and the fix.
+   */
+  means?: string;
 }
 
 const allowedCharacters = /^[A-Za-z0-9,\.\-_()\/@:&?\\%\s]*$/;
@@ -90,6 +98,7 @@ export function evaluatePreflightChecks(
     fail: string;
     fix: string;
     hi?: Partial<CheckWording>;
+    stateInformation?: { means: string; hi?: { means?: string } };
     appliesIf?: Condition[];
   }>;
 
@@ -100,9 +109,19 @@ export function evaluatePreflightChecks(
         input as unknown as Record<string, unknown>,
       ),
     )
-    .map((check) => ({
-      id: check.id,
-      ...wording(check, language),
-      status: (passes(check.id, input) ? "pass" : check.level) as CheckResult["status"],
-    }));
+    .map((check) => {
+      const passed = passes(check.id, input);
+      // Only the state answer reads as information. "I am not sure" still
+      // has something to resolve, so it keeps the consequence and the fix.
+      const information =
+        !passed && input.bodyLevel === "state" ? check.stateInformation : undefined;
+      return {
+        id: check.id,
+        ...wording(check, language),
+        status: (passed ? "pass" : check.level) as CheckResult["status"],
+        ...(information
+          ? { means: (language === "hi" && information.hi?.means) || information.means }
+          : {}),
+      };
+    });
 }

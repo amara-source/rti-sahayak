@@ -929,22 +929,22 @@ function ChecksStep() {
               <h2>{result.label}</h2>
               <span>{result.status === "warn" ? rtiCopy.checks.warn : rtiCopy.checks.block}</span>
             </header>
-            <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
-            <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
+            {result.means ? (
+              // Nothing to fix. The application is sound, it simply goes to
+              // the state body rather than the central portal, so the card
+              // says where that is instead of offering a repair.
+              <p><strong>{rtiCopy.checks.means}:</strong> {result.means}</p>
+            ) : (
+              <>
+                <p><strong>{rtiCopy.checks.consequence}:</strong> {result.fail}</p>
+                <p><strong>{rtiCopy.checks.fix}:</strong> {result.fix}</p>
+              </>
+            )}
             <Link
               className="rti-secondary rti-fix-link"
-              href={
-                // A state case cannot fix the jurisdiction check by changing
-                // the government type, because state really is the answer. It
-                // needs the authority step, where the state list now lives.
-                result.id === "jurisdiction" && draft.bodyLevel === "state"
-                  ? "/file/authority"
-                  : checkFixHrefs[result.id] ?? "/file"
-              }
+              href={result.means ? "/file/state" : checkFixHrefs[result.id] ?? "/file"}
             >
-              {result.id === "jurisdiction" && draft.bodyLevel === "state"
-                ? rtiCopy.checks.chooseStateAuthority
-                : rtiCopy.checks.fixAction}
+              {result.means ? rtiCopy.checks.whereToFile : rtiCopy.checks.fixAction}
             </Link>
           </article>
         ))}
