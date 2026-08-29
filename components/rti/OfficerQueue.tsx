@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { officerCopy } from "@/content/officer-copy";
 import { officerQueue, queueCounts, type QueueRow } from "@/lib/rti/officer-queue";
 import { nodeIcon } from "@/lib/rti/icon-map";
@@ -12,7 +11,7 @@ import { PageHero } from "./PageHero";
  * on it comes from the same engine and the same rule pack as the citizen
  * journey, so the two sides of a case can never disagree.
  */
-function unit(row: QueueRow, value: number): string {
+function unit(row: QueueRow): string {
   return row.lifeLiberty ? officerCopy.hours : officerCopy.days;
 }
 
@@ -45,12 +44,12 @@ function QueueCard({ row }: { row: QueueRow }) {
         <div>
           <span>{officerCopy.columns.elapsed}</span>
           <strong>{row.clock.elapsed}</strong>
-          <small>{unit(row, row.clock.elapsed)}</small>
+          <small>{unit(row)}</small>
         </div>
         <div>
           <span>{overdue ? officerCopy.columns.overdue : officerCopy.columns.remaining}</span>
           <strong>{overdue ? row.clock.overdue : row.clock.remaining}</strong>
-          <small>{unit(row, overdue ? row.clock.overdue : row.clock.remaining)}</small>
+          <small>{unit(row)}</small>
         </div>
       </section>
     </article>
@@ -93,9 +92,6 @@ export function OfficerQueue() {
         </div>
 
         <p className="rti-note officer-disclaimer">{officerCopy.disclaimer}</p>
-        <p className="rti-note">
-          <Link href="/honesty">{"How this prototype works"}</Link>
-        </p>
       </div>
     </article>
   );
